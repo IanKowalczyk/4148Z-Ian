@@ -24,7 +24,7 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	
+	pros::Task stateMachineTask(stateHandler);
 }
 
 /**
@@ -96,8 +96,9 @@ void opcontrol() {
 	while(true) {
 		splitArcade(pros::E_MOTOR_BRAKE_COAST); // Drive
 		intakeOpControl();						// Intake
-		cataOpControl();						// Cata
+		// cataOpControl();						// Cata
 		wingOpControl();						// Wings
+		matchloadOpControl();					// Matchload
 
 		pros::delay(20);
 	}

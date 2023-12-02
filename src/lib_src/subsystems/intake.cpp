@@ -24,10 +24,10 @@ int closeCount = 0;
 
 // ******** Intake Opcontrol function ******** //
 void intakeOpControl() {
-    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
         states.setIntakeState(stateMachine::intake_state::INTAKING);
     }
-    else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+    else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
         states.setIntakeState(stateMachine::intake_state::OUTTAKING);
     }
     else {states.setIntakeState(stateMachine::intake_state::OFF);}

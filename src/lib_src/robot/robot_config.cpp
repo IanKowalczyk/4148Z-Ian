@@ -15,8 +15,8 @@ pros::Motor rightMidDrive(19, pros::E_MOTOR_GEAR_BLUE, false, pros::E_MOTOR_ENCO
 pros::Motor rightBackDrive(18, pros::E_MOTOR_GEAR_BLUE, false, pros::E_MOTOR_ENCODER_COUNTS);  
 
 // Subsystem motors
-pros::Motor leftCata(11, pros::E_MOTOR_GEAR_RED, true, pros::E_MOTOR_ENCODER_COUNTS);
-pros::Motor rightCata(1, pros::E_MOTOR_GEAR_RED, false, pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor leftCata(11, pros::E_MOTOR_GEAR_RED, false, pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor rightCata(1, pros::E_MOTOR_GEAR_RED, true, pros::E_MOTOR_ENCODER_COUNTS);
 
 // Motor Groups
 pros::Motor_Group leftDrive({leftFrontDrive, leftMidDrive, leftBackDrive});

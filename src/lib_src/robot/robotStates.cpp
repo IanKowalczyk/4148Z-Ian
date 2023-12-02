@@ -45,7 +45,8 @@ void stateHandler() {
     // ******** Intake state handler ******** //
     if(states.intakeStateChanged()) {
         if(states.intakeStateIs(stateMachine::intake_state::OFF)) {
-            stopCata(pros::E_MOTOR_BRAKE_BRAKE);
+            // stopCata(pros::E_MOTOR_BRAKE_BRAKE);
+            setCata(20);
         }
         else if(states.intakeStateIs(stateMachine::intake_state::INTAKING)) {
             setCata(127);
@@ -54,6 +55,12 @@ void stateHandler() {
             setCata(-127);
         }
         states.oldIntakeState = states.intakeState;
+    }
+    // Rumble for triball
+    if(states.intakeStateIs(stateMachine::intake_state::INTAKING)) {
+        if(leftCata.get_current_draw() + rightCata.get_current_draw() > 1000) {
+            controller.rumble("-");
+        }
     }
 
     // ******** Cata state handler ******** //
@@ -134,29 +141,32 @@ void stateHandler() {
 
 
     // ******** Matchload ******** //
+    // while(matchloadState) {
+    //     fireCount = 0;
+    //     while(true) {
+    //         // fire
+    //         setCata(-127);
+
+    //         // pull back
+    //         while(cataEnc.get_position() < (FULL_PULLBACK_TICKS - 10000) && matchloadState) {pros::delay(5);}
+    //         fireCount++;
+    //         stopCata(pros::E_MOTOR_BRAKE_COAST);
+
+    //         // optical sensor
+    //         while(!(optical.get_proximity() < 150 && (optical.get_hue()) < 100 && optical.get_hue() > 80)){
+    //             pros::delay(5);
+    //         }
+
+    //         if(!matchloadState) { // || fireCount >= fireTarget
+    //             stopCata(pros::E_MOTOR_BRAKE_COAST);
+    //             states.setCataState(stateMachine::cata_state::PULLED_BACK);
+    //             // fireCount = fireTarget = 0;
+    //             break;
+    //         }
+    //     }
+    // }
     while(matchloadState) {
-        fireCount = 0;
-        while(true) {
-            // fire
-            setCata(-127);
-
-            // pull back
-            while(cataEnc.get_position() < (FULL_PULLBACK_TICKS - 10000) && matchloadState) {pros::delay(5);}
-            fireCount++;
-            stopCata(pros::E_MOTOR_BRAKE_COAST);
-
-            // optical sensor
-            while(!(optical.get_proximity() < 150 && (optical.get_hue()) < 100 && optical.get_hue() > 80)){
-                pros::delay(5);
-            }
-
-            if(!matchloadState) { // || fireCount >= fireTarget
-                stopCata(pros::E_MOTOR_BRAKE_COAST);
-                states.setCataState(stateMachine::cata_state::PULLED_BACK);
-                // fireCount = fireTarget = 0;
-                break;
-            }
-        }
+        setCata(-127);
     }
 
     // ******** DEBUG ******** //
