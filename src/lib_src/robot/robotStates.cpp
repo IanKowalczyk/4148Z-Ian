@@ -24,6 +24,7 @@ void stateHandler() {
 
     // local variables
     int loopDelay = 10;
+    int intakeCount = 0;
 
     while(true) {
     int loopStartTime = pros::c::millis();
@@ -45,23 +46,34 @@ void stateHandler() {
     // ******** Intake state handler ******** //
     if(states.intakeStateChanged()) {
         if(states.intakeStateIs(stateMachine::intake_state::OFF)) {
-            // stopCata(pros::E_MOTOR_BRAKE_BRAKE);
-            setCata(20);
+            stopCata(pros::E_MOTOR_BRAKE_BRAKE);
+            intakeCount = 0;
+            states.oldIntakeState = states.intakeState;
         }
         else if(states.intakeStateIs(stateMachine::intake_state::INTAKING)) {
             setCata(127);
+            intakeCount += 10;
+
+            if(intakeCount > 200 && (leftCata.get_current_draw() + rightCata.get_current_draw() > 1500)) {
+                states.setIntakeState(stateMachine::intake_state::OFF);
+                controller.rumble("-");
+            }
         }
         else if(states.intakeStateIs(stateMachine::intake_state::OUTTAKING)) {
             setCata(-127);
+            states.oldIntakeState = states.intakeState;
         }
-        states.oldIntakeState = states.intakeState;
     }
     // Rumble for triball
-    if(states.intakeStateIs(stateMachine::intake_state::INTAKING)) {
-        if(leftCata.get_current_draw() + rightCata.get_current_draw() > 1000) {
-            controller.rumble("-");
-        }
-    }
+    // if(states.intakeStateIs(stateMachine::intake_state::INTAKING)) {
+    //     if(intakeCount > 200 && (leftCata.get_current_draw() + rightCata.get_current_draw() > 1500)) {
+    //         states.setIntakeState(stateMachine::intake_state::OFF);
+    //         controller.rumble("-");
+    //     }
+    // }
+    // else {
+    //     intakeCount = 0;
+    // }
 
     // ******** Cata state handler ******** //
     if(states.cataStateChanged()) {
@@ -166,7 +178,15 @@ void stateHandler() {
     //     }
     // }
     while(matchloadState) {
-        setCata(-127);
+        while(true) {
+            setCata(-127);
+            pros::delay(5);
+
+            if(!matchloadState) {
+                stopCata(pros::E_MOTOR_BRAKE_COAST);
+                break;
+            }
+        }  
     }
 
     // ******** DEBUG ******** //
@@ -175,7 +195,8 @@ void stateHandler() {
     // // pros::screen::print(TEXT_MEDIUM_CENTER, 11, "Brake Ready?: %s", brakeReady ? "true" : "false");
     // pros::screen::print(TEXT_MEDIUM_CENTER, 5, "Puncher Enc: %d", cataEnc.get_position());
     // }
-    pros::screen::print(TEXT_MEDIUM_CENTER, 5, "Puncher Enc: %d", cataEnc.get_position());
+    pros::screen::print(TEXT_MEDIUM_CENTER, 5, "Cata Enc: %d", cataEnc.get_position());
+    pros::screen::print(TEXT_MEDIUM_CENTER, 6, "Cata Current: %d", leftCata.get_current_draw() + rightCata.get_current_draw());
     
     // necessary task delay - do not change
     pros::delay(loopDelay); // while(pros::c::millis() < loopStartTime + loopDelay) {pros::delay(1);}
