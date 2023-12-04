@@ -87,7 +87,12 @@ void offenseAuto(offense_auto_mode s) {
 }
 
 void sixBall() {
-
+	globalPose.setPoint(0, 0, 0);
+	
+	// **** Rush mid **** //
+	states.setWingState(stateMachine::wing_state::RIGHT_OUT);
+	pros::delay(100);
+	
 }
 
 void fourBall() {

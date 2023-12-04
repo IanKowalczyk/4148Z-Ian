@@ -7,6 +7,9 @@ void stateHandler() {
     states.setIntakeState(stateMachine::intake_state::OFF);
     states.setWingState(stateMachine::wing_state::WINGS_STOWED);
     states.setParkingBrakeState(stateMachine::parking_brake_state::BRAKE_OFF);
+    if(cataEnc.get_position() > FULL_PULLBACK_TICKS - 10000) {
+        states.setCataState(stateMachine::cata_state::PULLED_BACK);
+    }
 
     // odom initialization
     resetOdomSensors();

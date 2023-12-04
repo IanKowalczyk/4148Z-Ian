@@ -2,10 +2,10 @@
 
 
 // **** Constants **** //
-double FRONT_ENC_OFFSET = 0.0;
-// double SIDE_ENC_OFFSET = 2.5;
-double ROBOT_X_OFFSET = 6.5;
-double ROBOT_Y_OFFSET = 6.5;
+double FRONT_ENC_OFFSET = 1/8;      // Front enc offset to the left of tracking center (inches)
+double SIDE_ENC_OFFSET = 5.5;       // Side enc offset to tracking center (inches)
+double ROBOT_X_OFFSET = 13.5/2;     // robot width: 13.5 in
+double ROBOT_Y_OFFSET = 17.5/2;     // robot length: 14 in + 3.5 in to tip of intake sled
 
 // Points 
 Point globalPose;
