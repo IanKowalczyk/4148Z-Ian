@@ -78,6 +78,9 @@ void setMove(double driveTarget, double turnTarget, int maxDrivePower, int maxTu
     driveSlew ? drive_slew = true : drive_slew = false;
     turnSlew  ? turn_slew = true : turn_slew = false;
 
+    // // Reset error
+    // drive_error = 0;
+
     // Set state
     nearTarget = false;
     states.setDriveAutoState(stateMachine::drive_auto_state::MOVE);
@@ -120,6 +123,9 @@ void setMoveToPoint(double targetX, double targetY, double endOrientation, int m
     // // Movement flag
     // currentMovementFlag = flag;
     reversed ? movement_reversed = true : movement_reversed = false;
+
+    // // Reset error
+    // translation_error = 0;
 
     // Set state
     nearTarget = false;
@@ -231,7 +237,7 @@ void waitUntilSettled(int msecDelay) {
 }
 
 void waitUntilNear(double threshold, int msecDelay) {
-    pros::delay(300); // minimum move time
+    pros::delay(400); // minimum move time
     if(states.driveAutoStateIs(stateMachine::drive_auto_state::MOVE)) {
         while(std::fabs(drive_error) > threshold && !driveSettled) {pros::delay(5);}
     }
@@ -261,11 +267,6 @@ void autoMovementTask() {
             move();
         }
         else if(states.driveAutoStateIs(stateMachine::drive_auto_state::MOVE_TO_POINT)) {
-            // pros::screen::set_eraser(COLOR_BLACK);
-            // pros::screen::erase();
-            // pros::screen::set_pen(COLOR_RED);
-            // pros::screen::fill_rect(20, 20, 400, 400);
-            // pros::delay(20);
             moveToPoint();
             // pros::screen::set_eraser(COLOR_BLACK);
             // pros::screen::erase();
@@ -294,6 +295,9 @@ void move() {
     int tempTurnMax = 30;
     bool stopLoop = false;
     int settleCount = 0;
+    // Reset variables
+    drive_error = 0.0;
+
     // Slew conditionals
     if(std::fabs(drive_target) < 12.5) {drive_slew = false;}
 
@@ -430,6 +434,8 @@ void moveToPoint() {
     double xError = 0.0;
     double yError = 0.0;
     int settleCount = 0;
+    // Reset variables
+    translation_error = 0.0;
     bool onTarget = false;
     while(!driveSettled) {
         // Calculate point errors

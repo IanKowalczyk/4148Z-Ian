@@ -34,15 +34,6 @@ void stateHandler() {
         updatePosition();
     // }
 
-    // ******** Drive state handler ******** //
-    // if(states.driveStateChanged()) {
-    //     if(states.driveStateIs(stateMachine::drive_state::TWO_MOTOR)) {            
-    //     }
-    //     else if(states.driveStateIs(stateMachine::drive_state::SIX_MOTOR)) {            
-    //     }
-    //     states.oldDriveState = states.driveState;
-    // }
-
     // ******** Intake state handler ******** //
     if(states.intakeStateChanged()) {
         if(states.intakeStateIs(stateMachine::intake_state::OFF)) {
@@ -153,6 +144,14 @@ void stateHandler() {
 
 
     // ******** Matchload ******** //
+    if(matchloadState) {
+        if(states.cataStateIs(stateMachine::cata_state::PULLED_BACK)) {
+            if(optical.get_proximity() < 150 ) { // && (optical.get_hue()) < 100 && optical.get_hue() > 80
+                states.setCataState(stateMachine::cata_state::FIRE);
+            }
+        }
+    }
+
     // while(matchloadState) {
     //     fireCount = 0;
     //     while(true) {
@@ -177,17 +176,18 @@ void stateHandler() {
     //         }
     //     }
     // }
-    while(matchloadState) {
-        while(true) {
-            setCata(-127);
-            pros::delay(5);
+    
+    // while(matchloadState) {
+    //     while(true) {
+    //         setCata(-127);
+    //         pros::delay(5);
 
-            if(!matchloadState) {
-                stopCata(pros::E_MOTOR_BRAKE_COAST);
-                break;
-            }
-        }  
-    }
+    //         if(!matchloadState) {
+    //             stopCata(pros::E_MOTOR_BRAKE_COAST);
+    //             break;
+    //         }
+    //     }  
+    // }
 
     // ******** DEBUG ******** //
     // if(displayInfo) {
