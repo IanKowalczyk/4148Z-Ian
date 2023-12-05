@@ -8,6 +8,9 @@ extern bool brakeReady;
 // Wing Opcontrol 
 extern void wingOpControl();
 
+// Brake Opcontrol
+extern void brakeOpControl();
+
 // Climb Opcontrol
 extern void climbOpControl();
 

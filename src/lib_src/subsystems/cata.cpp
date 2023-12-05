@@ -5,7 +5,7 @@ int SHORT_PULLBACK_TICKS = 4800;   // In centidegrees (100 * degrees)
 int FULL_PULLBACK_TICKS = 0;     // In centidegrees (100 * degrees) 
 int MIN_FIRE_TIME = 200;
 int PULLBACK_TIMEOUT = 1000;    // 1000 ms
-int PULLBACK_THRESHOLD = 500;  // How close we want to get to the pullback value before stopping the cata (to mitigate overshoot)
+int PULLBACK_THRESHOLD = 700;  // How close we want to get to the pullback value before stopping the cata (to mitigate overshoot)
 
 // Variables
 int pullbackCount = 0;

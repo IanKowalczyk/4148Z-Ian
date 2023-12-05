@@ -107,7 +107,8 @@ void opcontrol() {
 		cataOpControl();						// Cata
 		wingOpControl();						// Wings
 		matchloadOpControl();					// Matchload
-
+		// brakeOpControl();						// Brake
+		// climbOpControl();						// Climb
 		pros::delay(20);
 	}
 }

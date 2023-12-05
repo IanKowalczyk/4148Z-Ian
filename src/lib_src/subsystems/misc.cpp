@@ -18,8 +18,8 @@ void wingOpControl() {
 }
 
 // Parking Brake opcontrol
-bool parkingBrakeOn = false;
-void parkingBrakeOpControl() {
+bool brakeOn = false;
+void brakeOpControl() {
     // if(brakeReady) {
     //     if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)) {
     //         parkingBrakeOn = !parkingBrakeOn;

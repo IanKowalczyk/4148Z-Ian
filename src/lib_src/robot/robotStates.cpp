@@ -155,18 +155,21 @@ void stateHandler() {
 
     // ******** Matchload ******** //
     if(matchloadState) {
+        // rumble to signal we are in matchload state
         rumbleCount += loopDelay;
         if(rumbleCount > 1000) {
             rumbleCount = 0;
-            controller.rumble("-");
+            controller.rumble(".");
         }
-
+        // firing logic with optical sensor
         if(states.cataStateIs(stateMachine::cata_state::PULLED_BACK)) {
-            if(optical.get_proximity() > 250 ) { // && (optical.get_hue()) < 100 && optical.get_hue() > 80
+            // closer to optical = higher proximity val; range from 0 -255
+            if(optical.get_proximity() > 250 ) { // && (optical.get_hue()) < 100 && optical.get_hue() > 80 
                 states.setCataState(stateMachine::cata_state::FIRE);
             }
         }
     }
+
 
     // while(matchloadState) {
     //     fireCount = 0;
