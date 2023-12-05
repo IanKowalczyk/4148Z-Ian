@@ -96,6 +96,11 @@ void autonomous() {
 void opcontrol() {
 	// controller.rumble("-");
 	autoMovement.suspend();
+	displayInfo = true;
+	states.setCataState(stateMachine::cata_state::PULLED_BACK);
+	// pros::delay(100);
+	// states.setCataState(stateMachine::cata_state::FIRE);
+	// pros::delay(50000);
 	while(true) {
 		splitArcade(pros::E_MOTOR_BRAKE_COAST); // Drive
 		intakeOpControl();						// Intake
@@ -103,6 +108,6 @@ void opcontrol() {
 		wingOpControl();						// Wings
 		matchloadOpControl();					// Matchload
 
-		pros::delay(20);
+		pros::delay(10);
 	}
 }

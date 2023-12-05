@@ -24,11 +24,11 @@ pros::Motor_Group rightDrive({rightFrontDrive, rightMidDrive, rightBackDrive});
 pros::Motor_Group cataMotors({leftCata, rightCata});
 
 // Sensors
-pros::Imu inertial(12);
-pros::Rotation frontEnc(13, false);
-pros::Rotation sideEnc(14, false);
-pros::Rotation cataEnc(15, false);
-pros::Optical optical(16, 20);
+pros::Imu inertial(21);
+pros::Rotation frontEnc(7, false);
+pros::Rotation sideEnc(12, false);
+pros::Rotation cataEnc(2, false);
+pros::Optical optical(17, 50);
 
 // Digital I/O
 pros::ADIDigitalOut leftWing('A', false);

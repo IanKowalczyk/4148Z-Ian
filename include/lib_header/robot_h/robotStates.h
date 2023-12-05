@@ -14,9 +14,9 @@ public:
     enum class intake_state {OFF, INTAKING, OUTTAKING} intakeState, oldIntakeState;
     const char* intakeStateString[3] = {"OFF", "INTAKING", "OUTTAKING"};
 
-    enum class cata_state {FIRE, SHORT_PULLBACK, FULL_PULLBACK, PULLED_BACK} cataState, oldCataState, defaultPullback = cata_state::SHORT_PULLBACK;
-    const char* cataStateString[2] = {"FIRE", "PULLED BACK"};
-    const char* pullbackStateString[3] = {"SHORT", "MID", "LONG"};
+    enum class cata_state {FIRE, SHORT_PULLBACK, PULLED_BACK} cataState, oldCataState, defaultPullback = cata_state::SHORT_PULLBACK;
+    // const char* cataStateString[2] = {"FIRE", "PULLED BACK"};
+    // const char* pullbackStateString[3] = {"SHORT", "MID", "LONG"};
 
     // enum puncher_angle_state {STEEP, MID, FLAT, DOWN} puncherAngleState, oldPuncherAngleState;
     // const char* angleStateString[4] = {"STEEP", "MID", "FLAT", "DOWN"};
