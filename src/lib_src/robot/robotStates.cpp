@@ -44,32 +44,31 @@ void stateHandler() {
         if(states.intakeStateIs(stateMachine::intake_state::OFF)) {
             stopCata(pros::E_MOTOR_BRAKE_BRAKE);
             intakeCount = 0;
-            states.oldIntakeState = states.intakeState;
         }
         else if(states.intakeStateIs(stateMachine::intake_state::INTAKING)) {
             setCata(127);
-            intakeCount += 10;
-
-            if(intakeCount > 200 && ((leftCata.get_current_draw() + rightCata.get_current_draw())/2 > 1500)) {
-                // states.setIntakeState(stateMachine::intake_state::OFF);
-                controller.rumble("-");
-            }
+            // intakeCount += 10;
         }
         else if(states.intakeStateIs(stateMachine::intake_state::OUTTAKING)) {
             setCata(-127);
-            states.oldIntakeState = states.intakeState;
         }
+        states.oldIntakeState = states.intakeState;
     }
     // Rumble for triball
-    // if(states.intakeStateIs(stateMachine::intake_state::INTAKING)) {
-    //     if(intakeCount > 200 && (leftCata.get_current_draw() + rightCata.get_current_draw() > 1500)) {
-    //         states.setIntakeState(stateMachine::intake_state::OFF);
-    //         controller.rumble("-");
-    //     }
+    // if(intakeCount > 200 && ((leftCata.get_current_draw() + rightCata.get_current_draw())/2 > 1500)) {
+    //     // states.setIntakeState(stateMachine::intake_state::OFF);
+    //     controller.rumble("-");
     // }
-    // else {
-    //     intakeCount = 0;
-    // }
+    if(states.intakeStateIs(stateMachine::intake_state::INTAKING)) {
+        intakeCount += loopDelay;
+        if(intakeCount > 200 && (leftCata.get_current_draw() + rightCata.get_current_draw())/2 > 1500) {
+            // states.setIntakeState(stateMachine::intake_state::OFF);
+            controller.rumble("-");
+        }
+    }
+    else {
+        intakeCount = 0;
+    }
 
     // ******** Cata state handler ******** //
     if(states.cataStateChanged()) {

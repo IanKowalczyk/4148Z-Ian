@@ -108,6 +108,6 @@ void opcontrol() {
 		wingOpControl();						// Wings
 		matchloadOpControl();					// Matchload
 
-		pros::delay(10);
+		pros::delay(20);
 	}
 }
