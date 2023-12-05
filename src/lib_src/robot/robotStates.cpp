@@ -28,6 +28,7 @@ void stateHandler() {
     // local variables
     int loopDelay = 10;
     int intakeCount = 0;
+    int rumbleCount = 0;
 
     while(true) {
     int loopStartTime = pros::c::millis();
@@ -48,8 +49,8 @@ void stateHandler() {
             setCata(127);
             intakeCount += 10;
 
-            if(intakeCount > 200 && (leftCata.get_current_draw() + rightCata.get_current_draw() > 1500)) {
-                states.setIntakeState(stateMachine::intake_state::OFF);
+            if(intakeCount > 200 && ((leftCata.get_current_draw() + rightCata.get_current_draw())/2 > 1500)) {
+                // states.setIntakeState(stateMachine::intake_state::OFF);
                 controller.rumble("-");
             }
         }
@@ -89,6 +90,7 @@ void stateHandler() {
             
             if(states.cataStateIs(stateMachine::cata_state::PULLED_BACK)) {
                 if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 4, "PULLED BACK");}
+                // stopCata(pros::E_MOTOR_BRAKE_COAST);
                 pullbackCount = 0;
                 states.oldCataState = states.cataState;
             }
@@ -148,6 +150,12 @@ void stateHandler() {
 
     // ******** Matchload ******** //
     if(matchloadState) {
+        rumbleCount += loopDelay;
+        if(rumbleCount > 1000) {
+            rumbleCount = 0;
+            controller.rumble("-");
+        }
+
         if(states.cataStateIs(stateMachine::cata_state::PULLED_BACK)) {
             if(optical.get_proximity() < 150 ) { // && (optical.get_hue()) < 100 && optical.get_hue() > 80
                 states.setCataState(stateMachine::cata_state::FIRE);

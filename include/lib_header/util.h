@@ -58,4 +58,7 @@ extern double constrainAngle90(double input);
 /** @brief Returns either 1 or -1 as the sign of the input */
 extern double getSign(double input);
 
+/** @brief Returns average of double inputs */
+extern double dAverage(std::vector<double> inputs);
+
 #endif

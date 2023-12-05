@@ -94,6 +94,7 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+	// controller.rumble("-");
 	autoMovement.suspend();
 	while(true) {
 		splitArcade(pros::E_MOTOR_BRAKE_COAST); // Drive

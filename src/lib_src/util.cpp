@@ -60,3 +60,11 @@ double constrainAngle90(double input) {
 double getSign(double input) {
     return(std::fabs(input) / input);
 }
+
+double dAverage(std::vector<double> inputs) {
+    double sum = 0;
+    for(int i = 0; i < inputs.size(); i++) {
+        sum += inputs[i];
+    }
+    return(sum / inputs.size());
+}
