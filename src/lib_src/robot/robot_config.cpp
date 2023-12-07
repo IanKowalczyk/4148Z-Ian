@@ -25,8 +25,8 @@ pros::Motor_Group cataMotors({leftCata, rightCata});
 
 // Sensors
 pros::Imu inertial(21);
-pros::Rotation frontEnc(7, false);
-pros::Rotation sideEnc(12, false);
+pros::Rotation frontEnc(7, true);   // reversed
+pros::Rotation sideEnc(12, true);   // reversed
 pros::Rotation cataEnc(2, false);
 pros::Optical optical(17, 50);
 

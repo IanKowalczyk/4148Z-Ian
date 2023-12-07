@@ -9,20 +9,20 @@ void stateHandler() {
     states.setParkingBrakeState(stateMachine::parking_brake_state::BRAKE_OFF);
     states.setCataState(stateMachine::cata_state::PULLED_BACK);
 
-    // odom initialization
-    resetOdomSensors();
-	globalPose.setPoint(0.0, 0.0, 0);
-
-    // set encoder data rates
+    // set sensor data rates
     inertial.set_data_rate(5);
     frontEnc.set_data_rate(5);
     sideEnc.set_data_rate(5);
     cataEnc.set_data_rate(5);
-    optical.set_integration_time(50);
-    optical.disable_gesture();
     
-    // init optical sensors
-    optical.set_led_pwm(100);
+    // optical sensor initilization
+    optical.set_integration_time(50);   // data rate
+    optical.disable_gesture();
+    optical.set_led_pwm(100);           // brightness
+
+    // odom initialization
+    resetOdomSensors();
+	globalPose.setPoint(0.0, 0.0, 0);
 
     // local variables
     int loopDelay = 10;
@@ -54,11 +54,8 @@ void stateHandler() {
         }
         states.oldIntakeState = states.intakeState;
     }
-    // Rumble for triball
-    // if(intakeCount > 200 && ((leftCata.get_current_draw() + rightCata.get_current_draw())/2 > 1500)) {
-    //     // states.setIntakeState(stateMachine::intake_state::OFF);
-    //     controller.rumble("-");
-    // }
+
+    // If triball in intake, rumble controller
     if(states.intakeStateIs(stateMachine::intake_state::INTAKING)) {
         intakeCount += loopDelay;
         if(intakeCount > 200 && (leftCata.get_current_draw() + rightCata.get_current_draw())/2 > 1500) {
@@ -66,9 +63,8 @@ void stateHandler() {
             controller.rumble("-");
         }
     }
-    else {
-        intakeCount = 0;
-    }
+    else {intakeCount = 0;}
+
 
     // ******** Cata state handler ******** //
     if(states.cataStateChanged()) {
@@ -148,14 +144,12 @@ void stateHandler() {
     if(std::fabs(leftFrontDrive.get_actual_velocity()) + std::fabs(rightFrontDrive.get_actual_velocity()) < DRIVE_BRAKE_THRESHOLD) {
         brakeReady = true;
     }
-    else {
-        brakeReady = false;
-    }
+    else {brakeReady = false;}
 
 
     // ******** Matchload ******** //
     if(matchloadState) {
-        // rumble to signal we are in matchload state
+        // rumble every second to signal we are in matchload state
         rumbleCount += loopDelay;
         if(rumbleCount > 1000) {
             rumbleCount = 0;
@@ -163,14 +157,39 @@ void stateHandler() {
         }
         // firing logic with optical sensor
         if(states.cataStateIs(stateMachine::cata_state::PULLED_BACK)) {
-            // closer to optical = higher proximity val; range from 0 -255
+            // closer to optical = higher proximity val; range from 0-255
             if(optical.get_proximity() > 250 ) { // && (optical.get_hue()) < 100 && optical.get_hue() > 80 
+                // add delay
                 states.setCataState(stateMachine::cata_state::FIRE);
             }
         }
     }
 
+    // ******** DEBUG ******** //
+    // if(displayInfo) {
+    // // pros::screen::print(TEXT_MEDIUM_CENTER, 10, "Drive Velo: %d", (leftFrontDrive.get_actual_velocity() + rightFrontDrive.get_actual_velocity()) / 2);
+    // // pros::screen::print(TEXT_MEDIUM_CENTER, 11, "Brake Ready?: %s", brakeReady ? "true" : "false");
+    // pros::screen::print(TEXT_MEDIUM_CENTER, 5, "Puncher Enc: %d", cataEnc.get_position());
+    // }
+    pros::screen::print(TEXT_MEDIUM_CENTER, 4, "Cata Enc: %d", cataEnc.get_position());
+    pros::screen::print(TEXT_MEDIUM_CENTER, 5, "Cata Angle: %d", cataEnc.get_angle());
+    pros::screen::print(TEXT_MEDIUM_CENTER, 6, "Cata Current: %d", leftCata.get_current_draw() + rightCata.get_current_draw());
+    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "Opical prox: %d", optical.get_proximity());
 
+    // Refresh display every 100 ms
+    // displayCount += loopDelay;
+    // if(displayCount > 100) {
+    //     displayCount = 0;
+    //     pros::screen::set_eraser(COLOR_BLACK);
+    //     pros::screen::erase();
+    // }
+
+    // necessary task delay - do not change
+    pros::delay(loopDelay); // while(pros::c::millis() < loopStartTime + loopDelay) {pros::delay(1);}
+    }
+}
+
+// **** old matchload code ****//
     // while(matchloadState) {
     //     fireCount = 0;
     //     while(true) {
@@ -207,26 +226,3 @@ void stateHandler() {
     //         }
     //     }  
     // }
-
-    // ******** DEBUG ******** //
-    // if(displayInfo) {
-    // // pros::screen::print(TEXT_MEDIUM_CENTER, 10, "Drive Velo: %d", (leftFrontDrive.get_actual_velocity() + rightFrontDrive.get_actual_velocity()) / 2);
-    // // pros::screen::print(TEXT_MEDIUM_CENTER, 11, "Brake Ready?: %s", brakeReady ? "true" : "false");
-    // pros::screen::print(TEXT_MEDIUM_CENTER, 5, "Puncher Enc: %d", cataEnc.get_position());
-    // }
-    pros::screen::print(TEXT_MEDIUM_CENTER, 4, "Cata Enc: %d", cataEnc.get_position());
-    pros::screen::print(TEXT_MEDIUM_CENTER, 5, "Cata Angle: %d", cataEnc.get_angle());
-    pros::screen::print(TEXT_MEDIUM_CENTER, 6, "Cata Current: %d", leftCata.get_current_draw() + rightCata.get_current_draw());
-    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "Opical prox: %d", optical.get_proximity());
-
-    displayCount += loopDelay;
-    if(displayCount > 100) {
-        displayCount = 0;
-        pros::screen::set_eraser(COLOR_BLACK);
-        pros::screen::erase();
-    }
-
-    // necessary task delay - do not change
-    pros::delay(loopDelay); // while(pros::c::millis() < loopStartTime + loopDelay) {pros::delay(1);}
-    }
-}

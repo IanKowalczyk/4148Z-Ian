@@ -9,9 +9,14 @@
 // Make curve function async
 // Path following alg 
 
+// **** Useful info **** //
+// NO SLEW: travels 24in in 605 ms: 39.67 in/s
+// SLEW:    travels 24in in 
+double IDEAL_DRIVE_VELOCITY = 39.67; // inches per second
+
 // **************** Movement Constants **************** //
-int DRIVE_SLEW_RATE = 120/50;   // 500 ms to accelerate = 50 iterations; 120 (basically max power) / 50 (iterations)
-int TURN_SLEW_RATE = 120/20;    // tune later
+int DRIVE_SLEW_RATE = 120/15;   // 150 ms to accelerate = 15 iterations; 120 (basically max power) / 15 (iterations)
+int TURN_SLEW_RATE = 120/15;    // 150 ms to accelerate ... TUNE LATER
 int SETTLE_THRESHOLD = 3;       // 30 ms: 3 iterations * 10 ms loop // Used to be 50ms
 int NEAR_TARGET_THRESHOLD = 2;          // 2 inches
 double DISTANCE_SETTLE_THRESHOLD = 1;   // 1 inch
@@ -282,10 +287,9 @@ void autoMovementTask() {
 // **************** Movement Functions **************** //
 
 void move() {
-    // Reset drive encoder 
-    // rightFrontDrive.tare_position();
     // Initialize timer
     int startTime = pros::c::millis();
+
     // Local variables 
     double initialPosition = (frontEnc.get_position() / 100) * DRIVE_DEG_TO_INCH_275;
     // double currentPosition;
@@ -295,12 +299,13 @@ void move() {
     int tempTurnMax = 30;
     bool stopLoop = false;
     int settleCount = 0;
+
     // Reset variables
     drive_error = 0.0;
 
     // Slew conditionals
     if(std::fabs(drive_target) < 12.5) {drive_slew = false;}
-
+    
     // Feedforward
     double turnFF = 1;
     double driveFF = 1;
@@ -386,14 +391,18 @@ void move() {
             else {settleCount = 0;}
         }
         if((settleCount >= SETTLE_THRESHOLD) || (pros::c::millis() - startTime) >= max_time) {
-            stopDrive(pros::E_MOTOR_BRAKE_BRAKE);
-            // drive_error = turnError = drivePower = turnPower = 0;
-            // drive_position = drive_target = turn_target = 0;
-            // drivePID.reset();
-            // turnPID.reset();
-            driveSettled = true;
-            states.setDriveAutoState(stateMachine::drive_auto_state::OFF);
-            break;
+            pros::screen::erase_line(0, 8, 600, 9);
+            pros::screen::print(TEXT_MEDIUM_CENTER, 8, "Movement time: %d", pros::c::millis() - startTime);
+            pros::delay(5000000);
+            
+            // stopDrive(pros::E_MOTOR_BRAKE_BRAKE);
+            // // drive_error = turnError = drivePower = turnPower = 0;
+            // // drive_position = drive_target = turn_target = 0;
+            // // drivePID.reset();
+            // // turnPID.reset();
+            // driveSettled = true;
+            // states.setDriveAutoState(stateMachine::drive_auto_state::OFF);
+            // break;
         }
 
         // Output to drive

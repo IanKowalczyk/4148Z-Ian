@@ -45,7 +45,7 @@ void squigglesTest() {
 	pros::delay(500);
 	setMove(800, 0, 100, 80, 3000);   // straight
 	waitUntilSettled(20);
-	setMoveToPoint(0, 0, 1500, false);     // back to origin
+	setMoveToPoint(0, 0, 1500, false);	// back to origin
 	waitUntilSettled(50);
 }
 void chainedMoveToPoint() {
@@ -92,6 +92,53 @@ void sixBall() {
 	// **** Rush mid **** //
 	states.setWingState(stateMachine::wing_state::RIGHT_OUT);
 	pros::delay(100);
+	setMoveToPoint(75, 72, 120, 120, 1800, false);
+	states.setIntakeState(stateMachine::intake_state::INTAKING);
+	waitUntilSettled(0);
+
+	// 1,2: Score first two mid triballs 
+	setMove(0, 90, 0, 100, 800, false);
+	states.setIntakeState(stateMachine::intake_state::OFF);
+	waitUntilSettled(0);
+	setMoveToPoint(120, 72, 120, 120, 1500, false);
+	waitUntilSettled(0);
+	
+	// 3: Grab third triball 
+	setMoveToPoint(rightTriball5.x, rightTriball5.y, 120, 120, 2000, true);
+	waitUntilNear(28, 0);
+	movement_reversed = false;
+	max_translate_power = 0;
+	pros::delay(600);
+	max_translate_power = 120;
+	states.setIntakeState(stateMachine::intake_state::INTAKING);
+	waitUntilSettled(0);
+
+	// 3: Outtake third triball near matchload station
+	setMove(0, 110, 0, 100, 800);
+	waitUntilSettled(0);
+	setMoveToPoint(108, 34, 120, 120, 1000, false);
+	pros::delay(700);
+	states.setIntakeState(stateMachine::intake_state::OUTTAKING);
+	waitUntilNear(2, 0);
+
+	// 4: Swing and grab fourth triball
+	setMoveToPoint(110, 12, 100, 120, 800, false);
+	states.setIntakeState(stateMachine::intake_state::OFF);
+	waitUntilNear(3, 0);
+	setMoveToPoint(72 + BASE_Y_OFFSET, 12, 120, 120, 1200, false);
+	states.setIntakeState(stateMachine::intake_state::INTAKING);
+	waitUntilSettled(0);
+
+	// 4: Go back to matchload bar
+	setMoveToPoint(108, 12, 120, 120, 1200, true);
+	states.setIntakeState(stateMachine::intake_state::OFF);
+	waitUntilNear(1, 0);
+	setMove(0, 50, 0, 100, 800);
+	waitUntilSettled(0);
+	
+	// 5: Descore matchload triball (fifth ball)
+	states.setWingState(stateMachine::wing_state::RIGHT_OUT);
+	// setMove()
 	
 }
 

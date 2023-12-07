@@ -25,6 +25,7 @@ void on_center_button() {
  */
 void initialize() {
 	pros::Task stateMachineTask(stateHandler);
+	// setCataBrakeMode(pros::E_MOTOR_BRAKE_COAST);
 }
 
 /**
@@ -58,26 +59,34 @@ void competition_initialize() {}
  */
 pros::Task autoMovement(autoMovementTask);
 void autonomous() {
-	
+	// odom init
+	resetOdomSensors();
+	globalPose.setPoint(0.0, 0.0, 0);
+
+	// tuning pid
+	// setMove(24, 0, 120, 0, 2000, false, false, false); // 605 ms
+	setMove(24, 0, 120, 0, 2000, false, true, false); // 605 ms
+
+
 	// Autoselector 
-	if(autoToRun == 1) {
-		defenseAuto(SOLO);
-	}
-	if(autoToRun == 2) {
-		defenseAuto(ELIMS);
-	}
-	if(autoToRun == 3) {
-		fourBall();
-	}
-	if(autoToRun == 4) {
-		progSkills();
-	}
-	if(autoToRun == 5) {
-		// defenseSafe();
-	}
-	if(autoToRun == 6) {
-		sixBall();
-	}
+	// if(autoToRun == 1) {
+	// 	defenseAuto(SOLO);
+	// }
+	// if(autoToRun == 2) {
+	// 	defenseAuto(ELIMS);
+	// }
+	// if(autoToRun == 3) {
+	// 	fourBall();
+	// }
+	// if(autoToRun == 4) {
+	// 	progSkills();
+	// }
+	// if(autoToRun == 5) {
+	// 	// defenseSafe();
+	// }
+	// if(autoToRun == 6) {
+	// 	sixBall();
+	// }
 }
 
 /**

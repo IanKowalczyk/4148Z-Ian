@@ -9,11 +9,14 @@ extern double FRONT_ENC_OFFSET;
 // Side encoder distance in inches from tracking center
 extern double SIDE_ENC_OFFSET;
 
-/** @brief X-offset from center of bot */
-extern double ROBOT_X_OFFSET;
+/** @brief X-offset from center of bot to side of base */
+extern double BASE_X_OFFSET;
 
-/** @brief Y-offset from center of bot */
-extern double ROBOT_Y_OFFSET;
+/** @brief Y-offset from center of bot to front of base*/
+extern double BASE_Y_OFFSET;
+
+/** @brief Y-offset from center of bot to tip of intake*/
+extern double TOTAL_Y_OFFSET;
 
 /**
  * @brief Class that creates a point with x, y coordinates and an orientation
