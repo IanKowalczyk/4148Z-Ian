@@ -28,7 +28,7 @@ pros::Imu inertial(21);
 pros::Rotation frontEnc(7, true);   // reversed
 pros::Rotation sideEnc(12, true);   // reversed
 pros::Rotation cataEnc(2, false);
-pros::Optical optical(17, 50);
+pros::Optical optical(17, 40);
 
 // Digital I/O
 pros::ADIDigitalOut leftWing('A', false);

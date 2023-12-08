@@ -1,7 +1,7 @@
 #include "lib_header/subsystems_h/cata.h"
 
 // Constants
-int SHORT_PULLBACK_TICKS = 4800;   // In centidegrees (100 * degrees) 
+int SHORT_PULLBACK_TICKS = 4500;   // In centidegrees (100 * degrees)  // 4800
 int FULL_PULLBACK_TICKS = 0;     // In centidegrees (100 * degrees) 
 int MIN_FIRE_TIME = 200;
 int PULLBACK_TIMEOUT = 1000;    // 1000 ms

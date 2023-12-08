@@ -25,6 +25,7 @@ void on_center_button() {
  */
 void initialize() {
 	pros::Task stateMachineTask(stateHandler);
+	pros::Task inertialInit([] {inertial.reset(true);});
 	// setCataBrakeMode(pros::E_MOTOR_BRAKE_COAST);
 }
 
@@ -63,10 +64,8 @@ void autonomous() {
 	resetOdomSensors();
 	globalPose.setPoint(0.0, 0.0, 0);
 
-	// tuning pid
-	// setMove(24, 0, 120, 0, 2000, false, false, false); // 605 ms
-	setMove(24, 0, 120, 0, 2000, false, true, false); // 605 ms
-
+	squigglesTest();
+	waitUntilSettled(50000);
 
 	// Autoselector 
 	// if(autoToRun == 1) {

@@ -12,22 +12,30 @@
 // **** Useful info **** //
 // NO SLEW: travels 24in in 605 ms: 39.67 in/s
 // SLEW:    travels 24in in 
-double IDEAL_DRIVE_VELOCITY = 39.67; // inches per second
+	// tuning pid
+	// setMove(24, 0, 120, 0, 2000, false, false, false);   // 605 ms
+	// setMove(24, 0, 120, 0, 2000, false, true, false);    // 638 ms
+	// setMove(0, 180, 0, 100, 1000);       // ~ 700 ms sometimes, 1000 ms sometimes else????
+	// setMove(0, 90, 0, 100, 1000);        // 500 ms
+	// setMoveToPoint(0, 24, 1000, false);  // 750 ms
+
+double IDEAL_DRIVE_VELOCITY = 39.67; // Inches per second
+double IDEAL_TURN_VELOCITY = 180;    // Degrees per second
 
 // **************** Movement Constants **************** //
 int DRIVE_SLEW_RATE = 120/15;   // 150 ms to accelerate = 15 iterations; 120 (basically max power) / 15 (iterations)
 int TURN_SLEW_RATE = 120/15;    // 150 ms to accelerate ... TUNE LATER
-int SETTLE_THRESHOLD = 3;       // 30 ms: 3 iterations * 10 ms loop // Used to be 50ms
+int SETTLE_THRESHOLD = 5;       // 50 ms: 5 iterations * 10 ms loop // Used to be 50ms
 int NEAR_TARGET_THRESHOLD = 2;          // 2 inches
 double DISTANCE_SETTLE_THRESHOLD = 1;   // 1 inch
-double TURN_SETTLE_THRESHOLD = 2;       // 2 degrees
+double TURN_SETTLE_THRESHOLD = 1.5;       // 1.5 degrees
 
 
 // **************** PID Objects **************** //
 
 PID drivePID(8, 12);        // Error units are in INCHES
-PID translationPID(7, 18);  // Error units are in INCHES // 20, 2
-PID turnPID(1.5, 4.5);      // Error units are in DEGREES 
+PID translationPID(7.9, 13);  // Error units are in INCHES    // 7, 18
+PID turnPID(1.5, 7);        // Error units are in DEGREES   // 1.5, 4.5
 
 
 // **************** Movement Variables **************** //
@@ -322,7 +330,7 @@ void move() {
         drive_position = ((frontEnc.get_position() / 100) * DRIVE_DEG_TO_INCH_275) - initialPosition; // in inches
         // drive_error = int(drive_target - drive_position);
         drive_error = drive_target - drive_position;
-        turnError = int(turn_target - inertial.get_heading());
+        turnError = turn_target - inertial.get_heading();
 
         // Constrain relative turn from 180 to -180
         if(turnError > 180) {turnError -= 360;}
@@ -335,7 +343,7 @@ void move() {
         else {
             drivePower = int(drivePID.calculateOutput(drive_error)) * driveFF; //, max_drive_power, -max_drive_power
         }
-        turnPower = turnPID.calculateOutput(double(turnError)) * turnFF; //, max_turn_power, -max_turn_power
+        turnPower = int(turnPID.calculateOutput(turnError)) * turnFF; //, max_turn_power, -max_turn_power
 
         // Slew rate logic
         if(drive_slew) {
@@ -349,64 +357,60 @@ void move() {
                 drive_slew = false;
             }
         }
-        if(turn_slew) { 
-            // Only increment if temp turn power is less than max turn power
-            if(tempTurnMax <= max_turn_power) {
-                tempTurnMax += TURN_SLEW_RATE;
-                turnPower = constrainValue(turnPower, tempTurnMax, -tempTurnMax);
-            }
-            else {
-                // Turn slew is done
-                turn_slew = false;
-            } 
-        }
+        // if(turn_slew) { 
+        //     // Only increment if temp turn power is less than max turn power
+        //     if(tempTurnMax <= max_turn_power) {
+        //         tempTurnMax += TURN_SLEW_RATE;
+        //         turnPower = constrainValue(turnPower, tempTurnMax, -tempTurnMax);
+        //     }
+        //     else {
+        //         // Turn slew is done
+        //         turn_slew = false;
+        //     } 
+        // }
 
         // Constrain PID outputs
         drivePower = constrainVoltage(drivePower, max_drive_power, -max_drive_power);
         turnPower = constrainVoltage(turnPower, max_turn_power, -max_turn_power);
 
         // Exit conditions
-        if(std::fabs(drive_target) > 0 && turn_target == 0) {   // If drive only, check drive error
-            if(std::fabs(drive_error) <= DISTANCE_SETTLE_THRESHOLD) {
+        if(std::fabs(drive_target) > 0 && max_turn_power == 0) {   // If drive only, check drive error
+            if(std::fabs(drive_error) < DISTANCE_SETTLE_THRESHOLD) {
                 nearTarget = true;
                 settleCount++;
-                // stopLoop = true;
             }
             else {settleCount = 0;}
         }
         if(std::fabs(turn_target) > 0 && drive_target == 0) {   // If turn only, check turn error
-            if(std::fabs(turnError) <= TURN_SETTLE_THRESHOLD) {
+            if(std::fabs(turnError) < TURN_SETTLE_THRESHOLD) {
                 nearTarget = true;
                 settleCount++;
-                // stopLoop = true;
             }
             else {settleCount = 0;}
         }
         if(std::fabs(drive_target) > 0 && std::fabs(turn_target) > 0) { // If both drive & turn, check both errors
-            if(std::fabs(drive_error) <= DISTANCE_SETTLE_THRESHOLD && std::fabs(turnError) <= TURN_SETTLE_THRESHOLD) {
+            if(std::fabs(drive_error) < DISTANCE_SETTLE_THRESHOLD && std::fabs(turnError) < TURN_SETTLE_THRESHOLD) {
                 nearTarget = true;
                 settleCount++;
-                // stopLoop = true;
             }
             else {settleCount = 0;}
         }
         if((settleCount >= SETTLE_THRESHOLD) || (pros::c::millis() - startTime) >= max_time) {
-            pros::screen::erase_line(0, 8, 600, 9);
-            pros::screen::print(TEXT_MEDIUM_CENTER, 8, "Movement time: %d", pros::c::millis() - startTime);
-            pros::delay(5000000);
-            
-            // stopDrive(pros::E_MOTOR_BRAKE_BRAKE);
-            // // drive_error = turnError = drivePower = turnPower = 0;
-            // // drive_position = drive_target = turn_target = 0;
-            // // drivePID.reset();
-            // // turnPID.reset();
-            // driveSettled = true;
-            // states.setDriveAutoState(stateMachine::drive_auto_state::OFF);
-            // break;
+            // pros::screen::erase_line(0, 8, 600, 9);
+            // pros::screen::print(TEXT_MEDIUM_CENTER, 8, "Movement time: %d", pros::c::millis() - startTime);
+            // pros::delay(50000);
+
+            stopDrive(pros::E_MOTOR_BRAKE_BRAKE);
+            drive_error = turnError = drivePower = turnPower = 0;
+            drive_position = drive_target = turn_target = 0;
+            drivePID.reset();
+            turnPID.reset();
+            driveSettled = true;
+            states.setDriveAutoState(stateMachine::drive_auto_state::OFF);
+            break;
         }
 
         // Output to drive
-        // setDrive(-drivePower - turnPower, -drivePower + turnPower); // MINI BOT
         setDrive(drivePower + turnPower, drivePower - turnPower); // NORMAL BOT
 
         // Debug 
@@ -414,7 +418,7 @@ void move() {
             pros::screen::erase_line(0, 1, 600, 1);
             pros::screen::print(TEXT_MEDIUM_CENTER, 1, "Drive Target: %3.1f, Err: %3.2f, Out: %3d", drive_target, drive_error, drivePower);
             pros::screen::erase_line(0, 2, 600, 2);
-            pros::screen::print(TEXT_MEDIUM_CENTER, 2, "Turn Tgt: %3.1f, Err: %3d, Out: %3d", turn_target, turnError, turnPower);
+            pros::screen::print(TEXT_MEDIUM_CENTER, 2, "Turn Tgt: %3.1f, Err: %3.2f, Out: %3d", turn_target, turnError, turnPower);
             pros::screen::erase_line(0, 2, 600, 3);
             pros::screen::print(TEXT_MEDIUM_CENTER, 3, "Turn: FF: %1.1f,  init Err: %3d", turnFF, initialTurnError);
             pros::screen::erase_line(0, 3, 600, 4);
@@ -425,13 +429,11 @@ void move() {
         // necessary delay - do not change
         pros::delay(10);
     }
-    // Reset
-    drive_error = turnError = drivePower = turnPower = 0;
-    drivePID.reset();
-    turnPID.reset();
+    // // Reset
+    // drive_error = turnError = drivePower = turnPower = 0;
+    // drivePID.reset();
+    // turnPID.reset();
 }
-
-
 
 void moveToPoint() {
     // Initialize timer
@@ -452,7 +454,7 @@ void moveToPoint() {
         yError = target_y - globalPose.y;
 
         // Calculate distance and angle, check if movement is reversed
-        if(movement_reversed) { //reverse
+        if(movement_reversed) { // reversed, add 180 to angle
             targetAngle = fmod((90 - (atan2(yError, xError) * RAD_TO_DEG)), 360) + 180;
         }
         else { // forward
@@ -461,10 +463,10 @@ void moveToPoint() {
         // targetAngle = 90 - (atan2(yError, xError) * RAD_TO_DEG);
 
         // Calculate movement errors
-        if(movement_reversed) { // reversed, add 180 to angle
+        if(movement_reversed) { // reverse drive direction
             translation_error = -hypot(xError, yError);
         }
-        else {  // forward
+        else { // forward
             translation_error = hypot(xError, yError);
         }
         rotationError = targetAngle - (globalPose.theta * RAD_TO_DEG);
@@ -490,10 +492,14 @@ void moveToPoint() {
         // translation_error <= NEAR_TARGET_THRESHOLD ? nearTarget = true : nearTarget = false;
         
         // Increment settle count if 'on' target (< 0.6 inches)
-        std::fabs(translation_error) <= 0.6 ? settleCount++ : settleCount = 0;
+        std::fabs(translation_error) < 1.2 ? settleCount ++ : settleCount = 0;
 
         // Exit condition
         if(settleCount >= SETTLE_THRESHOLD || (pros::c::millis() - startTime) >= max_time) {
+            // pros::screen::erase_line(0, 8, 600, 9);
+            // pros::screen::print(TEXT_MEDIUM_CENTER, 8, "Movement time: %d", pros::c::millis() - startTime);
+            // pros::delay(50000);
+
             stopDrive(pros::E_MOTOR_BRAKE_BRAKE);
             translation_error = translationPower = rotationError = rotationPower = 0;
             translationPID.reset();
@@ -508,10 +514,10 @@ void moveToPoint() {
         setDrive(translationPower + rotationPower, translationPower - rotationPower); // NORMAL BOT
 
         // if(!pros::competition::is_disabled()) {  // debug
-            pros::screen::erase_line(0, 3, 400, 3);
-            pros::screen::print(TEXT_MEDIUM_CENTER, 3, "Tgt: x: %3.1f, y: %3.1f, theta: %3.1f", target_x, target_y, targetAngle);
-            pros::screen::erase_line(0, 4, 400, 4);
-            pros::screen::print(TEXT_MEDIUM_CENTER, 4, "dist err: %3.1f, volt: %3d, angle err: %3.1f, volt: %3d", translation_error, translationPower, rotationError, rotationPower);
+            pros::screen::erase_line(0, 1, 400, 2);
+            pros::screen::print(TEXT_MEDIUM_CENTER, 1, "Tgt: x: %3.1f, y: %3.1f, theta: %3.1f", target_x, target_y, targetAngle);
+            pros::screen::erase_line(0, 2, 400, 3);
+            pros::screen::print(TEXT_MEDIUM, 2, "dist err: %3.1f, volt: %3d, ang err: %3.1f, volt: %3d", translation_error, translationPower, rotationError, rotationPower);
         // }
 
         // necessary delay

@@ -16,9 +16,9 @@ void stateHandler() {
     cataEnc.set_data_rate(5);
     
     // optical sensor initilization
-    optical.set_integration_time(50);   // data rate
+    optical.set_integration_time(40);   // 40 ms data refresh rate
     optical.disable_gesture();
-    optical.set_led_pwm(100);           // brightness
+    // optical.set_led_pwm(100);           // brightness
 
     // odom initialization
     resetOdomSensors();
@@ -149,6 +149,7 @@ void stateHandler() {
 
     // ******** Matchload ******** //
     if(matchloadState) {
+        optical.set_led_pwm(100);
         // rumble every second to signal we are in matchload state
         rumbleCount += loopDelay;
         if(rumbleCount > 1000) {
@@ -163,6 +164,9 @@ void stateHandler() {
                 states.setCataState(stateMachine::cata_state::FIRE);
             }
         }
+    }
+    else {
+        optical.set_led_pwm(0);
     }
 
     // ******** DEBUG ******** //

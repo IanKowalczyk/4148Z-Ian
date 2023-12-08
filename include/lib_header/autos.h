@@ -5,6 +5,9 @@
 extern int autoToRun;
 
 // ******* Test Autos *******//
+/** @brief Tests robot subsystems: intake, wings, cata */
+extern void autoFunctionTest();
+
 // Odom tests
 extern void odomBoxTest();
 extern void odomTriangleTest();
