@@ -4,6 +4,7 @@ stateMachine states;
 
 void stateHandler() {
     // default states
+    matchloadState = false;
     states.setIntakeState(stateMachine::intake_state::OFF);
     states.setWingState(stateMachine::wing_state::WINGS_STOWED);
     states.setParkingBrakeState(stateMachine::parking_brake_state::BRAKE_OFF);
@@ -124,27 +125,27 @@ void stateHandler() {
     }
 
     // ******** Parking brake state handler ******** //
-    if(states.parkingBrakeStateChanged()) {
-        if(states.parkingBrakeStateIs(stateMachine::parking_brake_state::BRAKE_OFF)) {
-            if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 8, "BRAKES OFF");}
-            setDrive(0, 0);
-            controller.rumble(".");
-        }
-        else if(states.parkingBrakeStateIs(stateMachine::parking_brake_state::BRAKE_ON)) {
-            if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 8, "BRAKES ON");}
-            setDrive(20, 20);
-            leftFrontDrive.move(-20);
-            rightFrontDrive.move(-20);
-            controller.rumble(".");
-        }
-        states.oldParkingBrakeState = states.parkingBrakeState;
-    }
+    // if(states.parkingBrakeStateChanged()) {
+    //     if(states.parkingBrakeStateIs(stateMachine::parking_brake_state::BRAKE_OFF)) {
+    //         if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 8, "BRAKES OFF");}
+    //         setDrive(0, 0);
+    //         controller.rumble(".");
+    //     }
+    //     else if(states.parkingBrakeStateIs(stateMachine::parking_brake_state::BRAKE_ON)) {
+    //         if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 8, "BRAKES ON");}
+    //         setDrive(20, 20);
+    //         leftFrontDrive.move(-20);
+    //         rightFrontDrive.move(-20);
+    //         controller.rumble(".");
+    //     }
+    //     states.oldParkingBrakeState = states.parkingBrakeState;
+    // }
 
     // Drive check for engaging brakes
-    if(std::fabs(leftFrontDrive.get_actual_velocity()) + std::fabs(rightFrontDrive.get_actual_velocity()) < DRIVE_BRAKE_THRESHOLD) {
-        brakeReady = true;
-    }
-    else {brakeReady = false;}
+    // if(std::fabs(leftFrontDrive.get_actual_velocity()) + std::fabs(rightFrontDrive.get_actual_velocity()) < DRIVE_BRAKE_THRESHOLD) {
+    //     brakeReady = true;
+    // }
+    // else {brakeReady = false;}
 
 
     // ******** Matchload ******** //
@@ -165,9 +166,9 @@ void stateHandler() {
             }
         }
     }
-    else {
-        optical.set_led_pwm(0);
-    }
+    // else {
+    //     optical.set_led_pwm(0);
+    // }
 
     // ******** DEBUG ******** //
     // if(displayInfo) {

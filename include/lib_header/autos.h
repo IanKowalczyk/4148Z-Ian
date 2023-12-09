@@ -21,8 +21,9 @@ extern void oldCurveTest();
 extern void curveTuning();
 
 /** @brief Parameter for defenseAuto */
-enum defense_auto_mode{SOLO, ELIMS};
-enum offense_auto_mode{SAFE, RISKY};
+enum class defense_auto_mode{SOLO, ELIMS};
+enum class offense_auto_mode{SAFE, RISKY};
+enum class sixBall_mode{BAR, MID};
 // enum progSkills_mode{LEFT, RIGHT};
 
 // ******* Match Autos *******//
@@ -42,7 +43,7 @@ extern void offenseAuto(offense_auto_mode s);
  * 
  * Shoot preload, (turn) intake hangBarTriball, shoot to goal; Knock out Matchload triball & push into goal; Score 1 from mid and 2 from auto line
 */
-extern void sixBall();
+extern void sixBall(sixBall_mode s);
 
 /** @brief Setup: In front of matchload station, back to goal, 200 deg --
  * 

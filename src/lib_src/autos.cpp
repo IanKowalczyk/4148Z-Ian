@@ -69,26 +69,25 @@ void odomTriangleTest() {
 
 void squigglesTest() {
     globalPose.setPoint(0.0, 0.0, 0);	// Initialize position
-    setMove(1600, 45, 100, 80, 3000);	// right curve
-	pros::delay(750);
-	setMove(1600, 315, 100, 80, 3000);	// left curve
-	pros::delay(750);
-	setMove(1600, 45, 100, 80, 3000);	// small right curve
+    setMove(20, 30, 100, 80, 2000);		// right curve
 	pros::delay(500);
-	setMove(800, 0, 100, 80, 3000);		// straight
-	waitUntilSettled(20);
+	setMove(20, 330, 100, 80, 2000);	// left curve
+	pros::delay(500);
+	setMove(10, 45, 100, 80, 2000);		// small right curve
+	pros::delay(500);
+	setMove(8, 0, 100, 80, 1000);		// straight
+	waitUntilSettled(0);
 	setMoveToPoint(0, 0, 1500, false);	// back to origin
-	waitUntilSettled(50);
+	waitUntilSettled(500);
 }
 
 void chainedMoveToPoint() {
 	// Test: chaining together moveToPoints to run a path
-    setMoveToPoint(20, 20, 1500, false);
-	// waitUntilSettled(20);
-	pros::delay(700);
-	setMoveToPoint(40, 0, 1500, false);
-	waitUntilSettled(20);
-	setMoveToPoint(0, 0, 1500, false);
+    setMoveToPoint(40, 36, 1200, false);
+	pros::delay(800);
+	setMoveToPoint(40, 0, 1200, false);
+	pros::delay(800);
+	setMoveToPoint(0, 0, 1200, false);
 	waitUntilSettled(500);
 }
 
@@ -119,60 +118,129 @@ void offenseAuto(offense_auto_mode s) {
 
 }
 
-void sixBall() {
-	globalPose.setPoint(0, 0, 0);
-	
-	// **** Rush mid **** //
-	states.setWingState(stateMachine::wing_state::RIGHT_OUT);
+void sixBall(sixBall_mode s) {
+	// globalPose.setPoint(96 + 16, 17, 0); // right drive c-channel in line with left edge of tile, front aligned to top edge of tile
+	// globalPose.setPoint(118, 13, 325); // right drive c-channel in line with left edge of tile, front aligned to top edge of tile
+	globalPose.setPoint(114, 14.5, 325); // right drive c-channel in line with left edge of tile, front aligned to top edge of tile
+
+	// Wing push and intake drop down
+	// states.setCataState(stateMachine::cata_state::FIRE);
+	// states.setWingState(stateMachine::wing_state::RIGHT_OUT);
+	// pros::delay(200);
+	// states.setWingState(stateMachine::wing_state::WINGS_STOWED);
+
+	setDrive(120, 120);
 	pros::delay(100);
-	setMoveToPoint(75, 72, 120, 120, 1800, false);
+	setDrive(-120, -120);
+	pros::delay(100);
+	stopDrive(pros::E_MOTOR_BRAKE_COAST);
+
+	// **** Rush mid **** //
+	if(s == sixBall_mode::BAR) {
+			// setMoveToPoint(85, 62, 120, 120, 1650, false); // (85, 62)
+			// pros::delay(460);
+			// max_translate_power = 120;
+		setMoveToPoint(83, 62, 120, 120, 1600, false); // (85, 62)
+	}
+	if(s == sixBall_mode::MID) {
+		setMoveToPoint(94, 72, 120, 120, 1700, false);
+	}
+
+	pros::delay(800);
 	states.setIntakeState(stateMachine::intake_state::INTAKING);
 	waitUntilSettled(0);
 
 	// 1,2: Score first two mid triballs 
-	setMove(0, 90, 0, 100, 800, false);
-	states.setIntakeState(stateMachine::intake_state::OFF);
+	// if(s == sixBall_mode::BAR) {
+	// 	setMove(-5, 315, 120, 100, 500);
+	// 	waitUntilSettled(0);
+	// }
+	setMove(0, 90, 0, 100, 700, false);
 	waitUntilSettled(0);
-	setMoveToPoint(120, 72, 120, 120, 1500, false);
+	if(s == sixBall_mode::BAR) {
+		states.setWingState(stateMachine::wing_state::WINGS_OUT);
+		states.setIntakeState(stateMachine::intake_state::OFF);
+	}
+	setMoveToPoint(117, 63, 120, 120, 1200, false); // (118, 70)
 	waitUntilSettled(0);
+	states.setWingState(stateMachine::wing_state::WINGS_STOWED);
 	
 	// 3: Grab third triball 
-	setMoveToPoint(rightTriball5.x, rightTriball5.y, 120, 120, 2000, true);
-	waitUntilNear(28, 0);
-	movement_reversed = false;
-	max_translate_power = 0;
-	pros::delay(600);
-	max_translate_power = 120;
+	// setMoveToPoint(82, 42, 80, 120, 1500, true); // (85, 48)
+	// waitUntilNear(30, 0);
+	// movement_reversed = false;
+	// max_translate_power = 0;
+	// pros::delay(600);
+	// max_translate_power = 100;
+	// states.setIntakeState(stateMachine::intake_state::INTAKING);
+	// waitUntilSettled(0);
+	setMoveToPoint(104, 48, 120, 120, 900, true);
+	waitUntilSettled(0);
+	setMove(0, 260, 0, 100, 700);
+	waitUntilSettled(0);
+	setMoveToPoint(82, 48, 800, false);
 	states.setIntakeState(stateMachine::intake_state::INTAKING);
 	waitUntilSettled(0);
 
 	// 3: Outtake third triball near matchload station
-	setMove(0, 110, 0, 100, 800);
+	setMove(0, 110, 0, 100, 700);
+	states.setIntakeState(stateMachine::intake_state::OFF);
 	waitUntilSettled(0);
-	setMoveToPoint(108, 34, 120, 120, 1000, false);
-	pros::delay(700);
+	setMoveToPoint(106, 36, 120, 120, 2200, false); // (108, 36)
+	pros::delay(100);
 	states.setIntakeState(stateMachine::intake_state::OUTTAKING);
-	waitUntilNear(2, 0);
+	// waitUntilSettled(0);
+	pros::delay(500);
+	max_translate_power = 100;
+	target_x = 108;
+	target_y = 14;
 
 	// 4: Swing and grab fourth triball
-	setMoveToPoint(110, 12, 100, 120, 800, false);
+	// setMoveToPoint(110, 14, 100, 120, 800, false); // (110, 15)
+	// states.setIntakeState(stateMachine::intake_state::OFF);
+	// waitUntilNear(2.5, 0);
+	// setMoveToPoint(72 + BASE_Y_OFFSET, 12, 100, 120, 800, false);
+
+	pros::delay(500);
 	states.setIntakeState(stateMachine::intake_state::OFF);
-	waitUntilNear(3, 0);
-	setMoveToPoint(72 + BASE_Y_OFFSET, 12, 120, 120, 1200, false);
+	max_translate_power = 120;
+	target_x = 72 + BASE_Y_OFFSET;
+	target_y = 12;
+	pros::delay(400);
 	states.setIntakeState(stateMachine::intake_state::INTAKING);
 	waitUntilSettled(0);
 
 	// 4: Go back to matchload bar
-	setMoveToPoint(108, 12, 120, 120, 1200, true);
+	setMoveToPoint(109, 15, 120, 120, 1200, true); // (110, 15)
 	states.setIntakeState(stateMachine::intake_state::OFF);
-	waitUntilNear(1, 0);
-	setMove(0, 50, 0, 100, 800);
+	waitUntilSettled(0);
+	setMove(0, 45, 0, 100, 700);
 	waitUntilSettled(0);
 	
 	// 5: Descore matchload triball (fifth ball)
 	states.setWingState(stateMachine::wing_state::RIGHT_OUT);
-	// setMove()
-	
+	setMoveToPoint(123, 24, 1000, false); // (123, 24)
+	waitUntilSettled(0);
+	setMove(0, 15, 0, 100, 400);
+	states.setWingState(stateMachine::wing_state::WINGS_STOWED);
+	waitUntilSettled(0);
+
+	// 6: Push triballs in from side of goal
+	setMove(0, 60, 0, 100, 600);
+	states.setCataState(stateMachine::cata_state::FIRE);
+	// states.setWingState(stateMachine::wing_state::WINGS_OUT);
+	waitUntilSettled(0);
+	// states.setWingState(stateMachine::wing_state::WINGS_STOWED);
+	setMove(28, 50, 120, 120, 900);
+	pros::delay(300);
+	turn_target = 0;
+	waitUntilSettled(0);
+	setMove(-8, 0, 120, 120, 600);
+	waitUntilSettled(0);
+	setMove(20, 0, 120, 120, 600);
+	waitUntilSettled(0);
+	setMove(-10, 0, 120, 120, 600);
+	waitUntilSettled(0);
 }
 
 void fourBall() {

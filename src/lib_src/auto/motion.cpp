@@ -95,7 +95,8 @@ void setMove(double driveTarget, double turnTarget, int maxDrivePower, int maxTu
     // drive_error = 0;
 
     // Set state
-    nearTarget = false;
+    // nearTarget = false;
+    driveSettled = false;
     states.setDriveAutoState(stateMachine::drive_auto_state::MOVE);
 }
 
@@ -116,7 +117,7 @@ void setMoveToPoint(double targetX, double targetY, double endOrientation, int m
     // Disable autoMovement
     states.setDriveAutoState(stateMachine::drive_auto_state::OFF);
     driveSettled = false;
-    pros::delay(10); // 20ms
+    pros::delay(10); // 10 ms
 
     // Colored box for debugging
     // pros::screen::set_eraser(COLOR_BLACK);
@@ -138,10 +139,13 @@ void setMoveToPoint(double targetX, double targetY, double endOrientation, int m
     reversed ? movement_reversed = true : movement_reversed = false;
 
     // // Reset error
-    // translation_error = 0;
+    translationPID.reset();
+    turnPID.reset();
+    translation_error = 0;
 
     // Set state
-    nearTarget = false;
+    // nearTarget = false;
+    driveSettled = false;
     states.setDriveAutoState(stateMachine::drive_auto_state::MOVE_TO_POINT);
 }
 void setMoveToPoint(double targetX, double targetY, int maxTranslatePower, int maxRotatePower,  int maxTime, bool reversed) {
@@ -310,6 +314,7 @@ void move() {
 
     // Reset variables
     drive_error = 0.0;
+    driveSettled = false;
 
     // Slew conditionals
     if(std::fabs(drive_target) < 12.5) {drive_slew = false;}
@@ -381,14 +386,14 @@ void move() {
             }
             else {settleCount = 0;}
         }
-        if(std::fabs(turn_target) > 0 && drive_target == 0) {   // If turn only, check turn error
+        else if(std::fabs(turn_target) > 0 && drive_target == 0) {   // If turn only, check turn error
             if(std::fabs(turnError) < TURN_SETTLE_THRESHOLD) {
                 nearTarget = true;
                 settleCount++;
             }
             else {settleCount = 0;}
         }
-        if(std::fabs(drive_target) > 0 && std::fabs(turn_target) > 0) { // If both drive & turn, check both errors
+        else if(std::fabs(drive_target) > 0 && std::fabs(turn_target) > 0) { // If both drive & turn, check both errors
             if(std::fabs(drive_error) < DISTANCE_SETTLE_THRESHOLD && std::fabs(turnError) < TURN_SETTLE_THRESHOLD) {
                 nearTarget = true;
                 settleCount++;
@@ -438,6 +443,7 @@ void move() {
 void moveToPoint() {
     // Initialize timer
     int startTime = pros::c::millis();
+
     // Local variables 
     double targetAngle, rotationError, orientationError;
     int translationPower, rotationPower, orientationPower;
@@ -445,9 +451,12 @@ void moveToPoint() {
     double xError = 0.0;
     double yError = 0.0;
     int settleCount = 0;
+
     // Reset variables
     translation_error = 0.0;
+    driveSettled = false;
     bool onTarget = false;
+
     while(!driveSettled) {
         // Calculate point errors
         xError = target_x - globalPose.x;

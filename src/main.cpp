@@ -64,8 +64,19 @@ void autonomous() {
 	resetOdomSensors();
 	globalPose.setPoint(0.0, 0.0, 0);
 
-	squigglesTest();
-	waitUntilSettled(50000);
+	// squigglesTest(); // FAILED, turns but doesn't move after chained movement
+	// chainedMoveToPoint(); // FAILED, turns but doesn't move after first chained to move
+	
+	// ** waitUntilNear test (WORKS) ** //
+	// setMoveToPoint(40, 24, 900, false);
+	// waitUntilNear(5, 0);
+	// setMoveToPoint(49, 5, 800, true);
+	// waitUntilNear(5, 0);
+	// setMoveToPoint(0, 0, 1200, true);
+	// waitUntilSettled(50000);
+
+	// globalPose.setPoint(96 + 16, 17, 0); // right drive c-channel in line with left edge of tile, front aligned to top edge of tile
+	sixBall(sixBall_mode::BAR);
 
 	// Autoselector 
 	// if(autoToRun == 1) {
