@@ -174,15 +174,20 @@ void stateHandler() {
     // }
 
     // ******** DEBUG ******** //
-    // if(displayInfo) {
+    if(displayInfo) {
     // // pros::screen::print(TEXT_MEDIUM_CENTER, 10, "Drive Velo: %d", (leftFrontDrive.get_actual_velocity() + rightFrontDrive.get_actual_velocity()) / 2);
     // // pros::screen::print(TEXT_MEDIUM_CENTER, 11, "Brake Ready?: %s", brakeReady ? "true" : "false");
     // pros::screen::print(TEXT_MEDIUM_CENTER, 5, "Puncher Enc: %d", cataEnc.get_position());
-    // }
+
+    // new stuff
     pros::screen::print(TEXT_MEDIUM_CENTER, 4, "Cata Enc: %d", cataEnc.get_position());
     pros::screen::print(TEXT_MEDIUM_CENTER, 5, "Cata Angle: %d", cataEnc.get_angle());
     pros::screen::print(TEXT_MEDIUM_CENTER, 6, "Cata Current: %d", leftCata.get_current_draw() + rightCata.get_current_draw());
     pros::screen::print(TEXT_MEDIUM_CENTER, 7, "Opical prox: %d", optical.get_proximity());
+    }
+    pros::screen::erase_line(0, 3, 600, 4);
+    pros::screen::print(TEXT_MEDIUM, 3, "Cata Enc: %5d, Ang: %5d | Prox: %d", cataEnc.get_position(), cataEnc.get_angle(), optical.get_proximity());
+    // pros::screen::print(TEXT_MEDIUM, 5, "Opical prox: %d", optical.get_proximity());
 
     // Refresh display every 100 ms
     // displayCount += loopDelay;

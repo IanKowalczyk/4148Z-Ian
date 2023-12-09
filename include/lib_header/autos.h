@@ -51,6 +51,8 @@ extern void sixBall(sixBall_mode s);
 */
 extern void fourBall();
 
+extern void defenseSafe();
+
 /** @brief Setup: Right side of Matchload Station, 45 deg --
  * 
  * Shoot preloads (44 + 4 [error margin]); move across to other zone; push triballs into goal

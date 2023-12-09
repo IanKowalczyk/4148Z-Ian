@@ -3,19 +3,19 @@
 #include "main.h"
 
 // **** Constants **** //
-// Front encoder distance in inches from tracking center
+/** @brief Front encoder distance in inches from tracking center */ 
 extern double FRONT_ENC_OFFSET;
 
-// Side encoder distance in inches from tracking center
+/** @brief Side encoder distance in inches from tracking center */
 extern double SIDE_ENC_OFFSET;
 
-/** @brief X-offset from center of bot to side of base */
+/** @brief X-offset from center of bot to side of base; 13.5/2 */
 extern double BASE_X_OFFSET;
 
-/** @brief Y-offset from center of bot to front of base*/
+/** @brief Y-offset from center of bot to front of base; 14/2 */
 extern double BASE_Y_OFFSET;
 
-/** @brief Y-offset from center of bot to tip of intake*/
+/** @brief Y-offset from center of bot to tip of intake; 17.5/2*/
 extern double TOTAL_Y_OFFSET;
 
 /**

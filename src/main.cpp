@@ -65,7 +65,7 @@ void autonomous() {
 	resetOdomSensors();
 	globalPose.setPoint(0.0, 0.0, 0);
 	displayInfo = false;
-	
+
 	// squigglesTest(); // FAILED, turns but doesn't move after chained movement
 	// chainedMoveToPoint(); // FAILED, turns but doesn't move after first chained to move
 	
@@ -80,6 +80,8 @@ void autonomous() {
 	// globalPose.setPoint(120, 14, 321); // angled to face triball near bar; right front wheel in line with intersection of tiles; (24, 14)
 	// sixBall(sixBall_mode::BAR);
 
+
+	// progSkills();
 	// Autoselector 
 	if(autoToRun == 1) {
 		defenseAuto(defense_auto_mode::SOLO);
@@ -94,10 +96,10 @@ void autonomous() {
 		progSkills();
 	}
 	if(autoToRun == 5) {
-		sixBall(sixBall_mode::BAR);
+		defenseSafe();
 	}
 	if(autoToRun == 6) {
-		sixBall(sixBall_mode::MID);
+		sixBall(sixBall_mode::BAR);
 	}
 }
 
