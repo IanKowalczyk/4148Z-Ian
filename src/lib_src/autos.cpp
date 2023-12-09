@@ -120,8 +120,8 @@ void offenseAuto(offense_auto_mode s) {
 
 void sixBall(sixBall_mode s) {
 	// globalPose.setPoint(96 + 16, 17, 0); // right drive c-channel in line with left edge of tile, front aligned to top edge of tile
-	// globalPose.setPoint(118, 13, 325); // right drive c-channel in line with left edge of tile, front aligned to top edge of tile
-	globalPose.setPoint(120, 14, 321); // right drive c-channel in line with left edge of tile, front aligned to top edge of tile
+	// globalPose.setPoint(118, 13, 325); // angled to face triball near bar
+	globalPose.setPoint(120, 14, 321); // angled to face triball near bar; right front wheel in line with intersection of tiles; (24, 14)
 
 	// Wing push and intake drop down
 	// states.setCataState(stateMachine::cata_state::FIRE);

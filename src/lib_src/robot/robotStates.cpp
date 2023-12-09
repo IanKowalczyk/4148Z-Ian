@@ -32,6 +32,9 @@ void stateHandler() {
     int rumbleCount = 0;
     int displayCount = 0;
 
+    // signal stateHanlder is running
+    controller.rumble("-");
+
     while(true) {
     int loopStartTime = pros::c::millis();
 

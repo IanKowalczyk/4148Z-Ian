@@ -26,6 +26,7 @@ void on_center_button() {
 void initialize() {
 	pros::Task stateMachineTask(stateHandler);
 	pros::Task inertialInit([] {inertial.reset(true);});
+	initGUI();
 	// setCataBrakeMode(pros::E_MOTOR_BRAKE_COAST);
 }
 
@@ -75,28 +76,28 @@ void autonomous() {
 	// setMoveToPoint(0, 0, 1200, true);
 	// waitUntilSettled(50000);
 
-	// globalPose.setPoint(120, 14, 321); // right drive c-channel in line with left edge of tile, front aligned to top edge of tile
-	sixBall(sixBall_mode::BAR);
+	// globalPose.setPoint(120, 14, 321); // angled to face triball near bar; right front wheel in line with intersection of tiles; (24, 14)
+	// sixBall(sixBall_mode::BAR);
 
 	// Autoselector 
-	// if(autoToRun == 1) {
-	// 	defenseAuto(SOLO);
-	// }
-	// if(autoToRun == 2) {
-	// 	defenseAuto(ELIMS);
-	// }
-	// if(autoToRun == 3) {
-	// 	fourBall();
-	// }
-	// if(autoToRun == 4) {
-	// 	progSkills();
-	// }
-	// if(autoToRun == 5) {
-	// 	// defenseSafe();
-	// }
-	// if(autoToRun == 6) {
-	// 	sixBall();
-	// }
+	if(autoToRun == 1) {
+		defenseAuto(defense_auto_mode::SOLO);
+	}
+	if(autoToRun == 2) {
+		defenseAuto(defense_auto_mode::ELIMS);
+	}
+	if(autoToRun == 3) {
+		fourBall();
+	}
+	if(autoToRun == 4) {
+		progSkills();
+	}
+	if(autoToRun == 5) {
+		sixBall(sixBall_mode::BAR);
+	}
+	if(autoToRun == 6) {
+		sixBall(sixBall_mode::MID);
+	}
 }
 
 /**
@@ -115,11 +116,8 @@ void autonomous() {
 void opcontrol() {
 	// controller.rumble("-");
 	autoMovement.suspend();
-	displayInfo = true;
+	// displayInfo = true;
 	states.setCataState(stateMachine::cata_state::PULLED_BACK);
-	// pros::delay(100);
-	// states.setCataState(stateMachine::cata_state::FIRE);
-	// pros::delay(50000);
 	while(true) {
 		splitArcade(pros::E_MOTOR_BRAKE_COAST); // Drive
 		intakeOpControl();						// Intake
