@@ -121,7 +121,7 @@ void offenseAuto(offense_auto_mode s) {
 void sixBall(sixBall_mode s) {
 	// globalPose.setPoint(96 + 16, 17, 0); // right drive c-channel in line with left edge of tile, front aligned to top edge of tile
 	// globalPose.setPoint(118, 13, 325); // right drive c-channel in line with left edge of tile, front aligned to top edge of tile
-	globalPose.setPoint(114, 14.5, 325); // right drive c-channel in line with left edge of tile, front aligned to top edge of tile
+	globalPose.setPoint(120, 14, 321); // right drive c-channel in line with left edge of tile, front aligned to top edge of tile
 
 	// Wing push and intake drop down
 	// states.setCataState(stateMachine::cata_state::FIRE);
@@ -132,7 +132,7 @@ void sixBall(sixBall_mode s) {
 	setDrive(120, 120);
 	pros::delay(100);
 	setDrive(-120, -120);
-	pros::delay(100);
+	pros::delay(200);
 	stopDrive(pros::E_MOTOR_BRAKE_COAST);
 
 	// **** Rush mid **** //
@@ -140,7 +140,7 @@ void sixBall(sixBall_mode s) {
 			// setMoveToPoint(85, 62, 120, 120, 1650, false); // (85, 62)
 			// pros::delay(460);
 			// max_translate_power = 120;
-		setMoveToPoint(83, 62, 120, 120, 1600, false); // (85, 62)
+		setMoveToPoint(80, 60, 120, 120, 1550, false); // (85, 62) // 2: (80, 60)
 	}
 	if(s == sixBall_mode::MID) {
 		setMoveToPoint(94, 72, 120, 120, 1700, false);
@@ -149,6 +149,7 @@ void sixBall(sixBall_mode s) {
 	pros::delay(800);
 	states.setIntakeState(stateMachine::intake_state::INTAKING);
 	waitUntilSettled(0);
+	pros::delay(100);
 
 	// 1,2: Score first two mid triballs 
 	// if(s == sixBall_mode::BAR) {
@@ -161,7 +162,8 @@ void sixBall(sixBall_mode s) {
 		states.setWingState(stateMachine::wing_state::WINGS_OUT);
 		states.setIntakeState(stateMachine::intake_state::OFF);
 	}
-	setMoveToPoint(117, 63, 120, 120, 1200, false); // (118, 70)
+	setMoveToPoint(117, 63, 120, 120, 1000, false); // (118, 70)
+	states.setCataState(stateMachine::cata_state::FIRE);
 	waitUntilSettled(0);
 	states.setWingState(stateMachine::wing_state::WINGS_STOWED);
 	
@@ -176,9 +178,9 @@ void sixBall(sixBall_mode s) {
 	// waitUntilSettled(0);
 	setMoveToPoint(104, 48, 120, 120, 900, true);
 	waitUntilSettled(0);
-	setMove(0, 260, 0, 100, 700);
+	setMove(0, 260, 0, 100, 660);
 	waitUntilSettled(0);
-	setMoveToPoint(82, 48, 800, false);
+	setMoveToPoint(82, 45, 800, false); // (82, 48)
 	states.setIntakeState(stateMachine::intake_state::INTAKING);
 	waitUntilSettled(0);
 
@@ -186,40 +188,32 @@ void sixBall(sixBall_mode s) {
 	setMove(0, 110, 0, 100, 700);
 	states.setIntakeState(stateMachine::intake_state::OFF);
 	waitUntilSettled(0);
-	setMoveToPoint(106, 36, 120, 120, 2200, false); // (108, 36)
+	setMoveToPoint(106, 36, 120, 120, 700, false); // (108, 36) // 2200 
 	pros::delay(100);
 	states.setIntakeState(stateMachine::intake_state::OUTTAKING);
-	// waitUntilSettled(0);
-	pros::delay(500);
-	max_translate_power = 100;
-	target_x = 108;
-	target_y = 14;
+	waitUntilSettled(0);
 
 	// 4: Swing and grab fourth triball
-	// setMoveToPoint(110, 14, 100, 120, 800, false); // (110, 15)
-	// states.setIntakeState(stateMachine::intake_state::OFF);
-	// waitUntilNear(2.5, 0);
-	// setMoveToPoint(72 + BASE_Y_OFFSET, 12, 100, 120, 800, false);
-
-	pros::delay(500);
+	setMoveToPoint(110, 14, 100, 120, 800, false); // (110, 15)
 	states.setIntakeState(stateMachine::intake_state::OFF);
-	max_translate_power = 120;
-	target_x = 72 + BASE_Y_OFFSET;
-	target_y = 12;
-	pros::delay(400);
+	// waitUntilNear(2.5, 0);
+	waitUntilSettled(0);
+	setMoveToPoint(80, 9, 110, 120, 860, false); // (80.5, 12) // (72 + BASE_Y_OFFSET, 9)
+	pros::delay(300);
 	states.setIntakeState(stateMachine::intake_state::INTAKING);
 	waitUntilSettled(0);
+	pros::delay(150);
 
 	// 4: Go back to matchload bar
 	setMoveToPoint(109, 15, 120, 120, 1200, true); // (110, 15)
 	states.setIntakeState(stateMachine::intake_state::OFF);
-	waitUntilSettled(0);
+	waitUntilSettled(100);
 	setMove(0, 45, 0, 100, 700);
 	waitUntilSettled(0);
 	
 	// 5: Descore matchload triball (fifth ball)
 	states.setWingState(stateMachine::wing_state::RIGHT_OUT);
-	setMoveToPoint(123, 24, 1000, false); // (123, 24)
+	setMoveToPoint(123.2, 24, 1000, false); // (123, 24)
 	waitUntilSettled(0);
 	setMove(0, 15, 0, 100, 400);
 	states.setWingState(stateMachine::wing_state::WINGS_STOWED);
@@ -232,12 +226,12 @@ void sixBall(sixBall_mode s) {
 	waitUntilSettled(0);
 	// states.setWingState(stateMachine::wing_state::WINGS_STOWED);
 	setMove(28, 50, 120, 120, 900);
-	pros::delay(300);
+	pros::delay(200);
 	turn_target = 0;
 	waitUntilSettled(0);
 	setMove(-8, 0, 120, 120, 600);
 	waitUntilSettled(0);
-	setMove(20, 0, 120, 120, 600);
+	setMove(20, 10, 120, 120, 600);
 	waitUntilSettled(0);
 	setMove(-10, 0, 120, 120, 600);
 	waitUntilSettled(0);

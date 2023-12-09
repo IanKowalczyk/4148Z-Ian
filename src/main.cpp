@@ -75,7 +75,7 @@ void autonomous() {
 	// setMoveToPoint(0, 0, 1200, true);
 	// waitUntilSettled(50000);
 
-	// globalPose.setPoint(96 + 16, 17, 0); // right drive c-channel in line with left edge of tile, front aligned to top edge of tile
+	// globalPose.setPoint(120, 14, 321); // right drive c-channel in line with left edge of tile, front aligned to top edge of tile
 	sixBall(sixBall_mode::BAR);
 
 	// Autoselector 
