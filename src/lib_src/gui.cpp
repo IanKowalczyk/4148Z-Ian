@@ -33,13 +33,13 @@ lv_res_t act4(lv_obj_t *btnm, const char *txt){
 lv_res_t act5(lv_obj_t *btnm, const char *txt){
     autoToRun = 5;
     pros::screen::erase_line(0, 7, 600, 8);
-    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "AUTO TO RUN %d: %s", autoToRun, "DEFENSE SAFE");
+    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "AUTO TO RUN %d: %s", autoToRun, "SIX BAll - RUSH BAR");
 	return LV_RES_OK; // return OK because the button matrix is not deleted
 }
 lv_res_t act6(lv_obj_t *btnm, const char *txt){
     autoToRun = 6;
     pros::screen::erase_line(0, 7, 600, 8);
-    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "AUTO TO RUN %d: %s", autoToRun, "FIVE BALL");
+    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "AUTO TO RUN %d: %s", autoToRun, "SIX BALL  - RUSH MID");
 	return LV_RES_OK; // return OK because the button matrix is not deleted
 }
 
@@ -102,21 +102,21 @@ void initGUI() {
     lv_label_set_text(statesHeading, "ROBOT STATES");
 
         // Display robot states
-    lv_obj_align(text1, infoTab, LV_ALIGN_IN_TOP_LEFT, 10, 0);
-    lv_label_set_text(text1, "DRIVE: ");
-    lv_obj_align(state1, text1, LV_ALIGN_OUT_RIGHT_TOP, 10, 0);
+    // lv_obj_align(text1, infoTab, LV_ALIGN_IN_TOP_LEFT, 10, 0);
+    // lv_label_set_text(text1, "DRIVE: ");
+    // lv_obj_align(state1, text1, LV_ALIGN_OUT_RIGHT_TOP, 10, 0);
 
-    lv_obj_align(text2, infoTab, LV_ALIGN_IN_TOP_LEFT, 10, 20);
-    lv_label_set_text(text2, "PUNCHER: ");
-    lv_obj_align(state2, text2, LV_ALIGN_OUT_RIGHT_TOP, 10, 0);
+    // lv_obj_align(text2, infoTab, LV_ALIGN_IN_TOP_LEFT, 10, 20);
+    // lv_label_set_text(text2, "PUNCHER: ");
+    // lv_obj_align(state2, text2, LV_ALIGN_OUT_RIGHT_TOP, 10, 0);
 
-    lv_obj_align(text3, infoTab, LV_ALIGN_IN_TOP_LEFT, 10, 40);
-    lv_label_set_text(text3, "PULLBACK: ");
-    lv_obj_align(state3, text3, LV_ALIGN_OUT_RIGHT_TOP, 10, 0);
+    // lv_obj_align(text3, infoTab, LV_ALIGN_IN_TOP_LEFT, 10, 40);
+    // lv_label_set_text(text3, "PULLBACK: ");
+    // lv_obj_align(state3, text3, LV_ALIGN_OUT_RIGHT_TOP, 10, 0);
 
-    lv_obj_align(text4, infoTab, LV_ALIGN_IN_TOP_LEFT, 10, 60);
-    lv_label_set_text(text4, "ANGLE: ");
-    lv_obj_align(state4, text4, LV_ALIGN_OUT_RIGHT_TOP, 10, 0);
+    // lv_obj_align(text4, infoTab, LV_ALIGN_IN_TOP_LEFT, 10, 60);
+    // lv_label_set_text(text4, "ANGLE: ");
+    // lv_obj_align(state4, text4, LV_ALIGN_OUT_RIGHT_TOP, 10, 0);
 
     // lv_label_set_text(state1, states.driveStateString[states.driveState]);
     // lv_label_set_text(state2, states.puncherStateString[states.puncherState]);

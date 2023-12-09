@@ -33,4 +33,5 @@ pros::Optical optical(17, 40);
 // Digital I/O
 pros::ADIDigitalOut leftWing('A', false);
 pros::ADIDigitalOut rightWing('B', false);
-pros::ADIDigitalOut bandRelease('C', false);
+pros::ADIDigitalOut climb('C', false);
+// pros::ADIDigitalOut bandRelease('C', false);

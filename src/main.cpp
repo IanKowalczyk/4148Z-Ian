@@ -26,7 +26,7 @@ void on_center_button() {
 void initialize() {
 	pros::Task stateMachineTask(stateHandler);
 	pros::Task inertialInit([] {inertial.reset(true);});
-	initGUI();
+	pros::Task GUI(initGUI);
 	// setCataBrakeMode(pros::E_MOTOR_BRAKE_COAST);
 }
 
@@ -64,7 +64,8 @@ void autonomous() {
 	// odom init
 	resetOdomSensors();
 	globalPose.setPoint(0.0, 0.0, 0);
-
+	displayInfo = false;
+	
 	// squigglesTest(); // FAILED, turns but doesn't move after chained movement
 	// chainedMoveToPoint(); // FAILED, turns but doesn't move after first chained to move
 	
@@ -125,7 +126,7 @@ void opcontrol() {
 		wingOpControl();						// Wings
 		matchloadOpControl();					// Matchload
 		// brakeOpControl();						// Brake
-		// climbOpControl();						// Climb
+		climbOpControl();						// Climb
 		pros::delay(20);
 	}
 }

@@ -35,8 +35,8 @@ extern pros::Optical optical;
 // Digital I/O
 extern pros::ADIDigitalOut leftWing;
 extern pros::ADIDigitalOut rightWing;
-extern pros::ADIDigitalOut bandRelease;
-
+extern pros::ADIDigitalOut climb;
+// extern pros::ADIDigitalOut bandRelease;
 
 
 #endif

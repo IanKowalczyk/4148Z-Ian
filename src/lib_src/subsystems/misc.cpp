@@ -34,8 +34,10 @@ void brakeOpControl() {
 }
 
 // Climb opcontrol
+bool climbState = false;
 void climbOpControl() {
-    // if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
-    //     climb.set_value(!climb.get_value());
-    // }
+    if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
+        climbState = !climbState;
+        climb.set_value(climbState);
+    }
 }
