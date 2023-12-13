@@ -15,7 +15,11 @@ void stateHandler() {
     frontEnc.set_data_rate(5);
     sideEnc.set_data_rate(5);
     cataEnc.set_data_rate(5);
-    
+
+    // default brake modes
+    intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    setCataBrakeMode(pros::E_MOTOR_BRAKE_COAST);
+
     // optical sensor initilization
     optical.set_integration_time(40);   // 40 ms data refresh rate
     optical.disable_gesture();
@@ -46,15 +50,15 @@ void stateHandler() {
     // ******** Intake state handler ******** //
     if(states.intakeStateChanged()) {
         if(states.intakeStateIs(stateMachine::intake_state::OFF)) {
-            stopCata(pros::E_MOTOR_BRAKE_BRAKE);
+            intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+            intake.brake();
             intakeCount = 0;
         }
         else if(states.intakeStateIs(stateMachine::intake_state::INTAKING)) {
-            setCata(127);
-            // intakeCount += 10;
+            intake.move(127);
         }
         else if(states.intakeStateIs(stateMachine::intake_state::OUTTAKING)) {
-            setCata(-127);
+            intake.move(-127);
         }
         states.oldIntakeState = states.intakeState;
     }
@@ -62,8 +66,7 @@ void stateHandler() {
     // If triball in intake, rumble controller
     if(states.intakeStateIs(stateMachine::intake_state::INTAKING)) {
         intakeCount += loopDelay;
-        if(intakeCount > 200 && (leftCata.get_current_draw() + rightCata.get_current_draw())/2 > 1500) {
-            // states.setIntakeState(stateMachine::intake_state::OFF);
+        if(intakeCount > 200 && intake.get_current_draw() > 1500) {
             controller.rumble("-");
         }
     }

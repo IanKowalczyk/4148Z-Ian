@@ -19,6 +19,7 @@ extern pros::Motor rightBackDrive;
 // Subsystem motors
 extern pros::Motor leftCata;
 extern pros::Motor rightCata;
+extern pros::Motor intake;
 
 // Motor Groups
 extern pros::Motor_Group leftDrive;

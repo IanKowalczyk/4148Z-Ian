@@ -10,16 +10,15 @@ int closeCount = 0;
 
 
 // ******** Intake Helper Functions ******** //
-// void spinIntake(int intakeVolt) {
-//     cataMotors.move(intakeVolt);
+// void setIntake(int intakeVolt) {
+//     intake.move(intakeVolt);
 // }
 // void setIntakeBrakeMode(pros::motor_brake_mode_e brakeMode) {
-//     leftDrive.set_brake_modes(brakeMode);
-//     rightDrive.set_brake_modes(brakeMode);
+//     intake.set_brake_mode(brakeMode);
 // }
 // void stopIntake(pros::motor_brake_mode_e_t brakeMode) {
 //     setIntakeBrakeMode(brakeMode);
-//     cataMotors.brake();
+//     intake.brake();
 // }
 
 // ******** Intake Opcontrol function ******** //

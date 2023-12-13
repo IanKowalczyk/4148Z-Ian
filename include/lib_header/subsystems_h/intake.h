@@ -9,7 +9,7 @@
  * @brief Spin intake at a specified voltage
  * @param intakeVolt Intake voltage from 127 to -127
 */
-extern void spinIntake(int intakeVolt);
+extern void setIntake(int intakeVolt);
 
 /**
  * @brief Set intake brake mode
