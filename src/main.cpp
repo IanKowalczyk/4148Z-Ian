@@ -80,27 +80,28 @@ void autonomous() {
 	// globalPose.setPoint(120, 14, 321); // angled to face triball near bar; right front wheel in line with intersection of tiles; (24, 14)
 	// sixBall(sixBall_mode::BAR);
 
+	states.setIntakeState(stateMachine::intake_state::INTAKING);
 
 	// progSkills();
-	// Autoselector 
-	if(autoToRun == 1) {
-		defenseAuto(defense_auto_mode::SOLO);
-	}
-	if(autoToRun == 2) {
-		defenseAuto(defense_auto_mode::ELIMS);
-	}
-	if(autoToRun == 3) {
-		fourBall();
-	}
-	if(autoToRun == 4) {
-		progSkills();
-	}
-	if(autoToRun == 5) {
-		defenseSafe();
-	}
-	if(autoToRun == 6) {
-		sixBall(sixBall_mode::BAR);
-	}
+	// **** Autoselector **** //
+	// if(autoToRun == 1) {
+	// 	defenseAuto(defense_auto_mode::SOLO);
+	// }
+	// if(autoToRun == 2) {
+	// 	defenseAuto(defense_auto_mode::ELIMS);
+	// }
+	// if(autoToRun == 3) {
+	// 	fourBall();
+	// }
+	// if(autoToRun == 4) {
+	// 	progSkills();
+	// }
+	// if(autoToRun == 5) {
+	// 	defenseSafe();
+	// }
+	// if(autoToRun == 6) {
+	// 	sixBall(sixBall_mode::BAR);
+	// }
 }
 
 /**
@@ -117,11 +118,24 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	// controller.rumble("-");
+	// **** init **** //
+	controller.rumble("-");
 	autoMovement.suspend();
 	// displayInfo = true;
+
+	// **** local variables **** //
+	int opcontrolStartTime = pros::c::millis();
+	int rumbleCount = 0;
+
+	// **** local constants **** //
+	int TEN_SECONDS_LEFT =  (105 - 10) * 1000; // 95,000 ms
+	int THREE_SECONDS_LEFT = (105 - 3) * 1000; 	// 102,000 ms
+
+	// **** default states **** //
 	states.setCataState(stateMachine::cata_state::PULLED_BACK);
+
 	while(true) {
+		// **** Subsystems **** //
 		splitArcade(pros::E_MOTOR_BRAKE_COAST); // Drive
 		intakeOpControl();						// Intake
 		cataOpControl();						// Cata
@@ -129,6 +143,20 @@ void opcontrol() {
 		matchloadOpControl();					// Matchload
 		// brakeOpControl();						// Brake
 		climbOpControl();						// Climb
-		pros::delay(20);
+
+		// **** Match timer **** //
+		if(pros::c::millis() - opcontrolStartTime >= TEN_SECONDS_LEFT && pros::c::millis() - opcontrolStartTime < 146000) {
+			// rumble once every second at last 10 seconds
+			if(rumbleCount % 1000 == 0) {controller.rumble("-");}
+
+			// rumble twice every second at last 3 seconds
+			if(pros::c::millis() - opcontrolStartTime >= THREE_SECONDS_LEFT) {
+				if(rumbleCount % 500 == 0) {controller.rumble("-");}
+			}
+			rumbleCount += 20;
+		}
+
+		// loop delay
+		pros::delay(20);	
 	}
 }
