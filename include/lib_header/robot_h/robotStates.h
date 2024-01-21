@@ -14,7 +14,7 @@ public:
     enum class intake_state {OFF, INTAKING, OUTTAKING} intakeState, oldIntakeState;
     const char* intakeStateString[3] = {"OFF", "INTAKING", "OUTTAKING"};
 
-    enum class cata_state {FIRE, SHORT_PULLBACK, PULLED_BACK} cataState, oldCataState, defaultPullback = cata_state::SHORT_PULLBACK;
+    enum class shooter_state {FIRE, SHORT_PULLBACK, PULLED_BACK} shooterState, oldShooterState, defaultPullback = shooter_state::SHORT_PULLBACK;
     // const char* cataStateString[2] = {"FIRE", "PULLED BACK"};
     // const char* pullbackStateString[3] = {"SHORT", "MID", "LONG"};
 
@@ -46,10 +46,10 @@ public:
     bool intakeStateChanged() {return(oldIntakeState != intakeState);}
 
     // Cata
-    void setCataState(cata_state s) {cataState = s;}
+    void setShooterState(shooter_state s) {shooterState = s;}
     // int getCataState() {return cataState;}
-    bool cataStateIs(cata_state s) {return(s == cataState);}
-    bool cataStateChanged() {return(oldCataState != cataState);}
+    bool shooterStateIs(shooter_state s) {return(s == shooterState);}
+    bool shooterStateChanged() {return(oldShooterState != shooterState);}
 
     // Puncher angle
     // void setPuncherAngleState(puncher_angle_state s) {puncherAngleState = s;}

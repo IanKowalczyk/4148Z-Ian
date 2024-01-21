@@ -17,20 +17,20 @@ extern pros::Motor rightMidDrive;
 extern pros::Motor rightBackDrive;
 
 // Subsystem motors
-extern pros::Motor leftCata;
-extern pros::Motor rightCata;
+extern pros::Motor leftShooter;
+extern pros::Motor rightShooter;
 extern pros::Motor intake;
 
 // Motor Groups
 extern pros::Motor_Group leftDrive;
 extern pros::Motor_Group rightDrive;
-extern pros::Motor_Group cataMotors;
+extern pros::Motor_Group shooterMotors;
 
 // Sensors
 extern pros::Imu inertial;
 extern pros::Rotation frontEnc;
 extern pros::Rotation sideEnc;
-extern pros::Rotation cataEnc;
+extern pros::Rotation shooterEnc;
 extern pros::Optical optical;
 
 // Digital I/O

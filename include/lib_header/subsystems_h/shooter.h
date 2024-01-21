@@ -1,5 +1,5 @@
-#ifndef CATA_H
-#define CATA_H
+#ifndef SHOOTER_H
+#define SHOOTER_H
 #include "main.h"
 #include <string>
 
@@ -20,17 +20,17 @@ extern int fireTarget;
 
 
 // Helper functions
-extern void setCata(int volt);
-extern void setCataBrakeMode(pros::motor_brake_mode_e brakeMode);
-extern void stopCata(pros::motor_brake_mode_e brakeMod);
+extern void setShooter(int volt);
+extern void setShooterBrakeMode(pros::motor_brake_mode_e brakeMode);
+extern void stopShooter(pros::motor_brake_mode_e brakeMod);
 
-// Cata  
+// Shooter  
 extern void fire(int numTimes, int newPullback);
 extern void setMatchload(int numTimes, bool waitForCompletion);
 extern void shooterTask();
 
 // Opcontrol function
-extern void cataOpControl();
+extern void shooterOpControl();
 extern void matchloadOpControl();
 
 #endif

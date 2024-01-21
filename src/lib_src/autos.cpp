@@ -33,8 +33,8 @@ void autoFunctionTest() {
 	states.setWingState(stateMachine::wing_state::WINGS_STOWED);
 	pros::delay(500);
 
-	// Cata
-	states.setCataState(stateMachine::cata_state::FIRE);
+	// Shooter
+	states.setShooterState(stateMachine::shooter_state::FIRE);
 	pros::delay(500);
 
 	// Matchload
@@ -172,7 +172,7 @@ void defenseSafe() {
 	states.setIntakeState(stateMachine::intake_state::OUTTAKING);
 	waitUntilSettled(0);
 	states.setIntakeState(stateMachine::intake_state::OFF);
-	states.setCataState(stateMachine::cata_state::FIRE);
+	states.setShooterState(stateMachine::shooter_state::FIRE);
 }
 
 void offenseAuto(offense_auto_mode s) {
@@ -185,7 +185,7 @@ void sixBall(sixBall_mode s) {
 	globalPose.setPoint(120, 14, 321); // angled to face triball near bar; right front wheel in line with intersection of tiles; (24, 14)
 
 	// Wing push and intake drop down
-	// states.setCataState(stateMachine::cata_state::FIRE);
+	// states.setShooterState(stateMachine::Shooter_state::FIRE);
 	// states.setWingState(stateMachine::wing_state::RIGHT_OUT);
 	// pros::delay(200);
 	// states.setWingState(stateMachine::wing_state::WINGS_STOWED);
@@ -224,7 +224,7 @@ void sixBall(sixBall_mode s) {
 		states.setIntakeState(stateMachine::intake_state::OFF);
 	}
 	setMoveToPoint(117, 63, 120, 120, 1000, false); // (118, 70)
-	states.setCataState(stateMachine::cata_state::FIRE);
+	states.setShooterState(stateMachine::shooter_state::FIRE);
 	waitUntilSettled(0);
 	states.setWingState(stateMachine::wing_state::WINGS_STOWED);
 	
@@ -283,7 +283,7 @@ void sixBall(sixBall_mode s) {
 
 	// 6: Push triballs in from side of goal
 	setMove(0, 60, 0, 100, 600);
-	states.setCataState(stateMachine::cata_state::FIRE);
+	states.setShooterState(stateMachine::shooter_state::FIRE);
 	// states.setWingState(stateMachine::wing_state::WINGS_OUT);
 	waitUntilSettled(0);
 	// states.setWingState(stateMachine::wing_state::WINGS_STOWED);
@@ -317,7 +317,7 @@ void fourBall() {
 
 	// 2: Push triballs in from side of goal
 	setMove(0, 60, 0, 100, 600);
-	states.setCataState(stateMachine::cata_state::FIRE);
+	states.setShooterState(stateMachine::shooter_state::FIRE);
 	waitUntilSettled(0);
 	setMove(28, 50, 120, 120, 900);
 	pros::delay(200);
@@ -408,7 +408,7 @@ void progSkills() {
 	pros::delay(200);
 	setMoveToPoint(122, 76, 120, 100, 1800, false); // (120, 74)
 	pros::delay(500);
-	states.setCataState(stateMachine::cata_state::FIRE);
+	states.setShooterState(stateMachine::shooter_state::FIRE);
 	waitUntilSettled(0);
 	// second push
 	setMove(-6, 90, 500);

@@ -13,7 +13,7 @@
 #include "lib_header/robot_h/robot_config.h"
 
 // subsystems_h
-#include "lib_header/subsystems_h/cata.h"
+#include "lib_header/subsystems_h/shooter.h"
 #include "lib_header/subsystems_h/drive.h"
 #include "lib_header/subsystems_h/intake.h"
 #include "lib_header/subsystems_h/misc.h"

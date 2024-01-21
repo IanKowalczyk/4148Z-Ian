@@ -1,4 +1,4 @@
-#include "lib_header/subsystems_h/cata.h"
+#include "lib_header/subsystems_h/shooter.h"
 
 // Constants
 int SHORT_PULLBACK_TICKS = 4500;   // In centidegrees (100 * degrees)  // 4800
@@ -17,18 +17,18 @@ int fireTarget = 0;
 
 
 // **** Helper functions **** //
-void setCata(int volt) {
-    cataMotors.move(volt);
+void setShooter(int volt) {
+    shooterMotors.move(volt);
 }
-void setCataBrakeMode(pros::motor_brake_mode_e brakeMode) {
-    cataMotors.set_brake_modes(brakeMode);
+void setShooterBrakeMode(pros::motor_brake_mode_e brakeMode) {
+    shooterMotors.set_brake_modes(brakeMode);
 }
-void stopCata(pros::motor_brake_mode_e brakeMode) {
-    setCataBrakeMode(brakeMode);
-    cataMotors.brake();
+void stopShooter(pros::motor_brake_mode_e brakeMode) {
+    setShooterBrakeMode(brakeMode);
+    shooterMotors.brake();
 }
 
-// **** Cata **** //
+// **** Shooter **** //
 void fire(int numTimes, int newPullback) {
 
 }
@@ -49,10 +49,10 @@ void setMatchload(int numTimes, bool waitForCompletion) {
 
 
 // **** Op control **** //
-void cataOpControl() {
+void shooterOpControl() {
     if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
-        if(states.cataStateIs(stateMachine::cata_state::PULLED_BACK)) {
-            states.setCataState(stateMachine::cata_state::FIRE);
+        if(states.shooterStateIs(stateMachine::shooter_state::PULLED_BACK)) {
+            states.setShooterState(stateMachine::shooter_state::FIRE);
         }
     }
 }

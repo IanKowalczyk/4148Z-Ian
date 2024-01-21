@@ -27,7 +27,7 @@ void initialize() {
 	pros::Task stateMachineTask(stateHandler);
 	pros::Task inertialInit([] {inertial.reset(true);});
 	pros::Task GUI(initGUI);
-	// setCataBrakeMode(pros::E_MOTOR_BRAKE_COAST);
+	// setShooterBrakeMode(pros::E_MOTOR_BRAKE_COAST);
 }
 
 /**
@@ -132,13 +132,13 @@ void opcontrol() {
 	int THREE_SECONDS_LEFT = (105 - 3) * 1000; 	// 102,000 ms
 
 	// **** default states **** //
-	states.setCataState(stateMachine::cata_state::PULLED_BACK);
+	states.setShooterState(stateMachine::shooter_state::PULLED_BACK);
 
 	while(true) {
 		// **** Subsystems **** //
 		splitArcade(pros::E_MOTOR_BRAKE_COAST); // Drive
 		intakeOpControl();						// Intake
-		cataOpControl();						// Cata
+		shooterOpControl();						// Shooter
 		wingOpControl();						// Wings
 		matchloadOpControl();					// Matchload
 		// brakeOpControl();						// Brake

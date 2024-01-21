@@ -15,20 +15,20 @@ pros::Motor rightMidDrive(19, pros::E_MOTOR_GEAR_BLUE, false, pros::E_MOTOR_ENCO
 pros::Motor rightBackDrive(18, pros::E_MOTOR_GEAR_BLUE, false, pros::E_MOTOR_ENCODER_COUNTS);  
 
 // Subsystem motors
-pros::Motor leftCata(11, pros::E_MOTOR_GEAR_RED, false, pros::E_MOTOR_ENCODER_COUNTS);  // 11 W
-pros::Motor rightCata(1, pros::E_MOTOR_GEAR_200, true, pros::E_MOTOR_ENCODER_COUNTS);   // 5.5 W
+pros::Motor leftShooter(11, pros::E_MOTOR_GEAR_RED, false, pros::E_MOTOR_ENCODER_COUNTS);  // 11 W
+pros::Motor rightShooter(1, pros::E_MOTOR_GEAR_200, true, pros::E_MOTOR_ENCODER_COUNTS);   // 5.5 W
 pros::Motor intake(6, pros::E_MOTOR_GEAR_200, false, pros::E_MOTOR_ENCODER_COUNTS);     // 5.5 W
 
 // Motor Groups
 pros::Motor_Group leftDrive({leftFrontDrive, leftMidDrive, leftBackDrive});
 pros::Motor_Group rightDrive({rightFrontDrive, rightMidDrive, rightBackDrive});
-pros::Motor_Group cataMotors({leftCata, rightCata});
+pros::Motor_Group shooterMotors({leftShooter, rightShooter});
 
 // Sensors
 pros::Imu inertial(21);
 pros::Rotation frontEnc(7, true);   // reversed
 pros::Rotation sideEnc(12, true);   // reversed
-pros::Rotation cataEnc(2, false);
+pros::Rotation shooterEnc(2, false);
 pros::Optical optical(17, 40);
 
 // Digital I/O

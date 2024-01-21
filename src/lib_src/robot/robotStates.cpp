@@ -8,17 +8,17 @@ void stateHandler() {
     states.setIntakeState(stateMachine::intake_state::OFF);
     states.setWingState(stateMachine::wing_state::WINGS_STOWED);
     states.setParkingBrakeState(stateMachine::parking_brake_state::BRAKE_OFF);
-    states.setCataState(stateMachine::cata_state::PULLED_BACK);
+    states.setShooterState(stateMachine::shooter_state::PULLED_BACK);
 
     // set sensor data rates
     inertial.set_data_rate(5);
     frontEnc.set_data_rate(5);
     sideEnc.set_data_rate(5);
-    cataEnc.set_data_rate(5);
+    shooterEnc.set_data_rate(5);
 
     // default brake modes
     intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    setCataBrakeMode(pros::E_MOTOR_BRAKE_COAST);
+    setShooterBrakeMode(pros::E_MOTOR_BRAKE_COAST);
 
     // optical sensor initilization
     optical.set_integration_time(40);   // 40 ms data refresh rate
@@ -73,34 +73,34 @@ void stateHandler() {
     else {intakeCount = 0;}
 
 
-    // ******** Cata state handler ******** //
-    if(states.cataStateChanged()) {
-        if(states.cataStateIs(stateMachine::cata_state::FIRE)) {
-            if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 3, "CATA FIRED");}
-            setCata(-127);
+    // ******** Shooter state handler ******** //
+    if(states.shooterStateChanged()) {
+        if(states.shooterStateIs(stateMachine::shooter_state::FIRE)) {
+            if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 3, "SHOOTER FIRED");}
+            setShooter(-127);
             fireCount += loopDelay;
             if(fireCount > MIN_FIRE_TIME) {
                 fireCount = 0;
-                states.setCataState(stateMachine::cata_state::SHORT_PULLBACK);
+                states.setShooterState(stateMachine::shooter_state::SHORT_PULLBACK);
             }
         }
 
-        if(states.cataStateIs(stateMachine::cata_state::SHORT_PULLBACK)) {
+        if(states.shooterStateIs(stateMachine::shooter_state::SHORT_PULLBACK)) {
             // if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 2, "SHORT PULLBACK, Volt: %d", cataMotors.get_voltages());}
             if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 3, "PULLING BACK");}
-            setCata(-127);
-            if(cataEnc.get_position() > (SHORT_PULLBACK_TICKS - PULLBACK_THRESHOLD) || pullbackCount >= PULLBACK_TIMEOUT) { // 
-                stopCata(pros::E_MOTOR_BRAKE_COAST);
-                states.setCataState(stateMachine::cata_state::PULLED_BACK);
+            setShooter(-127);
+            if(shooterEnc.get_position() > (SHORT_PULLBACK_TICKS - PULLBACK_THRESHOLD) || pullbackCount >= PULLBACK_TIMEOUT) { // 
+                stopShooter(pros::E_MOTOR_BRAKE_COAST);
+                states.setShooterState(stateMachine::shooter_state::PULLED_BACK);
             }
             pullbackCount += loopDelay;
         }
 
-        if(states.cataStateIs(stateMachine::cata_state::PULLED_BACK)) {
+        if(states.shooterStateIs(stateMachine::shooter_state::PULLED_BACK)) {
             if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 3, "PULLED BACK !!!!!!!");}
             // stopCata(pros::E_MOTOR_BRAKE_COAST);
             pullbackCount = 0;
-            states.oldCataState = states.cataState;
+            states.oldShooterState = states.shooterState;
         }
     }
 
@@ -164,11 +164,11 @@ void stateHandler() {
             controller.rumble(".");
         }
         // firing logic with optical sensor
-        if(states.cataStateIs(stateMachine::cata_state::PULLED_BACK)) {
+        if(states.shooterStateIs(stateMachine::shooter_state::PULLED_BACK)) {
             // closer to optical = higher proximity val; range from 0-255
             if(optical.get_proximity() > 250 ) { // && (optical.get_hue()) < 100 && optical.get_hue() > 80 
                 // add delay
-                states.setCataState(stateMachine::cata_state::FIRE);
+                states.setShooterState(stateMachine::shooter_state::FIRE);
             }
         }
     }
@@ -183,13 +183,13 @@ void stateHandler() {
     // pros::screen::print(TEXT_MEDIUM_CENTER, 5, "Puncher Enc: %d", cataEnc.get_position());
 
     // new stuff
-    pros::screen::print(TEXT_MEDIUM_CENTER, 4, "Cata Enc: %d", cataEnc.get_position());
-    pros::screen::print(TEXT_MEDIUM_CENTER, 5, "Cata Angle: %d", cataEnc.get_angle());
-    pros::screen::print(TEXT_MEDIUM_CENTER, 6, "Cata Current: %d", leftCata.get_current_draw() + rightCata.get_current_draw());
+    pros::screen::print(TEXT_MEDIUM_CENTER, 4, "Shooter Enc: %d", shooterEnc.get_position());
+    pros::screen::print(TEXT_MEDIUM_CENTER, 5, "Shooter Angle: %d", shooterEnc.get_angle());
+    pros::screen::print(TEXT_MEDIUM_CENTER, 6, "Shooter Current: %d", leftShooter.get_current_draw() + rightShooter.get_current_draw());
     pros::screen::print(TEXT_MEDIUM_CENTER, 7, "Opical prox: %d", optical.get_proximity());
     }
     pros::screen::erase_line(0, 3, 600, 4);
-    pros::screen::print(TEXT_MEDIUM, 3, "Cata Enc: %5d, Ang: %5d | Prox: %d", cataEnc.get_position(), cataEnc.get_angle(), optical.get_proximity());
+    pros::screen::print(TEXT_MEDIUM, 3, "Shooter Enc: %5d, Ang: %5d | Prox: %d", shooterEnc.get_position(), shooterEnc.get_angle(), optical.get_proximity());
     // pros::screen::print(TEXT_MEDIUM, 5, "Opical prox: %d", optical.get_proximity());
 
     // Refresh display every 100 ms
