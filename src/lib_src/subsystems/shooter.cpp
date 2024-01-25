@@ -1,9 +1,9 @@
 #include "lib_header/subsystems_h/shooter.h"
 
-// Constants
-int SHORT_PULLBACK_TICKS = 4500;   // In centidegrees (100 * degrees)  // 4800
+// Shooter Constants
+int SHORT_PULLBACK_TICKS = 3000;  // In centidegrees (100 * degrees)  // 4500
 int FULL_PULLBACK_TICKS = 0;     // In centidegrees (100 * degrees) 
-int MIN_FIRE_TIME = 200;
+int MIN_FIRE_TIME = 250;        // 200 ms
 int PULLBACK_TIMEOUT = 1000;    // 1000 ms
 int PULLBACK_THRESHOLD = 700;  // How close we want to get to the pullback value before stopping the cata (to mitigate overshoot)
 

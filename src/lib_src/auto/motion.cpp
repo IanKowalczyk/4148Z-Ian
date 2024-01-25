@@ -171,7 +171,7 @@ void setMoveToPoint(double targetX, double targetY, int maxTime, bool reversed) 
 
 //     double driveError, turnError;
 //     double drivePower, turnPower;
-//     double currentPosition = (frontEnc.get_position() / 100) * DRIVE_DEG_TO_INCH_275;
+//     double currentPosition = (frontEnc.get_position() / 100) * DRIVE_DEG_TO_INCH_2IN;
     
 //     while(true) {
 //         driveError = 
@@ -303,7 +303,7 @@ void move() {
     int startTime = pros::c::millis();
 
     // Local variables 
-    double initialPosition = (frontEnc.get_position() / 100) * DRIVE_DEG_TO_INCH_275;
+    double initialPosition = (frontEnc.get_position() / 100) * DRIVE_DEG_TO_INCH_2IN;
     // double currentPosition;
     int turnError = 0;
     int drivePower, turnPower;
@@ -331,8 +331,8 @@ void move() {
         // currentPosition = ((frontEnc.get_position() / 100) * DRIVE_DEG_TO_INCH) - initialPosition;
         // driveError = driveTarget - (frontEnc.get_position() * DRIVE_DEG_TO_INCH);
 
-        // drive_position = rightFrontDrive.get_position() * DRIVE_DEG_TO_INCH_275;
-        drive_position = ((frontEnc.get_position() / 100) * DRIVE_DEG_TO_INCH_275) - initialPosition; // in inches
+        // drive_position = rightFrontDrive.get_position() * DRIVE_DEG_TO_INCH_2IN;
+        drive_position = ((frontEnc.get_position() / 100) * DRIVE_DEG_TO_INCH_2IN) - initialPosition; // in inches
         // drive_error = int(drive_target - drive_position);
         drive_error = drive_target - drive_position;
         turnError = turn_target - inertial.get_heading();

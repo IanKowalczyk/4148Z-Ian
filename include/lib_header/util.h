@@ -26,6 +26,12 @@ extern double DRIVE_INCH_TO_DEG_275;
 /** @brief For 2.75" wheels: (2.75 * M_PI) / 360 */
 extern double DRIVE_DEG_TO_INCH_275;
 
+/** @brief For 2" wheels: 360 / (2 * M_PI) */
+extern double DRIVE_INCH_TO_DEG_2IN;
+
+/** @brief For 2" wheels: (2 * M_PI) / 360 */
+extern double DRIVE_DEG_TO_INCH_2IN;
+
 // **** Debug **** //
 extern void debugBox();
 

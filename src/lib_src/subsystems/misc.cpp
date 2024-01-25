@@ -38,6 +38,7 @@ bool climbState = false;
 void climbOpControl() {
     if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
         climbState = !climbState;
-        climb.set_value(climbState);
+        leftClimb.set_value(climbState);
+        rightClimb.set_value(climbState);
     }
 }

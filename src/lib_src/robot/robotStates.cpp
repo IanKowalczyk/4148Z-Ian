@@ -89,7 +89,7 @@ void stateHandler() {
             // if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 2, "SHORT PULLBACK, Volt: %d", cataMotors.get_voltages());}
             if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 3, "PULLING BACK");}
             setShooter(-127);
-            if(shooterEnc.get_position() > (SHORT_PULLBACK_TICKS - PULLBACK_THRESHOLD) || pullbackCount >= PULLBACK_TIMEOUT) { // 
+            if(shooterEnc.get_position() > (SHORT_PULLBACK_TICKS - PULLBACK_THRESHOLD) || pullbackCount >= PULLBACK_TIMEOUT) {
                 stopShooter(pros::E_MOTOR_BRAKE_COAST);
                 states.setShooterState(stateMachine::shooter_state::PULLED_BACK);
             }
@@ -168,6 +168,7 @@ void stateHandler() {
             // closer to optical = higher proximity val; range from 0-255
             if(optical.get_proximity() > 250 ) { // && (optical.get_hue()) < 100 && optical.get_hue() > 80 
                 // add delay
+                pros::delay(80);
                 states.setShooterState(stateMachine::shooter_state::FIRE);
             }
         }

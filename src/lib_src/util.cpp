@@ -13,6 +13,8 @@ double DEG_TO_RAD = M_PI / 180;
 
 double DRIVE_INCH_TO_DEG_275 = 360 / (2.75 * M_PI);
 double DRIVE_DEG_TO_INCH_275 = (2.75 * M_PI) / 360;
+double DRIVE_INCH_TO_DEG_2IN = 360 / (2 * M_PI);
+double DRIVE_DEG_TO_INCH_2IN = (2 * M_PI) / 360;
 
 // **** Debug **** //
 // void debugBox(color, int x1, int y1, int x2, int y2) {

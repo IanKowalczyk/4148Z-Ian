@@ -22,11 +22,11 @@ int closeCount = 0;
 // }
 
 // ******** Intake Opcontrol function ******** //
-void intakeOpControl() {
-    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+void intakeOpControl(pros::controller_digital_e_t b1, pros::controller_digital_e_t b2) {
+    if(controller.get_digital(b1)) {
         states.setIntakeState(stateMachine::intake_state::INTAKING);
     }
-    else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+    else if(controller.get_digital(b2)) {
         states.setIntakeState(stateMachine::intake_state::OUTTAKING);
     }
     else {states.setIntakeState(stateMachine::intake_state::OFF);}

@@ -176,7 +176,30 @@ void defenseSafe() {
 }
 
 void offenseAuto(offense_auto_mode s) {
+	globalPose.setPoint(32, 14, 0);
+	states.setIntakeState(stateMachine::intake_state::INTAKING);
+	states.setWingState(stateMachine::wing_state::LEFT_OUT);
+	pros::delay(100);
 
+	setMoveToPoint(43, 64, 1500, false);
+	states.setWingState(stateMachine::wing_state::WINGS_STOWED);
+	waitUntilSettled(0);
+
+	setMoveToPoint(62, 65, 1500, false);
+	waitUntilSettled(0);
+
+	setMoveToPoint(23, 23, 1500, false);
+	waitUntilSettled(0);
+
+	setMoveToPoint(13, 40, 1500, false);
+	waitUntilSettled(0);
+
+	setMoveToPoint(26, 16, 1500, false);
+	waitUntilSettled(0);
+
+	setMoveToPoint(66, 13, 1500, false);
+	waitUntilSettled(0);
+	
 }
 
 void sixBall(sixBall_mode s) {
@@ -358,29 +381,30 @@ void progSkills() {
 	setMove(12, 320, 800);
 	waitUntilSettled(0);
 	// setMove(0, 260, )
-	setMoveToPoint(120, 62, 0, 100, 800, true); // (120, 70)
+	setMoveToPoint(120, 62, 0, 100, 800, false); // turn to face goal
 	waitUntilSettled(0);
-	states.setWingState(stateMachine::wing_state::LEFT_OUT);
+	setMove(-5, inertial.get_heading(), 30, 40, 15000);
+	// states.setWingState(stateMachine::wing_state::LEFT_OUT);
 
 	matchloadState = true;
-	pros::delay(28000); // 26 seconds
+	pros::delay(28000); // 28 seconds
 	matchloadState = false;
-	states.setWingState(stateMachine::wing_state::WINGS_STOWED);
+	// states.setWingState(stateMachine::wing_state::WINGS_STOWED);
 	pros::delay(100);
 
 	//  2: Cross field  //
 	// get off of matchload bar and push preload in goal
-	setMoveToPoint(36, 13, 60, 120, 1200, true);
+	setMoveToPoint(36, 13, 60, 120, 1200, false);
 	pros::delay(500);
 	max_translate_power = 100;
 	waitUntilSettled(0);
-	setMoveToPoint(108, 12, 100, 120, 2000, true);
+	setMoveToPoint(108, 12, 100, 120, 2000, false);
 	waitUntilSettled(0);
 
 	// 4: Score first few triballs in from side of goal  //
-	setMoveToPoint(130, 25, 100, 120, 900, true);
+	setMoveToPoint(130, 25, 100, 120, 900, false);
 	waitUntilSettled(0);
-	setMoveToPoint(132, 44, 100, 120, 900, true);
+	setMoveToPoint(132, 44, 100, 120, 900, false);
 	pros::delay(500);
 	max_translate_power = 120;
 	waitUntilSettled(0);
