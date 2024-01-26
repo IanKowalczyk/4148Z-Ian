@@ -85,6 +85,9 @@ extern stateMachine states;
 /** @brief Task that handles all subsystem states */
 extern void stateHandler();
 
+/** @brief Flag to run state handler task*/
+extern bool runStateHandler;
+
 /** @brief State Machine task */
 // extern pros::Task stateMachineTask(stateHandler);
 

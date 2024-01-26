@@ -4,6 +4,9 @@
 
 extern int autoToRun;
 
+// ******** Auto Functions ******** //
+extern void releaseIntake();
+
 // ******* Test Autos *******//
 /** @brief Tests robot subsystems: intake, wings, cata */
 extern void autoFunctionTest();
@@ -25,6 +28,8 @@ enum class defense_auto_mode{SOLO, ELIMS};
 enum class offense_auto_mode{SAFE, RISKY};
 enum class sixBall_mode{BAR, MID};
 // enum progSkills_mode{LEFT, RIGHT};
+
+extern void newSixBall(sixBall_mode s);
 
 // ******* Match Autos *******//
 /** @brief Setup: Right side of Matchload Station, 45 deg -- Shoot preload; Score 2 from auto line;

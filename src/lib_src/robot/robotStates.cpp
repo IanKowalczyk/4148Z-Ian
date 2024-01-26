@@ -1,6 +1,7 @@
 #include "lib_header/robot_h/robotStates.h"
 
 stateMachine states;
+bool runStateHandler = false;
 
 void stateHandler() {
     // default states
@@ -40,7 +41,7 @@ void stateHandler() {
     controller.rumble("-");
 
     while(true) {
-    int loopStartTime = pros::c::millis();
+    // int loopStartTime = pros::c::millis();
 
      // ******** Odometry ******** //
     // if(pros::competition::is_autonomous()) {
@@ -72,8 +73,8 @@ void stateHandler() {
     }
     else {intakeCount = 0;}
 
-
-    // ******** Shooter state handler ******** //
+    // TODO - Better firing logic (e.g. fire, wait until sensor jumps back to zero-ish, then pull back)
+    // ******** Shooter state handler ******** // 
     if(states.shooterStateChanged()) {
         if(states.shooterStateIs(stateMachine::shooter_state::FIRE)) {
             if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 3, "SHOOTER FIRED");}
@@ -168,7 +169,7 @@ void stateHandler() {
             // closer to optical = higher proximity val; range from 0-255
             if(optical.get_proximity() > 250 ) { // && (optical.get_hue()) < 100 && optical.get_hue() > 80 
                 // add delay
-                pros::delay(80);
+                pros::delay(100);
                 states.setShooterState(stateMachine::shooter_state::FIRE);
             }
         }
@@ -189,8 +190,11 @@ void stateHandler() {
     pros::screen::print(TEXT_MEDIUM_CENTER, 6, "Shooter Current: %d", leftShooter.get_current_draw() + rightShooter.get_current_draw());
     pros::screen::print(TEXT_MEDIUM_CENTER, 7, "Opical prox: %d", optical.get_proximity());
     }
-    pros::screen::erase_line(0, 3, 600, 4);
+    pros::screen::erase_line(0, 3, 800, 4);
     pros::screen::print(TEXT_MEDIUM, 3, "Shooter Enc: %5d, Ang: %5d | Prox: %d", shooterEnc.get_position(), shooterEnc.get_angle(), optical.get_proximity());
+    // pros::screen::erase_line(0, 4, 600, 5);
+    // pros::screen::print(TEXT_MEDIUM, 4, "Front Enc rotation: %d", frontEnc.get_position());
+
     // pros::screen::print(TEXT_MEDIUM, 5, "Opical prox: %d", optical.get_proximity());
 
     // Refresh display every 100 ms
@@ -202,7 +206,8 @@ void stateHandler() {
     // }
 
     // necessary task delay - do not change
-    pros::delay(loopDelay); // while(pros::c::millis() < loopStartTime + loopDelay) {pros::delay(1);}
+
+    pros::delay(loopDelay); // while(pros::c::millis() < loopStartTime + loopDelay) {pros::delay(1);}    
     }
 }
 

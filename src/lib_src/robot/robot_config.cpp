@@ -26,8 +26,8 @@ pros::Motor_Group shooterMotors({leftShooter, rightShooter});
 
 // Sensors
 pros::Imu inertial(18);
-pros::Rotation frontEnc(4, true);   // reversed
-pros::Rotation sideEnc(14, false);   // reversed
+pros::Rotation frontEnc(4, false);  // not reversed
+pros::Rotation sideEnc(14, false);   // not reversed
 pros::Rotation shooterEnc(17, true);
 pros::Optical optical(13, 40);
 

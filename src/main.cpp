@@ -61,13 +61,21 @@ void competition_initialize() {}
  */
 pros::Task autoMovement(autoMovementTask);
 void autonomous() {
+	// init
+	displayInfo = false;
+
 	// odom init
 	resetOdomSensors();
 	globalPose.setPoint(0.0, 0.0, 0);
-	displayInfo = false;
+	// globalPose.setPoint(103.5, 17, 1); // newSixBall() // top left of tile
 
-	pros::delay(500);
-
+	// newSixBall(sixBall_mode::BAR);
+	/** Forward and backward test */
+	// setMoveToPoint(0, 24, 1000, false);
+	// waitUntilSettled(0);
+	// setMoveToPoint(0, 0, 1000, true);
+	// waitUntilSettled(0);
+	
 	// squigglesTest(); // FAILED, turns but doesn't move after chained movement
 	// chainedMoveToPoint(); // FAILED, turns but doesn't move after first chained to move
 	
@@ -82,28 +90,28 @@ void autonomous() {
 	// globalPose.setPoint(120, 14, 321); // angled to face triball near bar; right front wheel in line with intersection of tiles; (24, 14)
 	// sixBall(sixBall_mode::BAR);
 
-	states.setIntakeState(stateMachine::intake_state::INTAKING);
-
+	// sixBall(sixBall_mode::BAR);
 	// progSkills();
+
 	// **** Autoselector **** //
-	if(autoToRun == 1) {
-		defenseAuto(defense_auto_mode::SOLO);
-	}
-	if(autoToRun == 2) {
-		defenseAuto(defense_auto_mode::ELIMS);
-	}
-	if(autoToRun == 3) {
-		fourBall();
-	}
-	if(autoToRun == 4) {
-		progSkills();
-	}
-	if(autoToRun == 5) {
-		defenseSafe();
-	}
-	if(autoToRun == 6) {
-		sixBall(sixBall_mode::BAR);
-	}
+	// if(autoToRun == 1) {
+	// 	defenseAuto(defense_auto_mode::SOLO);
+	// }f
+	// if(autoToRun == 2) {
+	// 	defenseAuto(defense_auto_mode::ELIMS);
+	// }
+	// if(autoToRun == 3) {
+	// 	fourBall();
+	// }
+	// if(autoToRun == 4) {
+	// 	progSkills();
+	// }
+	// if(autoToRun == 5) {
+	// 	defenseSafe();
+	// }
+	// if(autoToRun == 6) {
+	// 	sixBall(sixBall_mode::BAR);
+	// }
 }
 
 /**
@@ -121,8 +129,8 @@ void autonomous() {
  */
 void opcontrol() {
 	// **** init **** //
-	controller.rumble("-");
 	autoMovement.suspend();
+	controller.rumble("-");
 	// displayInfo = true;
 
 	// **** local variables **** //
@@ -133,16 +141,15 @@ void opcontrol() {
 	int TEN_SECONDS_LEFT =  (105 - 10) * 1000; // 95,000 ms
 	int THREE_SECONDS_LEFT = (105 - 3) * 1000; 	// 102,000 ms
 
-	// **** default states **** //
-	states.setShooterState(stateMachine::shooter_state::PULLED_BACK);
 
 	while(true) {
 		// **** Subsystems **** //
+		// TODO - implement button parameters like in intake control
 		splitArcade(pros::E_MOTOR_BRAKE_COAST); // Drive
 		intakeOpControl(pros::E_CONTROLLER_DIGITAL_R1, pros::E_CONTROLLER_DIGITAL_R2);						// Intake
 		shooterOpControl();						// Shooter
 		wingOpControl();						// Wings
-		matchloadOpControl();					// Matjchload
+		matchloadOpControl();					// Matchload
 		// brakeOpControl();						// Brake
 		climbOpControl();						// Climb
 
