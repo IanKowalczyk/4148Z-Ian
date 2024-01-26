@@ -13,6 +13,7 @@ extern void autoFunctionTest();
 
 // Odom tests
 extern void odomBoxTest();
+extern void slowOdomBoxTest();
 extern void odomTriangleTest();
 
 // Squiggles

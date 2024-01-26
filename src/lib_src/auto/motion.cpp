@@ -451,6 +451,7 @@ void moveToPoint() {
     double xError = 0.0;
     double yError = 0.0;
     int settleCount = 0;
+    int tempDriveMax = 30;
 
     // Reset variables
     translation_error = 0.0;
@@ -488,10 +489,17 @@ void moveToPoint() {
         // translate power
         translationPower = round(translationPID.calculateOutput(translation_error) * movementScaleFactor);
         translationPower = constrainVoltage(translationPower, std::fabs(movementScaleFactor) * max_translate_power, -std::fabs(movementScaleFactor) * max_translate_power);
+        
+        // Slew
+        translationPower = constrainVoltage(translationPower, tempDriveMax, -tempDriveMax);
+        if(tempDriveMax <= max_translate_power - DRIVE_SLEW_RATE) {
+            tempDriveMax += DRIVE_SLEW_RATE;
+        }
 
+        
         // Rotate power
         // Stop rotating when close to target // used to be within 2.5 inches, now 3.5
-        std::fabs(translation_error) > 6.5 ? rotationPower = round(turnPID.calculateOutput(rotationError)) : rotationPower = 0; 
+        std::fabs(translation_error) > 7 ? rotationPower = round(turnPID.calculateOutput(rotationError)) : rotationPower = 0; 
 
         // Constrain outputs
         // translationPower = constrainVoltage(translationPower, max_translate_power, -max_translate_power);

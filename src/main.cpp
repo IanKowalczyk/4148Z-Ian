@@ -68,12 +68,15 @@ void autonomous() {
 	resetOdomSensors();
 	globalPose.setPoint(0.0, 0.0, 0);
 	// globalPose.setPoint(103.5, 17, 1); // newSixBall() // top left of tile
+	// states.setWingState(stateMachine::wing_state::RIGHT_OUT);
 
-	// newSixBall(sixBall_mode::BAR);
+	// slowOdomBoxTest();
+	// sixBall(sixBall_mode::BAR);
+	newSixBall(sixBall_mode::BAR);
 	/** Forward and backward test */
-	// setMoveToPoint(0, 24, 1000, false);
+	// setMoveToPoint(0, 24, 40, 30, 5000, false);
 	// waitUntilSettled(0);
-	// setMoveToPoint(0, 0, 1000, true);
+	// setMoveToPoint(0, 0, 40, 30, 5000, true);
 	// waitUntilSettled(0);
 	
 	// squigglesTest(); // FAILED, turns but doesn't move after chained movement

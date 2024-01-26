@@ -190,7 +190,7 @@ void stateHandler() {
     pros::screen::print(TEXT_MEDIUM_CENTER, 6, "Shooter Current: %d", leftShooter.get_current_draw() + rightShooter.get_current_draw());
     pros::screen::print(TEXT_MEDIUM_CENTER, 7, "Opical prox: %d", optical.get_proximity());
     }
-    pros::screen::erase_line(0, 3, 800, 4);
+    pros::screen::erase_line(0, 3, 800, 3);
     pros::screen::print(TEXT_MEDIUM, 3, "Shooter Enc: %5d, Ang: %5d | Prox: %d", shooterEnc.get_position(), shooterEnc.get_angle(), optical.get_proximity());
     // pros::screen::erase_line(0, 4, 600, 5);
     // pros::screen::print(TEXT_MEDIUM, 4, "Front Enc rotation: %d", frontEnc.get_position());

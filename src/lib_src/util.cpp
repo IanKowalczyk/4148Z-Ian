@@ -16,12 +16,12 @@ double DRIVE_INCH_TO_DEG_275 = 360 / (2.75 * M_PI);
 double DRIVE_DEG_TO_INCH_275 = (2.75 * M_PI) / 360;
 
 /** THEORETICAL 2.00 in conversion ratios */
-// double DRIVE_INCH_TO_DEG_2IN = 360 / (2.00 * M_PI); // 57.29577
-// double DRIVE_DEG_TO_INCH_2IN = (2.00 * M_PI) / 360; // 0.017453 
+double DRIVE_INCH_TO_DEG_2IN = 360 / (2.00 * M_PI); // 57.29577
+double DRIVE_DEG_TO_INCH_2IN = (2.00 * M_PI) / 360; // 0.017453 
 
 /** NEW / OBSERVED 2.00 in conversion ratios */
-double DRIVE_INCH_TO_DEG_2IN = 56.25;           // (1350 / 24) ~ 56.25 (don't use in this form)
-double DRIVE_DEG_TO_INCH_2IN = 0.0177777777;    // (24 / 1350) ~ 0.01777777 (don't use in this form)
+// double DRIVE_INCH_TO_DEG_2IN = 56.25;           // (1350 / 24) ~ 56.25 (don't use in this form)
+// double DRIVE_DEG_TO_INCH_2IN = 0.0177777777;    // (24 / 1350) ~ 0.01777777 (don't use in this form)
 
 
 // **** Debug **** //
