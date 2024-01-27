@@ -37,6 +37,9 @@ void stateHandler() {
     int rumbleCount = 0;
     int displayCount = 0;
 
+    // matchload first loop
+    bool matchloadFirstLoop = false;
+
     // signal stateHanlder is running
     controller.rumble("-");
 
@@ -154,9 +157,9 @@ void stateHandler() {
     // }
     // else {brakeReady = false;}
 
-
     // ******** Matchload ******** //
     if(matchloadState) {
+        matchloadFirstLoop = true;
         optical.set_led_pwm(100);
         // rumble every second to signal we are in matchload state
         rumbleCount += loopDelay;
@@ -171,12 +174,17 @@ void stateHandler() {
                 // add delay
                 pros::delay(100);
                 states.setShooterState(stateMachine::shooter_state::FIRE);
+                triballsFired++;
             }
         }
     }
-    // else {
-    //     optical.set_led_pwm(0);
-    // }
+    else {
+        if(matchloadFirstLoop) {
+            optical.set_led_pwm(0);
+            triballsFired = 0;
+            matchloadFirstLoop = false;
+        }
+    }
 
     // ******** DEBUG ******** //
     if(displayInfo) {

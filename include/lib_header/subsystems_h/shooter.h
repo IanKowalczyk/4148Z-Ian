@@ -15,8 +15,8 @@ extern int pullbackCount;
 
 // Matchload variables
 extern bool matchloadState;
-extern int fireCount;
-extern int fireTarget;
+extern int triballsFired;
+extern int triballFireTarget;
 
 
 // Helper functions

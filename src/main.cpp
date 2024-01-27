@@ -70,9 +70,6 @@ void autonomous() {
 	// globalPose.setPoint(103.5, 17, 1); // newSixBall() // top left of tile
 	// states.setWingState(stateMachine::wing_state::RIGHT_OUT);
 
-	// slowOdomBoxTest();
-	// sixBall(sixBall_mode::BAR);
-	newSixBall(sixBall_mode::BAR);
 	/** Forward and backward test */
 	// setMoveToPoint(0, 24, 40, 30, 5000, false);
 	// waitUntilSettled(0);
@@ -93,28 +90,25 @@ void autonomous() {
 	// globalPose.setPoint(120, 14, 321); // angled to face triball near bar; right front wheel in line with intersection of tiles; (24, 14)
 	// sixBall(sixBall_mode::BAR);
 
-	// sixBall(sixBall_mode::BAR);
-	// progSkills();
-
 	// **** Autoselector **** //
-	// if(autoToRun == 1) {
-	// 	defenseAuto(defense_auto_mode::SOLO);
-	// }f
-	// if(autoToRun == 2) {
-	// 	defenseAuto(defense_auto_mode::ELIMS);
-	// }
-	// if(autoToRun == 3) {
-	// 	fourBall();
-	// }
-	// if(autoToRun == 4) {
-	// 	progSkills();
-	// }
-	// if(autoToRun == 5) {
-	// 	defenseSafe();
-	// }
-	// if(autoToRun == 6) {
-	// 	sixBall(sixBall_mode::BAR);
-	// }
+	if(autoToRun == 1) {
+		defenseAuto(defense_auto_mode::SOLO);
+	}
+	if(autoToRun == 2) {
+		defenseAuto(defense_auto_mode::ELIMS);
+	}
+	if(autoToRun == 3) {
+		fourBall();
+	}
+	if(autoToRun == 4) {
+		progSkills();
+	}
+	if(autoToRun == 5) {
+		defenseSafe();
+	}
+	if(autoToRun == 6) {
+		newSixBall(sixBall_mode::BAR);
+	}
 }
 
 /**
@@ -146,12 +140,22 @@ void opcontrol() {
 
 
 	while(true) {
+		// **** Auto Macro **** //
+		if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT)) {
+			autoMovement.resume();
+			pros::Task progInDriver(progSkills);
+			while(controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) < 50) {
+				pros::delay(20);
+			}
+			progInDriver.suspend();
+		}
+	
 		// **** Subsystems **** //
 		// TODO - implement button parameters like in intake control
 		splitArcade(pros::E_MOTOR_BRAKE_COAST); // Drive
-		intakeOpControl(pros::E_CONTROLLER_DIGITAL_R1, pros::E_CONTROLLER_DIGITAL_R2);						// Intake
+		intakeOpControl(pros::E_CONTROLLER_DIGITAL_R2, pros::E_CONTROLLER_DIGITAL_R1);						// Intake
 		shooterOpControl();						// Shooter
-		wingOpControl();						// Wings
+		wingOpControl();	  					// Wings
 		matchloadOpControl();					// Matchload
 		// brakeOpControl();						// Brake
 		climbOpControl();						// Climb

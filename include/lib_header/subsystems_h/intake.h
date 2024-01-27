@@ -25,7 +25,7 @@ extern void stopIntake(pros::motor_brake_mode_e_t brakeMode);
 
 // ******** Intake Opcontrol Function ******** //
 // extern void intakeOpControl();
-extern void intakeOpControl(pros::controller_digital_e_t b1, pros::controller_digital_e_t b2);
+extern void intakeOpControl(pros::controller_digital_e_t intakeButton, pros::controller_digital_e_t outtakeButton);
 
 
 #endif
