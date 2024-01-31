@@ -24,8 +24,9 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
+	pros::Task inertialInit([] {inertial.reset(false);});
 	pros::Task stateMachineTask(stateHandler);
-	pros::Task inertialInit([] {inertial.reset(true);});
+
 	pros::Task GUI(initGUI);
 	// setShooterBrakeMode(pros::E_MOTOR_BRAKE_COAST);
 }
@@ -35,7 +36,9 @@ void initialize() {
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
-void disabled() {}
+void disabled() {
+	// states.setClimbState(stateMachine::climb_state::DOWN); // THINK ABOUT THIS ONE
+}
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
@@ -76,8 +79,8 @@ void autonomous() {
 	// setMoveToPoint(0, 0, 40, 30, 5000, true);
 	// waitUntilSettled(0);
 	
-	// squigglesTest(); // FAILED, turns but doesn't move after chained movement
-	// chainedMoveToPoint(); // FAILED, turns but doesn't move after first chained to move
+	// squigglesTest(); 		// FAILED, turns but doesn't move after chained movement
+	// chainedMoveToPoint(); 	// FAILED, turns but doesn't move after first chained to move
 	
 	// ** waitUntilNear test (WORKS) ** //
 	// setMoveToPoint(40, 24, 900, false);
@@ -91,24 +94,25 @@ void autonomous() {
 	// sixBall(sixBall_mode::BAR);
 
 	// **** Autoselector **** //
-	if(autoToRun == 1) {
-		defenseAuto(defense_auto_mode::SOLO);
-	}
-	if(autoToRun == 2) {
-		defenseAuto(defense_auto_mode::ELIMS);
-	}
-	if(autoToRun == 3) {
-		fourBall();
-	}
-	if(autoToRun == 4) {
+	// if(autoToRun == 1) {
+	// 	defenseAuto(defense_auto_mode::SOLO);
+	// }
+	// if(autoToRun == 2) {
+	// 	defenseAuto(defense_auto_mode::ELIMS);
+	// }
+	// if(autoToRun == 3) {
+	// 	fourBall();
+	// }
+	// if(autoToRun == 4) {
 		progSkills();
-	}
-	if(autoToRun == 5) {
-		defenseSafe();
-	}
-	if(autoToRun == 6) {
-		newSixBall(sixBall_mode::BAR);
-	}
+	// }
+	// if(autoToRun == 5) {
+	// 	defenseSafe();
+	// }
+	// if(autoToRun == 6) {
+	// 	newSixBall(sixBall_mode::BAR);
+	// }
+	
 }
 
 /**
@@ -138,30 +142,27 @@ void opcontrol() {
 	int TEN_SECONDS_LEFT =  (105 - 10) * 1000; // 95,000 ms
 	int THREE_SECONDS_LEFT = (105 - 3) * 1000; 	// 102,000 ms
 
-
 	while(true) {
 		// **** Auto Macro **** //
 		if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT)) {
 			autoMovement.resume();
 			pros::Task progInDriver(progSkills);
-			while(controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) < 50) {
-				pros::delay(20);
-			}
+			while(controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) < 50) {pros::delay(20);}
 			progInDriver.suspend();
+			autoMovement.suspend();
 		}
-	
+
 		// **** Subsystems **** //
-		// TODO - implement button parameters like in intake control
-		splitArcade(pros::E_MOTOR_BRAKE_COAST); // Drive
-		intakeOpControl(pros::E_CONTROLLER_DIGITAL_R2, pros::E_CONTROLLER_DIGITAL_R1);						// Intake
-		shooterOpControl();						// Shooter
-		wingOpControl();	  					// Wings
-		matchloadOpControl();					// Matchload
+		splitArcade(pros::E_MOTOR_BRAKE_COAST); 										// Drive
+		intakeOpControl(pros::E_CONTROLLER_DIGITAL_R2, pros::E_CONTROLLER_DIGITAL_R1);	// Intake
+		shooterOpControl(pros::E_CONTROLLER_DIGITAL_B);									// Shooter
+		wingOpControl(pros::E_CONTROLLER_DIGITAL_L1);	  								// Wings
+		matchloadOpControl(pros::E_CONTROLLER_DIGITAL_L2);								// Matchload
+		climbOpControl();							// Climb
 		// brakeOpControl();						// Brake
-		climbOpControl();						// Climb
 
 		// **** Match timer **** //
-		if(pros::c::millis() - opcontrolStartTime >= TEN_SECONDS_LEFT && pros::c::millis() - opcontrolStartTime < 146000) {
+		if(pros::c::millis() - opcontrolStartTime >= TEN_SECONDS_LEFT && pros::c::millis() - opcontrolStartTime < 110000) {
 			// rumble once every second at last 10 seconds
 			if(rumbleCount % 1000 == 0) {controller.rumble(".");}
 

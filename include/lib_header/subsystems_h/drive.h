@@ -2,9 +2,9 @@
 #define DRIVE_H
 #include "main.h"
 
-// ******** Drive Constants ******** //
-extern double TURN_SENS;
-extern double DRIVE_BRAKE_THRESHOLD;
+// // ******** Drive Constants ******** //
+// extern double TURN_SENS;
+// extern double DRIVE_BRAKE_THRESHOLD;
 
 // ******** Drive Helper Functions ******** //
 /**

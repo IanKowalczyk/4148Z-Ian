@@ -36,6 +36,9 @@ extern double DRIVE_DEG_TO_INCH_2IN;
 extern void debugBox();
 
 // ******** Util Functions ******** //
+extern double wheelDegreeToInch(double diameter);
+extern double wheelInchToDegree(double diameter);
+
 /** 
  * @brief Constrains input as a DOUBLE
  * @return DOUBLE

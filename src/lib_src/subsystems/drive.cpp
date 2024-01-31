@@ -1,8 +1,8 @@
 #include "lib_header/subsystems_h/drive.h"
 
 // ******** Drive Constants ******** //
-double TURN_SENS = 0.8;
-double DRIVE_BRAKE_THRESHOLD = 45;  // 45 RPM
+// double TURN_SENS = 0.8;
+// double DRIVE_BRAKE_THRESHOLD = 45;  // 45 RPM
 
 
 // ******** Drive Helper Functions ******** //

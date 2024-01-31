@@ -10,6 +10,7 @@ void stateHandler() {
     states.setWingState(stateMachine::wing_state::WINGS_STOWED);
     states.setParkingBrakeState(stateMachine::parking_brake_state::BRAKE_OFF);
     states.setShooterState(stateMachine::shooter_state::PULLED_BACK);
+    states.setClimbState(stateMachine::climb_state::DOWN);
 
     // set sensor data rates
     inertial.set_data_rate(5);
@@ -34,6 +35,7 @@ void stateHandler() {
     int loopDelay = 10;
     int fireCount = 0;
     int intakeCount = 0;
+    int matchloadDelay = 0;
     int rumbleCount = 0;
     int displayCount = 0;
 
@@ -134,6 +136,20 @@ void stateHandler() {
         states.oldWingState = states.wingState;
     }
 
+
+    // ******** Climb state handler ******** //
+    if(states.climbStateChanged()) {
+        if(states.climbStateIs(stateMachine::climb_state::DOWN)) {
+            leftClimb.set_value(false);
+            rightClimb.set_value(false);
+        }
+        else if(states.climbStateIs(stateMachine::climb_state::UP)) {
+            leftClimb.set_value(true);
+            rightClimb.set_value(true);
+        }
+    }
+
+
     // ******** Parking brake state handler ******** //
     // if(states.parkingBrakeStateChanged()) {
     //     if(states.parkingBrakeStateIs(stateMachine::parking_brake_state::BRAKE_OFF)) {
@@ -160,27 +176,39 @@ void stateHandler() {
     // ******** Matchload ******** //
     if(matchloadState) {
         matchloadFirstLoop = true;
-        optical.set_led_pwm(100);
+        // optical.set_led_pwm(100);
         // rumble every second to signal we are in matchload state
         rumbleCount += loopDelay;
+
         if(rumbleCount > 1000) {
             rumbleCount = 0;
             controller.rumble(".");
         }
-        // firing logic with optical sensor
+
+        // ** firing logic with optical sensor ** // 
+        // if(states.shooterStateIs(stateMachine::shooter_state::PULLED_BACK)) {
+        //     // closer to optical = higher proximity val; range from 0-255
+        //     if(optical.get_proximity() > 250 ) { // && (optical.get_hue()) < 100 && optical.get_hue() > 80 
+        //         // add delay
+        //         pros::delay(100);
+        //         states.setShooterState(stateMachine::shooter_state::FIRE);
+        //         triballsFired++;
+        //     }
+        // }
+
+        // ** regular firing logic ** //
         if(states.shooterStateIs(stateMachine::shooter_state::PULLED_BACK)) {
-            // closer to optical = higher proximity val; range from 0-255
-            if(optical.get_proximity() > 250 ) { // && (optical.get_hue()) < 100 && optical.get_hue() > 80 
-                // add delay
-                pros::delay(100);
+            matchloadDelay += loopDelay;
+            if(matchloadDelay > 140) {
+                matchloadDelay = 0;
                 states.setShooterState(stateMachine::shooter_state::FIRE);
-                triballsFired++;
             }
         }
     }
     else {
         if(matchloadFirstLoop) {
-            optical.set_led_pwm(0);
+            // optical.set_led_pwm(0);
+            matchloadDelay = 0;
             triballsFired = 0;
             matchloadFirstLoop = false;
         }
@@ -192,17 +220,16 @@ void stateHandler() {
     // // pros::screen::print(TEXT_MEDIUM_CENTER, 11, "Brake Ready?: %s", brakeReady ? "true" : "false");
     // pros::screen::print(TEXT_MEDIUM_CENTER, 5, "Puncher Enc: %d", cataEnc.get_position());
 
-    // new stuff
-    pros::screen::print(TEXT_MEDIUM_CENTER, 4, "Shooter Enc: %d", shooterEnc.get_position());
-    pros::screen::print(TEXT_MEDIUM_CENTER, 5, "Shooter Angle: %d", shooterEnc.get_angle());
-    pros::screen::print(TEXT_MEDIUM_CENTER, 6, "Shooter Current: %d", leftShooter.get_current_draw() + rightShooter.get_current_draw());
-    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "Opical prox: %d", optical.get_proximity());
+        // new stuff
+        pros::screen::print(TEXT_MEDIUM_CENTER, 4, "Shooter Enc: %d", shooterEnc.get_position());
+        pros::screen::print(TEXT_MEDIUM_CENTER, 5, "Shooter Angle: %d", shooterEnc.get_angle());
+        pros::screen::print(TEXT_MEDIUM_CENTER, 6, "Shooter Current: %d", leftShooter.get_current_draw() + rightShooter.get_current_draw());
+        pros::screen::print(TEXT_MEDIUM_CENTER, 7, "Opical prox: %d", optical.get_proximity());
     }
     pros::screen::erase_line(0, 3, 800, 3);
     pros::screen::print(TEXT_MEDIUM, 3, "Shooter Enc: %5d, Ang: %5d | Prox: %d", shooterEnc.get_position(), shooterEnc.get_angle(), optical.get_proximity());
     // pros::screen::erase_line(0, 4, 600, 5);
     // pros::screen::print(TEXT_MEDIUM, 4, "Front Enc rotation: %d", frontEnc.get_position());
-
     // pros::screen::print(TEXT_MEDIUM, 5, "Opical prox: %d", optical.get_proximity());
 
     // Refresh display every 100 ms
@@ -218,41 +245,3 @@ void stateHandler() {
     pros::delay(loopDelay); // while(pros::c::millis() < loopStartTime + loopDelay) {pros::delay(1);}    
     }
 }
-
-// **** old matchload code ****//
-    // while(matchloadState) {
-    //     fireCount = 0;
-    //     while(true) {
-    //         // fire
-    //         setCata(-127);
-
-    //         // pull back
-    //         while(cataEnc.get_position() < (FULL_PULLBACK_TICKS - 10000) && matchloadState) {pros::delay(5);}
-    //         fireCount++;
-    //         stopCata(pros::E_MOTOR_BRAKE_COAST);
-
-    //         // optical sensor
-    //         while(!(optical.get_proximity() < 150 && (optical.get_hue()) < 100 && optical.get_hue() > 80)){
-    //             pros::delay(5);
-    //         }
-
-    //         if(!matchloadState) { // || fireCount >= fireTarget
-    //             stopCata(pros::E_MOTOR_BRAKE_COAST);
-    //             states.setCataState(stateMachine::cata_state::PULLED_BACK);
-    //             // fireCount = fireTarget = 0;
-    //             break;
-    //         }
-    //     }
-    // }
-    
-    // while(matchloadState) {
-    //     while(true) {
-    //         setCata(-127);
-    //         pros::delay(5);
-
-    //         if(!matchloadState) {
-    //             stopCata(pros::E_MOTOR_BRAKE_COAST);
-    //             break;
-    //         }
-    //     }  
-    // }

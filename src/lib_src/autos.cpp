@@ -514,6 +514,7 @@ void progSkills() {
 	// globalPose.setPoint(24, 24 - BASE_Y_OFFSET, 0); // as far left as possible on matchload bar, right drive motor in line with edge of tile
 	globalPose.setPoint(22, 17, 0); // as far left as possible on matchload bar, right drive motor in line with edge of tile
 	int matchloadTimer = 26000; // 26000 ms - 26 seconds
+	int angleToGoal = 70;
 	// init
 	states.setShooterState(stateMachine::shooter_state::FIRE);
 
@@ -538,19 +539,20 @@ void progSkills() {
 
 	/** 1: Push two preloads in and line up to matchload bar */ 
 	pros::delay(100);
-	setMove(34, 320, 100, 100, 800); // 800 ms, DONT FORGET TO CHANGE
+	setMove(34, 320, 100, 100, 500); // 800 ms, DONT FORGET TO CHANGE
 	states.setIntakeState(stateMachine::intake_state::OUTTAKING);
 	pros::delay(400);
 	turn_target = 0;
 	waitUntilSettled(0);
-	setMoveToPoint(18, 25, 100, 100, 700, true); // (20, 25)
+	setMoveToPoint(20, 25, 100, 100, 700, true); // (20, 25)
 	states.setIntakeState(stateMachine::intake_state::OFF);
 	waitUntilSettled(0);
-	setMoveToPoint(120, 50, 0, 100, 800, false); // turn to face goal
+	// setMoveToPoint(120, 50, 0, 100, 800, false); // turn to face goal
+	setMove(0, angleToGoal, 0, 100, 800);
 	waitUntilSettled(0);
 
 	// Back up to bar
-	setMove(-6, inertial.get_heading(), 30, 40, 22000);
+	setMove(-6, angleToGoal, 30, 80, 22000);
 	pros::delay(200);
 	max_drive_power = 10;
 
@@ -563,11 +565,11 @@ void progSkills() {
 
 	/** 2: Cross field */
 	// get off of matchload bar
-	setMoveToPoint(36, 13, 60, 120, 800, false);
+	setMoveToPoint(36, 13, 60, 120, 700, false);
 	pros::delay(400);
 	max_translate_power = 100;
 	waitUntilSettled(0);
-	setMoveToPoint(108, 12, 100, 120, 2000, false);
+	setMoveToPoint(108, 12, 100, 120, 1900, false); // 2000 ms
 	waitUntilSettled(0);
 
 	/** 3: Score first few triballs in from side of goal */
@@ -667,29 +669,18 @@ void progSkills() {
 	setMove(20, 180, 120, 120, 500);
 	waitUntilSettled(0);
 	states.setIntakeState(stateMachine::intake_state::OFF);
-	setMoveToPoint(108, 128, 100, 100, 1000, true);
+	setMoveToPoint(108, 128, 100, 100, 900, true);
 	waitUntilSettled(0);
-
-
-	// Back to our hang bar
-	// setMoveToPoint(110, 111, 600, true);
-	// waitUntilSettled(0);
-	// setMoveToPoint(95, 64, 100, 120, 700, false);
-	// waitUntilSettled(0);
-	// setMoveToPoint(108, 31, 120, 120, 700, false);
-	// waitUntilSettled(0);
-	// setMove(-40, 225, 100, 100, 800);
-	// waitUntilSettled(0);
-
-	// setMoveToPoint(108, 14, 120, 120, 700, false);
-	// waitUntilSettled(0);
 
 	// // OPTIONAL : CLIMB
 	// leftClimb.set_value(true);
 	// rightClimb.set_value(true);
-	// setMoveToPoint(72, 12, 120, 120, 800, false);
-	// states.setShooterState(stateMachine::shooter_state::FIRE);
-	// waitUntilSettled(0);
-	// leftClimb.set_value(false);
-	// rightClimb.set_value(false);
+	states.setClimbState(stateMachine::climb_state::UP);
+	setMoveToPoint(70, 132, 0, 120, 1200, false);
+	pros::delay(400);
+	max_translate_power = 120;
+	states.setShooterState(stateMachine::shooter_state::FIRE);
+	waitUntilSettled(0);
+	states.setClimbState(stateMachine::climb_state::DOWN);
 }
+

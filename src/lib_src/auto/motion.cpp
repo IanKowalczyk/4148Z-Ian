@@ -19,16 +19,17 @@
 	// setMove(0, 90, 0, 100, 1000);        // 500 ms
 	// setMoveToPoint(0, 24, 1000, false);  // 750 ms
 
-double IDEAL_DRIVE_VELOCITY = 39.67; // Inches per second
-double IDEAL_TURN_VELOCITY = 180;    // Degrees per second
+// ********* RECOMMMENT LATER ********* //
+// double IDEAL_DRIVE_VELOCITY = 39.67; // Inches per second
+// double IDEAL_TURN_VELOCITY = 180;    // Degrees per second
 
 // **************** Movement Constants **************** //
-int DRIVE_SLEW_RATE = 120/15;   // 150 ms to accelerate = 15 iterations; 120 (basically max power) / 15 (iterations)
-int TURN_SLEW_RATE = 120/15;    // 150 ms to accelerate ... TUNE LATER
-int SETTLE_THRESHOLD = 5;       // 50 ms: 5 iterations * 10 ms loop // Used to be 50ms
-int NEAR_TARGET_THRESHOLD = 2;          // 2 inches
-double DISTANCE_SETTLE_THRESHOLD = 1;   // 1 inch
-double TURN_SETTLE_THRESHOLD = 1.5;       // 1.5 degrees
+// int DRIVE_SLEW_RATE = 120/15;   // 150 ms to accelerate = 15 iterations; 120 (basically max power) / 15 (iterations)
+// int TURN_SLEW_RATE = 120/15;    // 150 ms to accelerate ... TUNE LATER
+// int SETTLE_THRESHOLD = 5;       // 50 ms: 5 iterations * 10 ms loop // Used to be 50ms
+// int NEAR_TARGET_THRESHOLD = 2;          // 2 inches
+// double DISTANCE_SETTLE_THRESHOLD = 1;   // 1 inch
+// double TURN_SETTLE_THRESHOLD = 1.5;       // 1.5 degrees
 
 
 // **************** PID Objects **************** //
@@ -303,7 +304,7 @@ void move() {
     int startTime = pros::c::millis();
 
     // Local variables 
-    double initialPosition = (frontEnc.get_position() / 100) * DRIVE_DEG_TO_INCH_2IN;
+    double initialPosition = (frontEnc.get_position() / 100) * wheelDegreeToInch(TRACKING_WHEEL_DIAMETER);
     // double currentPosition;
     int turnError = 0;
     int drivePower, turnPower;
@@ -331,8 +332,8 @@ void move() {
         // currentPosition = ((frontEnc.get_position() / 100) * DRIVE_DEG_TO_INCH) - initialPosition;
         // driveError = driveTarget - (frontEnc.get_position() * DRIVE_DEG_TO_INCH);
 
-        // drive_position = rightFrontDrive.get_position() * DRIVE_DEG_TO_INCH_2IN;
-        drive_position = ((frontEnc.get_position() / 100) * DRIVE_DEG_TO_INCH_2IN) - initialPosition; // in inches
+        // drive_position = rightFrontDrive.get_position() * wheelDegreeToInch(TRACKING_WHEEL_DIAMETER);
+        drive_position = ((frontEnc.get_position() / 100) * wheelDegreeToInch(TRACKING_WHEEL_DIAMETER)) - initialPosition; // in inches
         // drive_error = int(drive_target - drive_position);
         drive_error = drive_target - drive_position;
         turnError = turn_target - inertial.get_heading();

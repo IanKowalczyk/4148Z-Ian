@@ -5,8 +5,8 @@ bool brakeReady = false;
 
 // Wing opcontrol
 bool wingsOut = false;
-void wingOpControl() {
-    if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)) {
+void wingOpControl(pros::controller_digital_e_t wingButton) {
+    if(controller.get_digital_new_press(wingButton)) {
         wingsOut = !wingsOut;
     }
     if(wingsOut) {
@@ -38,8 +38,14 @@ bool climbState = false;
 void climbOpControl() {
     if((controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y) || controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT))
     || controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)) {
-        climbState = !climbState;
-        leftClimb.set_value(climbState);
-        rightClimb.set_value(climbState);
+        if(states.climbStateIs(stateMachine::climb_state::DOWN)) {
+            states.setClimbState(stateMachine::climb_state::UP);
+        }
+        else {
+            states.setClimbState(stateMachine::climb_state::DOWN);
+        }
+        // climbState = !climbState;
+        // leftClimb.set_value(climbState);
+        // rightClimb.set_value(climbState);
     }
 }

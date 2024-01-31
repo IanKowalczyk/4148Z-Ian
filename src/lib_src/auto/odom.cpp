@@ -2,11 +2,11 @@
 
 
 // **** Constants **** //
-double FRONT_ENC_OFFSET = 1/4;      // Front enc offset to the left of tracking center (inches) // 1/4
-double SIDE_ENC_OFFSET = -3.5;       // Side enc offset to tracking center (inches) // old : 5.5 in
-double BASE_X_OFFSET = 13.5/2;      // robot base width: 13.5 in
-double BASE_Y_OFFSET = 14/2;        // robot base length: 14 in
-double TOTAL_Y_OFFSET = 17.5/2;     // robot length: 14 in + 3.5 in to tip of intake sled
+// double FRONT_ENC_OFFSET = 1/4;      // Front enc offset to the left of tracking center (inches) // 1/4
+// double SIDE_ENC_OFFSET = -3.5;       // Side enc offset to tracking center (inches) // old : 5.5 in
+// double BASE_X_OFFSET = 13.5/2;      // robot base width: 13.5 in
+// double BASE_Y_OFFSET = 14/2;        // robot base length: 14 in
+// double TOTAL_Y_OFFSET = 17.5/2;     // robot length: 14 in + 3.5 in to tip of intake sled
 
 // Points 
 Point globalPose;
@@ -37,11 +37,11 @@ void updatePosition() {
 
     // while(true) {
     // Update front encoder in inches
-    frontEncValue = (frontEnc.get_position() / 100)* DRIVE_DEG_TO_INCH_2IN; // (2.75 * M_PI) / 360
+    frontEncValue = (frontEnc.get_position() / 100)* wheelDegreeToInch(TRACKING_WHEEL_DIAMETER); // (2.75 * M_PI) / 360
     deltaFrontEncValue = frontEncValue - lastFrontEncValue;
     
     // Update side encoder in inches
-    sideEncValue = (sideEnc.get_position() / 100) * DRIVE_DEG_TO_INCH_2IN;
+    sideEncValue = (sideEnc.get_position() / 100) * wheelDegreeToInch(TRACKING_WHEEL_DIAMETER);
     // sideEncValue = 0;
     deltaSideEncValue = sideEncValue - lastSideEncValue;
 

@@ -3,12 +3,12 @@
 #include "main.h"
 #include <string>
 
-// Contstants
-extern int SHORT_PULLBACK_TICKS;
-extern int FULL_PULLBACK_TICKS;
-extern int MIN_FIRE_TIME;
-extern int PULLBACK_TIMEOUT;
-extern int PULLBACK_THRESHOLD;
+// ******* Shooter constants ******** //
+// extern int SHORT_PULLBACK_TICKS;
+// extern int FULL_PULLBACK_TICKS;
+// extern int MIN_FIRE_TIME;
+// extern int PULLBACK_TIMEOUT;
+// extern int PULLBACK_THRESHOLD;
 
 // Variables
 extern int pullbackCount;
@@ -30,7 +30,7 @@ extern void setMatchload(int numTimes, bool waitForCompletion);
 extern void shooterTask();
 
 // Opcontrol function
-extern void shooterOpControl();
-extern void matchloadOpControl();
+extern void shooterOpControl(pros::controller_digital_e_t shootButton);
+extern void matchloadOpControl(pros::controller_digital_e_t matchloadButton);
 
 #endif

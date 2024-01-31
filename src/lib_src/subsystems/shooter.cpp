@@ -1,11 +1,11 @@
 #include "lib_header/subsystems_h/shooter.h"
 
 // Shooter Constants
-int SHORT_PULLBACK_TICKS = 3000;  // In centidegrees (100 * degrees)  // 4500
-int FULL_PULLBACK_TICKS = 0;     // In centidegrees (100 * degrees) 
-int MIN_FIRE_TIME = 300;        // 200 ms // 380 ms
-int PULLBACK_TIMEOUT = 1000;    // 1000 ms
-int PULLBACK_THRESHOLD = 700;  // How close we want to get to the pullback value before stopping the cata (to mitigate overshoot)
+// int SHORT_PULLBACK_TICKS = 3000;  // In centidegrees (100 * degrees)  // 4500
+// int FULL_PULLBACK_TICKS = 0;     // In centidegrees (100 * degrees) 
+// int MIN_FIRE_TIME = 300;        // 200 ms // 380 ms
+// int PULLBACK_TIMEOUT = 1000;    // 1000 ms
+// int PULLBACK_THRESHOLD = 700;  // How close we want to get to the pullback value before stopping the cata (to mitigate overshoot)
 
 // Variables
 int pullbackCount = 0;
@@ -49,17 +49,17 @@ void setMatchload(int numTimes, bool waitForCompletion) {
 
 
 // **** Op control **** //
-void shooterOpControl() {
-    if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
+void shooterOpControl(pros::controller_digital_e_t shootButton) {
+    if(controller.get_digital_new_press(shootButton)) {
         if(states.shooterStateIs(stateMachine::shooter_state::PULLED_BACK)) {
             states.setShooterState(stateMachine::shooter_state::FIRE);
         }
     }
 }
 
-void matchloadOpControl() {
+void matchloadOpControl(pros::controller_digital_e_t matchloadButton) {
     // // static bool localMatchloadState = matchloadState;
-    if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)) {
+    if(controller.get_digital_new_press(matchloadButton)) {
         matchloadState = !matchloadState;
         controller.rumble("-");
     }

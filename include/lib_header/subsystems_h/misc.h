@@ -6,7 +6,7 @@
 extern bool brakeReady;
 
 // Wing Opcontrol 
-extern void wingOpControl();
+extern void wingOpControl(pros::controller_digital_e_t wingButton);
 
 // Brake Opcontrol
 extern void brakeOpControl();

@@ -9,6 +9,7 @@
 #include "lib_header/auto_h/pid.h"
 
 // robot_h
+#include "lib_header/robot_h/constants.h"
 #include "lib_header/robot_h/robotStates.h"
 #include "lib_header/robot_h/robot_config.h"
 
