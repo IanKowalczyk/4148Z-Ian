@@ -13,5 +13,7 @@ extern void brakeOpControl();
 
 // Climb Opcontrol
 extern void climbOpControl();
+extern void climbUp();
+extern void climbDown();
 
 #endif

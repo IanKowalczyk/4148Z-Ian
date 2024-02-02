@@ -10,7 +10,7 @@ void stateHandler() {
     states.setWingState(stateMachine::wing_state::WINGS_STOWED);
     states.setParkingBrakeState(stateMachine::parking_brake_state::BRAKE_OFF);
     states.setShooterState(stateMachine::shooter_state::PULLED_BACK);
-    states.setClimbState(stateMachine::climb_state::DOWN);
+    // states.setClimbState(stateMachine::climb_state::DOWN);
 
     // set sensor data rates
     inertial.set_data_rate(5);
@@ -23,8 +23,8 @@ void stateHandler() {
     setShooterBrakeMode(pros::E_MOTOR_BRAKE_COAST);
 
     // optical sensor initilization
-    optical.set_integration_time(40);   // 40 ms data refresh rate
-    optical.disable_gesture();
+    // optical.set_integration_time(40);   // 40 ms data refresh rate
+    // optical.disable_gesture();
     // optical.set_led_pwm(100);           // brightness
 
     // odom initialization
@@ -138,16 +138,17 @@ void stateHandler() {
 
 
     // ******** Climb state handler ******** //
-    if(states.climbStateChanged()) {
-        if(states.climbStateIs(stateMachine::climb_state::DOWN)) {
-            leftClimb.set_value(false);
-            rightClimb.set_value(false);
-        }
-        else if(states.climbStateIs(stateMachine::climb_state::UP)) {
-            leftClimb.set_value(true);
-            rightClimb.set_value(true);
-        }
-    }
+    // if(states.climbStateChanged()) {
+    //     if(states.climbStateIs(stateMachine::climb_state::DOWN)) {
+    //         leftClimb.set_value(false);
+    //         rightClimb.set_value(false);
+    //     }
+    //     else if(states.climbStateIs(stateMachine::climb_state::UP)) {
+    //         leftClimb.set_value(true);
+    //         rightClimb.set_value(true);
+    //     }
+    //     states.oldClimbState = states.climbState;
+    // }
 
 
     // ******** Parking brake state handler ******** //
@@ -172,6 +173,7 @@ void stateHandler() {
     //     brakeReady = true;
     // }
     // else {brakeReady = false;}
+
 
     // ******** Matchload ******** //
     if(matchloadState) {
@@ -224,10 +226,10 @@ void stateHandler() {
         pros::screen::print(TEXT_MEDIUM_CENTER, 4, "Shooter Enc: %d", shooterEnc.get_position());
         pros::screen::print(TEXT_MEDIUM_CENTER, 5, "Shooter Angle: %d", shooterEnc.get_angle());
         pros::screen::print(TEXT_MEDIUM_CENTER, 6, "Shooter Current: %d", leftShooter.get_current_draw() + rightShooter.get_current_draw());
-        pros::screen::print(TEXT_MEDIUM_CENTER, 7, "Opical prox: %d", optical.get_proximity());
+        // pros::screen::print(TEXT_MEDIUM_CENTER, 7, "Opical prox: %d", optical.get_proximity());
     }
     pros::screen::erase_line(0, 3, 800, 3);
-    pros::screen::print(TEXT_MEDIUM, 3, "Shooter Enc: %5d, Ang: %5d | Prox: %d", shooterEnc.get_position(), shooterEnc.get_angle(), optical.get_proximity());
+    pros::screen::print(TEXT_MEDIUM, 3, "Shooter Enc: %5d, Ang: %5d | Prox: ", shooterEnc.get_position(), shooterEnc.get_angle());
     // pros::screen::erase_line(0, 4, 600, 5);
     // pros::screen::print(TEXT_MEDIUM, 4, "Front Enc rotation: %d", frontEnc.get_position());
     // pros::screen::print(TEXT_MEDIUM, 5, "Opical prox: %d", optical.get_proximity());

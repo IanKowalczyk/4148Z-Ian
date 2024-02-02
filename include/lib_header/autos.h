@@ -25,7 +25,7 @@ extern void oldCurveTest();
 extern void curveTuning();
 
 /** @brief Parameter for defenseAuto */
-enum class defense_auto_mode{SOLO, ELIMS};
+enum class defense_auto_mode{FOUR_BALL, THREE_BALL};
 enum class offense_auto_mode{SAFE, RISKY};
 enum class sixBall_mode{BAR, MID};
 // enum progSkills_mode{LEFT, RIGHT};

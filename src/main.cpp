@@ -24,7 +24,7 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	pros::Task inertialInit([] {inertial.reset(false);});
+	pros::Task inertialInit([] {inertial.reset(true);});
 	pros::Task stateMachineTask(stateHandler);
 
 	pros::Task GUI(initGUI);
@@ -37,7 +37,7 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
-	// states.setClimbState(stateMachine::climb_state::DOWN); // THINK ABOUT THIS ONE
+	// climbDown(); // be careful with this one
 }
 
 /**
@@ -64,12 +64,22 @@ void competition_initialize() {}
  */
 pros::Task autoMovement(autoMovementTask);
 void autonomous() {
-	// init
+	// **** Init **** //
 	displayInfo = false;
-
-	// odom init
+	// odom init //
 	resetOdomSensors();
 	globalPose.setPoint(0.0, 0.0, 0);
+
+	// **** Extend moveToPoint test **** //
+	// setMoveToPoint(0, 24, 800, false);
+	// waitUntilNear(4, 0);
+	// extendMoveToPoint(12, 24, 100, 100, 1000, false);
+	// waitUntilNear(4, 0);
+	// extendMoveToPoint(0, 0, 100, 100, 1000, false);
+	// waitUntilSettled(500);
+	// setMove(0, 90, 1000);
+	// waitUntilSettled(0);
+
 	// globalPose.setPoint(103.5, 17, 1); // newSixBall() // top left of tile
 	// states.setWingState(stateMachine::wing_state::RIGHT_OUT);
 
@@ -95,24 +105,23 @@ void autonomous() {
 
 	// **** Autoselector **** //
 	// if(autoToRun == 1) {
-	// 	defenseAuto(defense_auto_mode::SOLO);
+		defenseAuto(defense_auto_mode::FOUR_BALL);
 	// }
 	// if(autoToRun == 2) {
-	// 	defenseAuto(defense_auto_mode::ELIMS);
+	// 	defenseAuto(defense_auto_mode::THREE_BALL);
 	// }
 	// if(autoToRun == 3) {
-	// 	fourBall();
-	// }
-	// if(autoToRun == 4) {
-		progSkills();
-	// }
-	// if(autoToRun == 5) {
 	// 	defenseSafe();
 	// }
-	// if(autoToRun == 6) {
-	// 	newSixBall(sixBall_mode::BAR);
+	// if(autoToRun == 4) {
+		// progSkills();
 	// }
-	
+	// if(autoToRun == 5) {
+	// 	newSixBall(sixBall_mode::MID);
+	// }
+	// if(autoToRun == 6) {
+		// newSixBall(sixBall_mode::BAR);
+	// }
 }
 
 /**

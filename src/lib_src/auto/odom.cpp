@@ -95,5 +95,4 @@ void updatePosition() {
 void resetOdomSensors() {
     frontEnc.reset_position();
     sideEnc.reset_position();
-    // frontEnc.reset();
 }

@@ -226,6 +226,24 @@ void chainMoveToPoint(std::vector<double> pose1, std::vector<double> power1, int
     setMoveToPoint(pose2[0], pose2[1], power2[0], power2[1], maxTime2, true);
 }
 
+void extendMove(double driveTarget, double turnTarget, int maxDrivePower, int maxTurnPower, int maxTime) {
+    drive_target = driveTarget;
+    turn_target = turnTarget;
+    max_drive_power = maxDrivePower;
+    max_turn_power = maxTurnPower;
+    max_time += maxTime;
+}
+
+void extendMoveToPoint(double targetX, double targetY, int maxTranslatePower, int maxRotatePower, int maxTime, bool reversed) {
+    target_x = targetX;
+    target_y = target_y;
+    max_translate_power = maxTranslatePower;
+    max_rotate_power = maxRotatePower;
+    max_time += max_time;
+    movement_reversed = reversed;
+}
+
+
 // ******** Wait Functions ******** //
 void waitUntilSettled(int msecDelay) {
     pros::delay(400);
@@ -255,6 +273,7 @@ void waitUntilSettled(int msecDelay) {
 }
 
 void waitUntilNear(double threshold, int msecDelay) {
+    int functionTime = pros::c::millis();
     pros::delay(400); // minimum move time
     if(states.driveAutoStateIs(stateMachine::drive_auto_state::MOVE)) {
         while(std::fabs(drive_error) > threshold && !driveSettled) {pros::delay(5);}
@@ -543,33 +562,33 @@ void moveToPoint() {
     }
 }
 
-void turn() {
-    int turnError;
-    int turnPower;
-    int startTime = pros::c::millis();
-    while(!driveSettled) {
-        // Calculate and constrain error
-        // turnError = turn_target - inertial.get_heading();
-        turnError = constrainAngle180(turn_target - inertial.get_heading());
+// void turn() {
+//     int turnError;
+//     int turnPower;
+//     int startTime = pros::c::millis();
+//     while(!driveSettled) {
+//         // Calculate and constrain error
+//         // turnError = turn_target - inertial.get_heading();
+//         turnError = constrainAngle180(turn_target - inertial.get_heading());
         
-        // Calculate and constrain turn power
-        turnPower = turnPID.calculateOutput(turnError);
-        turnPower = constrainValue(turnPower, max_turn_power, -max_turn_power);
+//         // Calculate and constrain turn power
+//         turnPower = turnPID.calculateOutput(turnError);
+//         turnPower = constrainValue(turnPower, max_turn_power, -max_turn_power);
 
-        // Exit conditions
-        if(std::fabs(turnError) <= TURN_SETTLE_THRESHOLD || (pros::c::millis() - startTime) > max_time) {
-            stopDrive(pros::E_MOTOR_BRAKE_BRAKE);
-            turnPID.reset();
-            driveSettled = true;
-        }
+//         // Exit conditions
+//         if(std::fabs(turnError) <= TURN_SETTLE_THRESHOLD || (pros::c::millis() - startTime) > max_time) {
+//             stopDrive(pros::E_MOTOR_BRAKE_BRAKE);
+//             turnPID.reset();
+//             driveSettled = true;
+//         }
 
 
-        if(pros::competition::is_autonomous()) {
-        pros::screen::erase_line(0, 3, 300, 3);
-        pros::screen::print(TEXT_MEDIUM_CENTER, 3, "Turn Target: %i, Error: %i, Output: %i", turn_target, turnError, turnPower);
-        }
+//         if(pros::competition::is_autonomous()) {
+//         pros::screen::erase_line(0, 3, 300, 3);
+//         pros::screen::print(TEXT_MEDIUM_CENTER, 3, "Turn Target: %i, Error: %i, Output: %i", turn_target, turnError, turnPower);
+//         }
 
-        // necessary delay - do not change
-        pros::delay(20);
-    }
-}
+//         // necessary delay - do not change
+//         pros::delay(20);
+//     }
+// }

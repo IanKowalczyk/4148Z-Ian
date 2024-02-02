@@ -127,6 +127,9 @@ extern void chainMove(std::vector<double> target1, std::vector<double> power1, i
                 std::vector<double> target2, std::vector<double> power2, int maxTime2, double threshold);
 extern void chainMoveToPoint(std::vector<double> pose1, std::vector<double> power1, int maxTime1, 
                         std::vector<double> pose2, std::vector<double> power2, int maxTime2, double threshold);
+extern void extendMove(double driveTarget, double turnTarget, int maxDrivePower, int maxTurnPower, int maxTime);
+
+extern void extendMoveToPoint(double targetX, double targetY, int maxTranslatePower, int maxRotatePower, int maxTime, bool reversed);
 
 // ******** Wait Functions ******** //
 /**

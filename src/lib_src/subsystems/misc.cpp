@@ -38,14 +38,24 @@ bool climbState = false;
 void climbOpControl() {
     if((controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y) || controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT))
     || controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)) {
-        if(states.climbStateIs(stateMachine::climb_state::DOWN)) {
-            states.setClimbState(stateMachine::climb_state::UP);
-        }
-        else {
-            states.setClimbState(stateMachine::climb_state::DOWN);
-        }
-        // climbState = !climbState;
-        // leftClimb.set_value(climbState);
-        // rightClimb.set_value(climbState);
+        // if(states.climbStateIs(stateMachine::climb_state::DOWN)) {
+        //     states.setClimbState(stateMachine::climb_state::UP);
+        // }
+        // else {
+        //     states.setClimbState(stateMachine::climb_state::DOWN);
+        // }
+        climbState = !climbState;
+        leftClimb.set_value(climbState);
+        rightClimb.set_value(climbState);
     }
+}
+
+void climbUp() {
+    leftClimb.set_value(true);
+    rightClimb.set_value(true);
+}
+
+void climbDown() {
+    leftClimb.set_value(false);
+    rightClimb.set_value(false);
 }
