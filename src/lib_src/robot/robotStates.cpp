@@ -10,7 +10,7 @@ void stateHandler() {
     states.setWingState(stateMachine::wing_state::WINGS_STOWED);
     states.setParkingBrakeState(stateMachine::parking_brake_state::BRAKE_OFF);
     states.setShooterState(stateMachine::shooter_state::PULLED_BACK);
-    // states.setClimbState(stateMachine::climb_state::DOWN);
+    states.setClimbState(stateMachine::climb_state::DOWN);
 
     // set sensor data rates
     inertial.set_data_rate(5);
@@ -110,7 +110,7 @@ void stateHandler() {
         }
     }
 
-        
+
     // ******** Wing state handler ******** //
     if(states.wingStateChanged()) {
         if(states.wingStateIs(stateMachine::wing_state::WINGS_STOWED)) {
@@ -142,12 +142,30 @@ void stateHandler() {
     //     if(states.climbStateIs(stateMachine::climb_state::DOWN)) {
     //         leftClimb.set_value(false);
     //         rightClimb.set_value(false);
+    //         states.oldClimbState = states.climbState;
     //     }
     //     else if(states.climbStateIs(stateMachine::climb_state::UP)) {
     //         leftClimb.set_value(true);
     //         rightClimb.set_value(true);
+    //         states.oldClimbState = states.climbState;
     //     }
-    //     states.oldClimbState = states.climbState;
+    //     else if(states.climbStateIs(stateMachine::climb_state::AUTO_BALANCE)) {
+    //         if(inertial.get_roll() > 5) {
+    //             // matchloadState = true;
+    //             pros::screen::set_eraser(COLOR_BLACK);
+    //             pros::screen::erase();
+    //             pros::screen::set_pen(COLOR_BLUE);
+    //             pros::screen::fill_rect(20, 20, 400, 400);
+    //         }
+    //         else {
+    //             pros::screen::set_eraser(COLOR_BLACK);
+    //             pros::screen::erase();
+    //             pros::screen::set_pen(COLOR_BLUE);
+    //             pros::screen::fill_rect(20, 20, 400, 400);
+    //             matchloadState = false;
+    //             states.oldClimbState = states.climbState;
+    //         }
+    //     }
     // }
 
 

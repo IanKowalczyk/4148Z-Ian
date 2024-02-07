@@ -65,5 +65,7 @@ extern void defenseSafe();
 */
 extern void progSkills();
 
+extern void progFirstHalf();
+
 
 #endif

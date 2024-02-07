@@ -17,8 +17,8 @@ public:
     enum class wing_state {WINGS_OUT, WINGS_STOWED, LEFT_OUT, RIGHT_OUT} wingState, oldWingState;
     const char* wingStateString[4] = {"WINGS OUT", "WINGS IN", "LEFT OUT", "RIGHT OUT"};
 
-    enum class climb_state {UP, DOWN} climbState, oldClimbState;
-    const char* climbStateString[2] = {"CLIMB UP", "CLIMB DOWN"};
+    enum class climb_state {UP, DOWN, AUTO_BALANCE} climbState, oldClimbState;
+    const char* climbStateString[3] = {"CLIMB UP", "CLIMB DOWN", "ON BAR"};
 
     enum class parking_brake_state {BRAKE_ON, BRAKE_OFF} parkingBrakeState, oldParkingBrakeState;
     const char* parkingBrakeStateString[2] = {"BRAKES ON", "BRAKES OFF"};

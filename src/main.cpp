@@ -37,7 +37,7 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
-	// climbDown(); // be careful with this one
+	climbDown(); // be careful with this one
 }
 
 /**
@@ -104,24 +104,25 @@ void autonomous() {
 	// sixBall(sixBall_mode::BAR);
 
 	// **** Autoselector **** //
-	// if(autoToRun == 1) {
-		defenseAuto(defense_auto_mode::FOUR_BALL);
-	// }
-	// if(autoToRun == 2) {
-	// 	defenseAuto(defense_auto_mode::THREE_BALL);
-	// }
-	// if(autoToRun == 3) {
-	// 	defenseSafe();
-	// }
-	// if(autoToRun == 4) {
-		// progSkills();
-	// }
-	// if(autoToRun == 5) {
-	// 	newSixBall(sixBall_mode::MID);
-	// }
-	// if(autoToRun == 6) {
-		// newSixBall(sixBall_mode::BAR);
-	// }
+	if(autoToRun == 1) {
+		newSixBall(sixBall_mode::BAR);
+		// defenseAuto(defense_auto_mode::FOUR_BALL);
+	}
+	if(autoToRun == 2) {
+		defenseAuto(defense_auto_mode::THREE_BALL);
+	}
+	if(autoToRun == 3) {
+		defenseSafe();
+	}
+	if(autoToRun == 4) {
+		progSkills();
+	}
+	if(autoToRun == 5) {
+		newSixBall(sixBall_mode::MID);
+	}
+	if(autoToRun == 6) {
+		newSixBall(sixBall_mode::BAR);
+	}
 }
 
 /**
@@ -155,7 +156,7 @@ void opcontrol() {
 		// **** Auto Macro **** //
 		if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT)) {
 			autoMovement.resume();
-			pros::Task progInDriver(progSkills);
+			pros::Task progInDriver(progFirstHalf);
 			while(controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) < 50) {pros::delay(20);}
 			progInDriver.suspend();
 			autoMovement.suspend();
