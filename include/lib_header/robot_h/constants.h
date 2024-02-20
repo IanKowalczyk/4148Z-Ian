@@ -18,7 +18,7 @@ extern int FULL_PULLBACK_TICKS;
 extern int MIN_FIRE_TIME;
 extern int PULLBACK_TIMEOUT;
 extern int PULLBACK_THRESHOLD;
-
+extern int FIRE_DELAY;
 
 // ******** Odom Constants ******** //
 extern double TRACKING_WHEEL_DIAMETER;

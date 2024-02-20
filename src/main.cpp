@@ -70,6 +70,7 @@ void autonomous() {
 	resetOdomSensors();
 	globalPose.setPoint(0.0, 0.0, 0);
 
+	// ******** TESTS ******** //
 	// **** Extend moveToPoint test **** //
 	// setMoveToPoint(0, 24, 800, false);
 	// waitUntilNear(4, 0);
@@ -102,27 +103,31 @@ void autonomous() {
 
 	// globalPose.setPoint(120, 14, 321); // angled to face triball near bar; right front wheel in line with intersection of tiles; (24, 14)
 	// sixBall(sixBall_mode::BAR);
+	// ******** ******** //
+
+	// safeSixBall();
+	// newSixBall(sixBall_mode::BAR);
 
 	// **** Autoselector **** //
-	if(autoToRun == 1) {
-		newSixBall(sixBall_mode::BAR);
-		// defenseAuto(defense_auto_mode::FOUR_BALL);
-	}
-	if(autoToRun == 2) {
-		defenseAuto(defense_auto_mode::THREE_BALL);
-	}
-	if(autoToRun == 3) {
-		defenseSafe();
-	}
-	if(autoToRun == 4) {
-		progSkills();
-	}
-	if(autoToRun == 5) {
-		newSixBall(sixBall_mode::MID);
-	}
-	if(autoToRun == 6) {
-		newSixBall(sixBall_mode::BAR);
-	}
+	// if(autoToRun == 1) {
+	// 	newSixBall(sixBall_mode::BAR);
+	// 	// defenseAuto(defense_auto_mode::FOUR_BALL);
+	// }
+	// if(autoToRun == 2) {
+	// 	defenseAuto(defense_auto_mode::THREE_BALL);
+	// }
+	// if(autoToRun == 3) {
+	// 	defenseSafe();
+	// }
+	// if(autoToRun == 4) {
+	// 	newProgSkillsMRL();
+	// }
+	// if(autoToRun == 5) {
+	// 	safeSixBall();
+	// }
+	// if(autoToRun == 6) {
+	// 	newSixBall(sixBall_mode::BAR);
+	// }
 }
 
 /**
@@ -143,6 +148,8 @@ void opcontrol() {
 	autoMovement.suspend();
 	controller.rumble("-");
 	// displayInfo = true;
+	states.setWingState(stateMachine::wing_state::WINGS_STOWED);
+	states.setIntakeState(stateMachine::intake_state::OFF);
 
 	// **** local variables **** //
 	int opcontrolStartTime = pros::c::millis();
@@ -171,7 +178,7 @@ void opcontrol() {
 		climbOpControl();							// Climb
 		// brakeOpControl();						// Brake
 
-		// **** Match timer **** //
+		// **** Match timer **** // move this to misc.cpp eventually
 		if(pros::c::millis() - opcontrolStartTime >= TEN_SECONDS_LEFT && pros::c::millis() - opcontrolStartTime < 110000) {
 			// rumble once every second at last 10 seconds
 			if(rumbleCount % 1000 == 0) {controller.rumble(".");}

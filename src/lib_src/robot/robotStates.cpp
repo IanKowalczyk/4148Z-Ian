@@ -219,7 +219,7 @@ void stateHandler() {
         // ** regular firing logic ** //
         if(states.shooterStateIs(stateMachine::shooter_state::PULLED_BACK)) {
             matchloadDelay += loopDelay;
-            if(matchloadDelay > 140) {
+            if(matchloadDelay > FIRE_DELAY) {
                 matchloadDelay = 0;
                 states.setShooterState(stateMachine::shooter_state::FIRE);
             }

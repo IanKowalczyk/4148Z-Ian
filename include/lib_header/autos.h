@@ -65,7 +65,10 @@ extern void defenseSafe();
 */
 extern void progSkills();
 
+extern void newProgSkillsMRL();
+extern void newProgSkillsRLM();
 extern void progFirstHalf();
 
+extern void safeSixBall();
 
 #endif
