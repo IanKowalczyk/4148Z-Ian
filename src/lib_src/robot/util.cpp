@@ -32,7 +32,7 @@
 // **** Match timer **** //
 void matchTimerRumble(int startTime) {
     static int rumbleCount = 0;
-    if(pros::c::millis() - startTime >= TEN_SECONDS_LEFT && pros::c::millis() - startTime < 110000) {
+    if(pros::c::millis() - startTime >= TEN_SECONDS_LEFT && pros::c::millis() - startTime < OPCONTROL_TIME + 1000) {
 			// rumble once every second at last 10 seconds
 			if(rumbleCount % 1000 == 0) {controller.rumble(".");}
 

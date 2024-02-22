@@ -71,7 +71,8 @@ double DRIVE_DEG_TO_INCH_2IN = (2.00 * M_PI) / 360; // 0.017453
 // double DRIVE_INCH_TO_DEG_2IN = 56.25;           // (1350 / 24) ~ 56.25 (don't use in this form)
 // double DRIVE_DEG_TO_INCH_2IN = 0.0177777777;    // (24 / 1350) ~ 0.01777777 (don't use in this form)
 
-/** TIMER CONSTANTS*/
+/** TIMER CONSTANTS */
+
 int OPCONTROL_TIME = 105000; // 105,000 ms / 105 s / 1m45s
 int TEN_SECONDS_LEFT =  OPCONTROL_TIME - 10000;     // 95,000 ms
 int THREE_SECONDS_LEFT = OPCONTROL_TIME - 3000; 	// 102,000 ms

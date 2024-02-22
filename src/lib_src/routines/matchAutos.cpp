@@ -33,7 +33,7 @@ void defenseElims() { // mid rush and pull back both triballs
 	waitUntilSettled(100);
 
 	// 2: Scoop top triball over to our side
-	setMove(-15.5, 280, 40, 120, 800);
+	setMove(-14.5, 280, 40, 120, 800); // move -15.5
         pros::delay(600);
 		states.setWingState(stateMachine::wing_state::RIGHT_OUT);
 	waitUntilSettled(0);
@@ -54,25 +54,41 @@ void defenseElims() { // mid rush and pull back both triballs
 	setMove(0, 90, 0, 100, 500);
 	waitUntilSettled(0);
 		states.setIntakeState(stateMachine::intake_state::OUTTAKING);
-    setMoveToPoint(62, 38, 120, 100, 800, false);
-	// setMove(22, 90, 120, 100, 600);
+    // setMoveToPoint(62, 38, 120, 100, 800, false);
+	setMove(25, 90, 120, 100, 700);
 	waitUntilSettled(0);
 	setMove(-10, 90, 120, 100, 410);
 	waitUntilSettled(0);
-    setMoveToPoint(62, 38, 120, 100, 800, false);
-	// setMove(13, 90, 120, 100, 600);
+    // setMoveToPoint(62, 38, 120, 100, 800, false);
+	setMove(15, 90, 120, 100, 700);
 	waitUntilSettled(0);
-	
+
 	// 4: Back to matchload bar
 	setMoveToPoint(42, 36, 600, true);
 	waitUntilSettled(0);
-	setMoveToPoint(34, 12, 100, 120, 900, true);
+	// setMoveToPoint(34, 12, 100, 120, 900, true); 
+    setMoveToPoint(15.5, 27, 80, 120, 800, true);
 	waitUntilSettled(0);
-	
+
+    // 5: Descore matchload triball
+    int descoreAngle = 131;
+    setMove(0, descoreAngle, 0, 100, 500);
+    waitUntilSettled(0);
+        states.setWingState(stateMachine::wing_state::RIGHT_OUT);
+        pros::delay(100);
+    setMove(16, descoreAngle, 120, 100, 700);
+    waitUntilSettled(200);
+    setMove(0, 110, 0, 100, 500);
+        pros::delay(300);
+        states.setWingState(stateMachine::wing_state::WINGS_STOWED);
+    waitUntilSettled(0);
+    setMove(0, descoreAngle, 0, 100, 500);
+    waitUntilSettled(0);
+
 	// 5: Push over alliance triball & hangbar triball
-	setMoveToPoint(60, 13, 0, 100, 1000, false);
-		pros::delay(350);
-		max_translate_power = 120;
+	setMoveToPoint(64, 11, 100, 120, 1100, false);
+		// pros::delay(350);
+		// max_translate_power = 120;
 	waitUntilSettled(0);
 
 	// 6: Final back to matchload bar, line up to bowl
