@@ -57,7 +57,6 @@ extern void sixBall(sixBall_mode s);
 */
 extern void fourBall();
 
-extern void defenseSafe();
 
 /** @brief Setup: Right side of Matchload Station, 45 deg --
  * 
@@ -65,10 +64,16 @@ extern void defenseSafe();
 */
 extern void progSkills();
 
-extern void newProgSkillsMRL();
+// progs
 extern void newProgSkillsRLM();
 extern void progFirstHalf();
+// actual prog
+extern void newProgSkillsMRL();
 
-extern void safeSixBall();
+// actual autos
+extern void defenseWP();
+extern void defenseElims();
+extern void sixBallWP();
+extern void sixBallElims();
 
 #endif
