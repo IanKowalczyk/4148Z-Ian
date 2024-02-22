@@ -105,7 +105,7 @@ void autonomous() {
 	// sixBall(sixBall_mode::BAR);
 	// ******** ******** //
 
-	// newSixBall(sixBall_mode::BAR);
+	// **** NEW AUTOS **** //
 	// sixBallWP();
 	// sixBallElims();
 	// defenseWP();
@@ -113,8 +113,7 @@ void autonomous() {
 
 	// **** Autoselector **** //
 	// if(autoToRun == 1) {
-	// 	// defenseAuto(defense_auto_mode::FOUR_BALL);
-	// 	defenseAuto(defense_auto_mode::THREE_BALL);
+	// 	defenseAuto(defense_auto_mode::THREE_BALL); // defenseAuto(defense_auto_mode::FOUR_BALL);
 	// }
 	// if(autoToRun == 2) {
 	// 	defenseWP();
@@ -129,8 +128,7 @@ void autonomous() {
 	// 	sixBallWP();
 	// }
 	// if(autoToRun == 6) {
-	// 	sixBallElims();
-	// 	// newSixBall(sixBall_mode::BAR);
+	// 	sixBallElims(); // newSixBall(sixBall_mode::BAR);
 	// }
 }
 
@@ -152,16 +150,13 @@ void opcontrol() {
 	autoMovement.suspend();
 	controller.rumble("-");
 	// displayInfo = true;
+
+	// **** default states **** //
 	states.setWingState(stateMachine::wing_state::WINGS_STOWED);
 	states.setIntakeState(stateMachine::intake_state::OFF);
 
 	// **** local variables **** //
 	int opcontrolStartTime = pros::c::millis();
-	int rumbleCount = 0;
-
-	// **** local constants **** //
-	int TEN_SECONDS_LEFT =  (105 - 10) * 1000; // 95,000 ms
-	int THREE_SECONDS_LEFT = (105 - 3) * 1000; 	// 102,000 ms
 
 	while(true) {
 		// **** Auto Macro **** //
@@ -174,25 +169,26 @@ void opcontrol() {
 		}
 
 		// **** Subsystems **** //
-		splitArcade(pros::E_MOTOR_BRAKE_COAST); 										// Drive
-		intakeOpControl(pros::E_CONTROLLER_DIGITAL_R2, pros::E_CONTROLLER_DIGITAL_R1);	// Intake
-		shooterOpControl(pros::E_CONTROLLER_DIGITAL_B);									// Shooter
-		wingOpControl(pros::E_CONTROLLER_DIGITAL_L1);	  								// Wings
-		matchloadOpControl(pros::E_CONTROLLER_DIGITAL_L2);								// Matchload
-		climbOpControl();							// Climb
-		// brakeOpControl();						// Brake
+		/* Drive */
+		splitArcade(pros::E_MOTOR_BRAKE_COAST);
+		/* Intake */
+		intakeOpControl(pros::E_CONTROLLER_DIGITAL_R2, 
+						pros::E_CONTROLLER_DIGITAL_R1);
+		/* Shooter */
+		shooterOpControl(pros::E_CONTROLLER_DIGITAL_B);
+		/* Wing */
+		wingOpControl(pros::E_CONTROLLER_DIGITAL_L1);
+		/* Matchload */
+		matchloadOpControl(pros::E_CONTROLLER_DIGITAL_L2);
+		/* Climb */
+		climbOpControl(pros::E_CONTROLLER_DIGITAL_Y, 
+					pros::E_CONTROLLER_DIGITAL_RIGHT,
+					pros::E_CONTROLLER_DIGITAL_DOWN);
+		/* Brake */
+		// brakeOpControl(pros::E_CONTROLLER_DIGITAL_X);
 
-		// **** Match timer **** // move this to misc.cpp eventually
-		if(pros::c::millis() - opcontrolStartTime >= TEN_SECONDS_LEFT && pros::c::millis() - opcontrolStartTime < 110000) {
-			// rumble once every second at last 10 seconds
-			if(rumbleCount % 1000 == 0) {controller.rumble(".");}
-
-			// rumble twice every second at last 3 seconds
-			if(pros::c::millis() - opcontrolStartTime >= THREE_SECONDS_LEFT) {
-				if(rumbleCount % 500 == 0) {controller.rumble(".");}
-			}
-			rumbleCount += 20;
-		}
+		// **** Util **** //
+		matchTimerRumble(opcontrolStartTime);		// Rumble for match time
 
 		// loop delay
 		pros::delay(20);	

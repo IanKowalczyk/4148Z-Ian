@@ -10,16 +10,18 @@
 
 // robot_h
 #include "lib_header/robot_h/constants.h"
-#include "lib_header/robot_h/robotStates.h"
+#include "lib_header/robot_h/gui.h"
 #include "lib_header/robot_h/robot_config.h"
+#include "lib_header/robot_h/robotStates.h"
+#include "lib_header/robot_h/util.h"
+
+// routines_h
+#include "lib_header/routines_h/matchAutos.h"
+#include "lib_header/routines_h/progSkills.h"
+#include "lib_header/routines_h/testAutos.h"
 
 // subsystems_h
-#include "lib_header/subsystems_h/shooter.h"
 #include "lib_header/subsystems_h/drive.h"
 #include "lib_header/subsystems_h/intake.h"
 #include "lib_header/subsystems_h/misc.h"
-
-// other files
-#include "lib_header/autos.h"
-#include "lib_header/gui.h"
-#include "lib_header/util.h"
+#include "lib_header/subsystems_h/shooter.h"

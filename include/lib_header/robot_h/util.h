@@ -5,6 +5,8 @@
 // ******** Constants ******** //
 // extern double PI;
 
+// **** Rumble for Match Timer **** //
+extern void matchTimerRumble(int startTime);
 
 // ******** Conversion Rates ******** //
 

@@ -1,4 +1,4 @@
-#include "lib_header/gui.h"
+#include "lib_header/robot_h/gui.h"
 
 bool displayInfo = false;
 int autoToRun = 1;
@@ -8,19 +8,19 @@ lv_res_t act1(lv_obj_t *btnm, const char *txt){
     // if(strcmp(txt, btnmMap[i]) == 0){
     autoToRun = 1;
     pros::screen::erase_line(0, 7, 600, 8);
-    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "AUTO TO RUN %d: %s", autoToRun, "DEFENSE 4 BALL");
+    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "AUTO TO RUN %d: %s", autoToRun, "UNKNOWN");
 	return LV_RES_OK; // return OK because the button matrix is not deleted
 }
 lv_res_t act2(lv_obj_t *btnm, const char *txt){
     autoToRun = 2;
     pros::screen::erase_line(0, 7, 600, 8);
-    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "AUTO TO RUN %d: %s", autoToRun, "DEFENSE 3 BALL");
+    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "AUTO TO RUN %d: %s", autoToRun, "DEFENSE WP - DESCORE");
 	return LV_RES_OK; // return OK because the button matrix is not deleted
 }
 lv_res_t act3(lv_obj_t *btnm, const char *txt){
     autoToRun = 3;
     pros::screen::erase_line(0, 7, 600, 8);
-    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "AUTO TO RUN %d: %s", autoToRun, "DEFENSE WP");
+    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "AUTO TO RUN %d: %s", autoToRun, "DEFENSE ELIMS - MID RUSH");
 	return LV_RES_OK; // return OK because the button matrix is not deleted
 }
 lv_res_t act4(lv_obj_t *btnm, const char *txt){

@@ -2,6 +2,9 @@
 #define CONSTANTS_H
 #include "main.h"
 
+// **** Auto to run **** //
+extern int autoToRun;
+
 // ******** Drive Constants ******** //
 extern double TURN_SENS;
 extern double DRIVE_BRAKE_THRESHOLD;
@@ -80,5 +83,9 @@ extern double DRIVE_DEG_TO_INCH_2IN;
 // extern double DRIVE_INCH_TO_DEG_2IN = 56.25;           // (1350 / 24) ~ 56.25 (don't use in this form)
 // extern double DRIVE_DEG_TO_INCH_2IN = 0.0177777777;    // (24 / 1350) ~ 0.01777777 (don't use in this form)
 
+// ******** Timer Constants ******** //
+extern int OPCONTROL_TIME;
+extern int TEN_SECONDS_LEFT;
+extern int THREE_SECONDS_LEFT;
 
 #endif

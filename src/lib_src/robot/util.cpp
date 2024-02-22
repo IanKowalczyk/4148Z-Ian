@@ -1,4 +1,4 @@
-#include "lib_header/util.h"
+#include "lib_header/robot_h/util.h"
 // #include <cmath>
 
 // // Math constants (why doesn't cmath work??)
@@ -29,6 +29,20 @@
 
 // }
 
+// **** Match timer **** //
+void matchTimerRumble(int startTime) {
+    static int rumbleCount = 0;
+    if(pros::c::millis() - startTime >= TEN_SECONDS_LEFT && pros::c::millis() - startTime < 110000) {
+			// rumble once every second at last 10 seconds
+			if(rumbleCount % 1000 == 0) {controller.rumble(".");}
+
+			// rumble twice every second at last 3 seconds
+			if(pros::c::millis() - startTime >= THREE_SECONDS_LEFT) {
+				if(rumbleCount % 500 == 0) {controller.rumble(".");}
+			}
+			rumbleCount += 20;
+	}
+}
 
 // ******** Util Functions ******** //
 
