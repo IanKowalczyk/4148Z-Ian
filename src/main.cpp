@@ -109,7 +109,8 @@ void autonomous() {
 	// defenseWP();	// 1
 	// defenseElims();	// 2
 	// sixBallWP();	// 4
-	sixBallElims();	// 5
+	// sixBallElims();	// 5
+	newProgSkillsMRL();	// 6
 
 	// **** Autoselector **** //
 	// if(autoToRun == 1) {

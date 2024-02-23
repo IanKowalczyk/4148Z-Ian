@@ -6,57 +6,55 @@ void newProgSkillsMRL() { // PUSHED MID, RIGHT, LEFT
 	globalPose.setPoint(22, 17, 0); // as far left as possible on matchload bar, right drive motor in line with edge of tile
 	int MATCHLOAD_TIME = 23000; // 23000 ms - 23 seconds
 	if(MATCHLOAD_TIME > 23000) {MATCHLOAD_TIME = 23000;}
-	int ANGLE_TO_GOAL = 66; // angle = 74
+	int ANGLE_TO_GOAL = 66.4; // angle = 74
 	states.setShooterState(stateMachine::shooter_state::FIRE);
 
 	/** 1: Push two preloads in and line up to matchload bar */ 
-	pros::delay(100);
+		pros::delay(100);
 	setMove(34, 320, 100, 100, 900); // 800 ms, DONT FORGET TO CHANGE
-	states.setIntakeState(stateMachine::intake_state::OUTTAKING);
-	pros::delay(400);
-	turn_target = 0;
+		states.setIntakeState(stateMachine::intake_state::OUTTAKING);
+		pros::delay(400);
+		turn_target = 0;
 	waitUntilSettled(0);
-	states.setShooterState(stateMachine::shooter_state::FIRE);
+		states.setShooterState(stateMachine::shooter_state::FIRE);
 	setMoveToPoint(25, 17, 80, 110, 1000, true); // (26, 17) // BACK TO BAR
-	states.setIntakeState(stateMachine::intake_state::OFF);
+		states.setIntakeState(stateMachine::intake_state::OFF);
 	waitUntilSettled(0);
 	// setMoveToPoint(120, 50, 0, 100, 800, false); // turn to face goal
-	setMove(0, ANGLE_TO_GOAL, 0, 100, 800);
+	setMove(0, ANGLE_TO_GOAL, 0, 120, 700);
 	waitUntilSettled(0);
-	states.setShooterState(stateMachine::shooter_state::FIRE);
-	// pros::delay(50);
 
 	// Back up to bar
 	setMove(-6.7, ANGLE_TO_GOAL, 60, 80, MATCHLOAD_TIME - 2000);
-	pros::delay(210);
-	max_drive_power = 10;
+		pros::delay(230);
+		max_drive_power = 10;
 
 	// Matchload
-	pros::delay(200);
-	matchloadState = true;
-	pros::delay(MATCHLOAD_TIME); // 28 seconds
-	matchloadState = false;
-	pros::delay(100);
+		pros::delay(400);
+		matchloadState = true;
+		pros::delay(MATCHLOAD_TIME); // 28 seconds
+		matchloadState = false;
+		pros::delay(100);
 	// states.setWingState(stateMachine::wing_state::WINGS_STOWED);
 
 	/** 2: Cross field */
 	// get off of matchload bar
-	states.setIntakeState(stateMachine::intake_state::OUTTAKING);
-	setMoveToPoint(36, 12, 60, 120, 750, false);
-	pros::delay(300);
-	max_translate_power = 120;
+		states.setIntakeState(stateMachine::intake_state::OUTTAKING);
+	setMoveToPoint(36, 12, 60, 120, 700, false);
+		pros::delay(300);
+		max_translate_power = 120;
 	waitUntilSettled(0);
 	setMoveToPoint(108, 11, 120, 120, 1800, false); // 100 max translate
 	waitUntilSettled(0);
 	
 	/** 3: Score first few triballs in from side of goal */
-	states.setWingState(stateMachine::wing_state::LEFT_OUT);
+		states.setWingState(stateMachine::wing_state::LEFT_OUT);
 	setMoveToPoint(130, 25, 100, 120, 600, false);
 	waitUntilSettled(0);
 	setMoveToPoint(132, 44, 90, 120, 800, false);
 	// states.setWingState(stateMachine::wing_state::LEFT_OUT);
-	pros::delay(400);
-	max_translate_power = 120;
+		pros::delay(400);
+		max_translate_power = 120;
 	waitUntilSettled(0);
 		// BACK UP AND PUSH AGAIN
 		setMove(-13, 0, 120, 120, 600);
@@ -70,8 +68,8 @@ void newProgSkillsMRL() { // PUSHED MID, RIGHT, LEFT
 	waitUntilSettled(0);
 
 	/** 4: Push from mid */
-	setMove(0, 270, 0, 100, 600);
-	states.setIntakeState(stateMachine::intake_state::INTAKING);
+	setMove(0, 270, 0, 120, 500);
+		states.setIntakeState(stateMachine::intake_state::INTAKING);
 	waitUntilSettled(0);
 	// states.setWingState(stateMachine::wing_state::LEFT_OUT);
 	setMoveToPoint(85, 34, 90, 120, 1000, false);	// (85, 35)
@@ -80,17 +78,17 @@ void newProgSkillsMRL() { // PUSHED MID, RIGHT, LEFT
 	waitUntilSettled(0);
 
 	setMoveToPoint(83, 73, 10, 100, 1000, false);
-	pros::delay(300);
-	max_translate_power = 100;
+		pros::delay(300);
+		max_translate_power = 100;
 	waitUntilSettled(0);
 	setMove(0, 90, 0, 100, 500);
 	waitUntilSettled(0);
-	states.setWingState(stateMachine::wing_state::WINGS_OUT);
-	states.setIntakeState(stateMachine::intake_state::OUTTAKING);
-	pros::delay(200);
+		states.setWingState(stateMachine::wing_state::WINGS_OUT);
+		states.setIntakeState(stateMachine::intake_state::OUTTAKING);
+		pros::delay(200);
 	setMoveToPoint(126, 66, 50, 100, 1400, false); // (126, 68)
-	pros::delay(400);
-	max_translate_power = 120;
+		pros::delay(400);
+		max_translate_power = 120;
 	// for(int i=0; i<(500/10); i++) {
 	// 	pros::delay(10);
 	// 	max_translate_power += 120/25;
@@ -108,7 +106,7 @@ void newProgSkillsMRL() { // PUSHED MID, RIGHT, LEFT
 	// FACE GOAL
 	setMoveToPoint(90, 72, 800, true);
 	waitUntilSettled(0);
-	states.setIntakeState(stateMachine::intake_state::INTAKING);
+		states.setIntakeState(stateMachine::intake_state::INTAKING);
 	setMoveToPoint(77, 30, 0, 100, 1300, true); // (77, 32)
 		pros::delay(260);
 		max_translate_power = 110;
@@ -137,18 +135,21 @@ void newProgSkillsMRL() { // PUSHED MID, RIGHT, LEFT
 		// waitUntilSettled(0);
 
 	/** JUST TURN AND PUSH FROM RIGHT SIDE*/
-		setMove(0, 60, 0, 100, 800);
+		setMove(0, 60, 0, 120, 500);
+			pros::delay(300);
+			states.setWingState(stateMachine::wing_state::WINGS_OUT);
+			states.setIntakeState(stateMachine::intake_state::OUTTAKING);
 		waitUntilSettled(0);
 
 	setMoveToPoint(126, 65, 800, false);
 	waitUntilSettled(0);
 		// SECOND PUSH
-		setMove(0, 90, 0, 100, 600);
+		setMove(0, 90, 0, 100, 500);
 		waitUntilSettled(0);
 		setMove(-15, 90, 120, 120, 600);
 		// states.setWingState(stateMachine::wing_state::LEFT_OUT);
 		waitUntilSettled(200);
-		setMove(20, 90, 120, 120, 700);
+		setMove(25, 90, 125, 120, 800, true);
 		waitUntilSettled(0);
 	states.setWingState(stateMachine::wing_state::WINGS_STOWED);
 	pros::delay(150);
@@ -157,10 +158,10 @@ void newProgSkillsMRL() { // PUSHED MID, RIGHT, LEFT
 	/** 5: Push diagonally from the left side */ 
 	setMoveToPoint(85, 54, 800, true);
 	waitUntilSettled(0);
-	states.setIntakeState(stateMachine::intake_state::INTAKING);
+		states.setIntakeState(stateMachine::intake_state::INTAKING);
 	setMoveToPoint(85, 108, 0, 100, 1250, false); // (85, 108)
-	pros::delay(300);
-	max_translate_power = 80;
+		pros::delay(300);
+		max_translate_power = 80;
 	waitUntilSettled(0);
 	setMove(16, 90, 1, 120, 900);
 		pros::delay(400);
@@ -168,20 +169,20 @@ void newProgSkillsMRL() { // PUSHED MID, RIGHT, LEFT
 	waitUntilSettled(0);
 	setMove(0, 160, 0, 100, 500);
 	waitUntilSettled(0);
-	states.setWingState(stateMachine::wing_state::WINGS_OUT);
-	states.setIntakeState(stateMachine::intake_state::OUTTAKING);
-	pros::delay(200);
+		states.setWingState(stateMachine::wing_state::WINGS_OUT);
+		states.setIntakeState(stateMachine::intake_state::OUTTAKING);
+		pros::delay(200);
 	// setMoveToPoint(96, 83, 70, 90, 800, false); // (98, 86)
 	// waitUntilSettled(0);
 	setMoveToPoint(126, 62, 900, false); // (125, 83)
 	waitUntilSettled(0);
 		// SECOND PUSH
-		setMove(0, 90, 0, 100, 600);
+		setMove(0, 90, 0, 120, 500);
 		waitUntilSettled(0);
 		setMove(-15, 90, 120, 120, 600);
 		// states.setWingState(stateMachine::wing_state::RIGHT_OUT);
 		waitUntilSettled(200);
-		setMove(20, 90, 120, 120, 800);
+		setMove(22, 90, 125, 120, 800, true);
 		waitUntilSettled(0);
 	states.setWingState(stateMachine::wing_state::WINGS_STOWED);
 	pros::delay(150);
@@ -189,27 +190,29 @@ void newProgSkillsMRL() { // PUSHED MID, RIGHT, LEFT
 
 	/** 7: Push from left side of goal */
 	setMoveToPoint(95, 74, 110, 120, 700, true); // (92, 70)
-	states.setWingState(stateMachine::wing_state::WINGS_STOWED);
+		states.setWingState(stateMachine::wing_state::WINGS_STOWED);
 	waitUntilSettled(0);
-	setMoveToPoint(114, 126, 120, 120, 1200, false); // hit hang bar at (108, 130) // (114, 130)
-	states.setIntakeState(stateMachine::intake_state::INTAKING);
-	pros::delay(650);
-	states.setWingState(stateMachine::wing_state::RIGHT_OUT);
+	setMoveToPoint(114, 140, 125, 125, 1300, false); // hit hang bar at (108, 130) // (114, 130)
+		states.setIntakeState(stateMachine::intake_state::INTAKING);
+		pros::delay(650);
+		states.setWingState(stateMachine::wing_state::RIGHT_OUT);
 	waitUntilSettled(0);
 	// states.setWingState(stateMachine::wing_state::WINGS_STOWED);
-	setMove(0, 130, 0, 100, 500);
+	setMove(0, 115, 0, 100, 500);
 	waitUntilSettled(0);
 	// setMoveToPoint(125, 112, 110, 120, 900, false); // (132, 116)
-	setMove(18, 130, 100, 100, 800);
+	setMove(17, 115, 120, 120, 600);
+		pros::delay(300);
+		turn_target = 120;
 	waitUntilSettled(0);
 
-	states.setIntakeState(stateMachine::intake_state::OUTTAKING);
-	setMoveToPoint(130, 88, 900, false);
+		states.setIntakeState(stateMachine::intake_state::OUTTAKING);
+	setMoveToPoint(130, 88, 120, 120, 900, false);
 	waitUntilSettled(0);
 		// SECOND PUSH
-		setMove(-10, 160, 120, 120, 500);
+		setMove(-12, 160, 120, 120, 500);
 		waitUntilSettled(200);
-		setMove(20, 160, 120, 120, 700);
+		setMove(22, 160, 125, 120, 700, true);
 		waitUntilSettled(0);
 	states.setWingState(stateMachine::wing_state::WINGS_STOWED);
 	// states.setIntakeState(stateMachine::intake_state::OFF);
@@ -226,15 +229,15 @@ void newProgSkillsMRL() { // PUSHED MID, RIGHT, LEFT
 	setMove(41, 270, 120, 100, 1000);
 	waitUntilSettled(0);
 	climbDown();
-	states.setShooterState(stateMachine::shooter_state::FIRE);
-	pros::delay(400);
+		states.setShooterState(stateMachine::shooter_state::FIRE);
+		pros::delay(400);
 	while(inertial.get_roll() > 8) {
-		matchloadState = true;
-		// setShooter(-100);
+		// matchloadState = true;
+		setShooter(-127);
 		pros::delay(5);
 	}
-	// setShooter(0);
-	matchloadState = false;
+	setShooter(0);
+	// matchloadState = false;
 }
 
 // ******** NOT IN USE ******** //
