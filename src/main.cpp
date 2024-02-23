@@ -106,29 +106,29 @@ void autonomous() {
 	// ******** ******** //
 
 	// **** NEW AUTOS **** //
-	// sixBallWP();
-	// sixBallElims();
-	// defenseWP();
-	defenseElims();
+	// defenseWP();	// 1
+	// defenseElims();	// 2
+	// sixBallWP();	// 4
+	sixBallElims();	// 5
 
 	// **** Autoselector **** //
 	// if(autoToRun == 1) {
-	// 	defenseAuto(defense_auto_mode::THREE_BALL); // defenseAuto(defense_auto_mode::FOUR_BALL);
-	// }
-	// if(autoToRun == 2) {
 	// 	defenseWP();
 	// }
-	// if(autoToRun == 3) {
+	// if(autoToRun == 2) {
 	// 	defenseElims();
 	// }
-	// if(autoToRun == 4) {
-	// 	newProgSkillsMRL();
+	// if(autoToRun == 3) {
+	// 	defenseAuto(defense_auto_mode::THREE_BALL); // defenseAuto(defense_auto_mode::FOUR_BALL);
 	// }
-	// if(autoToRun == 5) {
+	// if(autoToRun == 4) {
 	// 	sixBallWP();
 	// }
-	// if(autoToRun == 6) {
+	// if(autoToRun == 5) {
 	// 	sixBallElims(); // newSixBall(sixBall_mode::BAR);
+	// }
+	// if(autoToRun == 6) {
+	// 	newProgSkillsMRL();
 	// }
 }
 
@@ -166,6 +166,7 @@ void opcontrol() {
 			while(controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) < 50) {pros::delay(20);}
 			progInDriver.suspend();
 			autoMovement.suspend();
+			matchloadState = false;
 		}
 
 		// **** Subsystems **** //
