@@ -32,12 +32,13 @@ void stateHandler() {
 	globalPose.setPoint(0.0, 0.0, 0);
 
     // local variables
-    int loopDelay = 10;
-    int fireCount = 0;
+    int loopDelay = 10; // refresh delay for loop
+    int fireCount = 0;  // time for 
     int intakeCount = 0;
     int matchloadDelay = 0;
     int rumbleCount = 0;
     int displayCount = 0;
+    // bool passedZero = false;    // shooter has shot once?
 
     // matchload first loop
     bool matchloadFirstLoop = false;
@@ -83,6 +84,12 @@ void stateHandler() {
     if(states.shooterStateChanged()) {
         if(states.shooterStateIs(stateMachine::shooter_state::FIRE)) {
             if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 3, "SHOOTER FIRED");}
+            // if((shooterEnc.get_position()/100) > 330) {passedZero = true;}
+            // setShooter(-127);
+            // if(passedZero) {
+            //     states.setShooterState(stateMachine::shooter_state::SHORT_PULLBACK);
+            // }
+
             setShooter(-127);
             fireCount += loopDelay;
             if(fireCount > MIN_FIRE_TIME) {
@@ -92,6 +99,7 @@ void stateHandler() {
         }
 
         if(states.shooterStateIs(stateMachine::shooter_state::SHORT_PULLBACK)) {
+            // passedZero = false;
             // if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 2, "SHORT PULLBACK, Volt: %d", cataMotors.get_voltages());}
             if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 3, "PULLING BACK");}
             setShooter(-127);
@@ -105,6 +113,7 @@ void stateHandler() {
         if(states.shooterStateIs(stateMachine::shooter_state::PULLED_BACK)) {
             if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 3, "PULLED BACK !!!!!!!");}
             // stopCata(pros::E_MOTOR_BRAKE_COAST);
+            // passedZero = false;
             pullbackCount = 0;
             states.oldShooterState = states.shooterState;
         }
@@ -219,7 +228,7 @@ void stateHandler() {
         // ** regular firing logic ** //
         if(states.shooterStateIs(stateMachine::shooter_state::PULLED_BACK)) {
             matchloadDelay += loopDelay;
-            if(matchloadDelay > FIRE_DELAY) {
+            if(matchloadDelay >= FIRE_DELAY) {
                 matchloadDelay = 0;
                 states.setShooterState(stateMachine::shooter_state::FIRE);
             }
@@ -247,7 +256,7 @@ void stateHandler() {
         // pros::screen::print(TEXT_MEDIUM_CENTER, 7, "Opical prox: %d", optical.get_proximity());
     }
     pros::screen::erase_line(0, 3, 800, 3);
-    pros::screen::print(TEXT_MEDIUM, 3, "Shooter Enc: %5d, Ang: %5d | Prox: ", shooterEnc.get_position(), shooterEnc.get_angle());
+    pros::screen::print(TEXT_MEDIUM, 3, "Shooter Enc: %5d, Ang: %5d | Passed ?  ", shooterEnc.get_position(), shooterEnc.get_angle());
     // pros::screen::erase_line(0, 4, 600, 5);
     // pros::screen::print(TEXT_MEDIUM, 4, "Front Enc rotation: %d", frontEnc.get_position());
     // pros::screen::print(TEXT_MEDIUM, 5, "Opical prox: %d", optical.get_proximity());

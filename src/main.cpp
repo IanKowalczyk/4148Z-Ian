@@ -110,27 +110,28 @@ void autonomous() {
 	// defenseElims();	// 2
 	// sixBallWP();	// 4
 	// sixBallElims();	// 5
-	newProgSkillsMRL();	// 6
+	// newProgSkillsMRL();	// 6
 
 	// **** Autoselector **** //
-	// if(autoToRun == 1) {
-	// 	defenseWP();
-	// }
-	// if(autoToRun == 2) {
-	// 	defenseElims();
-	// }
-	// if(autoToRun == 3) {
-	// 	defenseAuto(defense_auto_mode::THREE_BALL); // defenseAuto(defense_auto_mode::FOUR_BALL);
-	// }
-	// if(autoToRun == 4) {
-	// 	sixBallWP();
-	// }
-	// if(autoToRun == 5) {
-	// 	sixBallElims(); // newSixBall(sixBall_mode::BAR);
-	// }
-	// if(autoToRun == 6) {
-	// 	newProgSkillsMRL();
-	// }
+	if(autoToRun == 1) {
+		defenseWP();
+	}
+	if(autoToRun == 2) {
+		defenseElims();
+	}
+	if(autoToRun == 3) {
+		newSixBall(sixBall_mode::BAR); 
+		 // defenseAuto(defense_auto_mode::THREE_BALL); // defenseAuto(defense_auto_mode::FOUR_BALL);
+	}
+	if(autoToRun == 4) {
+		sixBallWP();
+	}
+	if(autoToRun == 5) {
+		sixBallElims(); //
+	}
+	if(autoToRun == 6) {
+		newProgSkillsMRL();
+	}
 }
 
 /**

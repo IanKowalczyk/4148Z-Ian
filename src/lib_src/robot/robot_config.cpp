@@ -28,7 +28,7 @@ pros::Motor_Group shooterMotors({leftShooter, rightShooter});
 pros::Imu inertial(5); // old = 18
 pros::Rotation frontEnc(4, false);  // not reversed
 pros::Rotation sideEnc(14, false);   // not reversed
-pros::Rotation shooterEnc(17, true);
+pros::Rotation shooterEnc(17, true); // reversed or no???
 // pros::Optical optical(13, 40);
 
 // Digital I/O

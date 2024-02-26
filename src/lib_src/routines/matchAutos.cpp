@@ -510,7 +510,7 @@ void newSixBall(sixBall_mode s) { // GOOD
 	// if(s == sixBall_mode::BAR) {
 		setMove(0, 90, 0, 100, 600, false);
 		waitUntilSettled(0);
-		states.setWingState(stateMachine::wing_state::WINGS_OUT);
+		states.setWingState(stateMachine::wing_state::RIGHT_OUT);
 		states.setIntakeState(stateMachine::intake_state::OFF);
 		setMove(36, 92, 120, 100, 900);
 		states.setIntakeState(stateMachine::intake_state::OUTTAKING);
