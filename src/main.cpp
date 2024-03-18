@@ -26,7 +26,6 @@ void on_center_button() {
 void initialize() {
 	pros::Task inertialInit([] {inertial.reset(true);});
 	pros::Task stateMachineTask(stateHandler);
-
 	pros::Task GUI(initGUI);
 	// setShooterBrakeMode(pros::E_MOTOR_BRAKE_COAST);
 }
@@ -165,9 +164,13 @@ void opcontrol() {
 		if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT)) {
 			autoMovement.resume();
 			pros::Task progInDriver(progFirstHalf);
+			// exit once driver moves joystick
 			while(controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) < 50) {pros::delay(20);}
 			progInDriver.suspend();
 			autoMovement.suspend();
+			// set default states
+			states.setWingState(stateMachine::wing_state::WINGS_STOWED);
+			states.setIntakeState(stateMachine::intake_state::OFF);
 			matchloadState = false;
 		}
 
@@ -191,7 +194,7 @@ void opcontrol() {
 		// brakeOpControl(pros::E_CONTROLLER_DIGITAL_X);
 
 		// **** Util **** //
-		matchTimerRumble(opcontrolStartTime);		// Rumble for match time
+		matchTimerRumble(opcontrolStartTime);	// Rumble for match time
 
 		// loop delay
 		pros::delay(20);	

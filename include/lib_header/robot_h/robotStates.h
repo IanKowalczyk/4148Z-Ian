@@ -8,19 +8,19 @@ struct stateMachine{
 private:
 public:
     // Subsystem states
-    enum class intake_state {OFF, INTAKING, OUTTAKING} intakeState, oldIntakeState;
+    enum class intake_state {NULL_STATE, OFF, INTAKING, OUTTAKING} intakeState, oldIntakeState;
     const char* intakeStateString[3] = {"OFF", "INTAKING", "OUTTAKING"};
 
-    enum class shooter_state {FIRE, SHORT_PULLBACK, PULLED_BACK} shooterState, oldShooterState, defaultPullback = shooter_state::SHORT_PULLBACK;
+    enum class shooter_state {NULL_STATE, FIRE, SHORT_PULLBACK, PULLED_BACK} shooterState, oldShooterState, defaultPullback = shooter_state::SHORT_PULLBACK;
     const char* shooterStateString[3] = {"FIRE", "SHORT PULLBACK", "PULLED BACK"};
 
-    enum class wing_state {WINGS_OUT, WINGS_STOWED, LEFT_OUT, RIGHT_OUT} wingState, oldWingState;
+    enum class wing_state {NULL_STATE, WINGS_OUT, WINGS_STOWED, LEFT_OUT, RIGHT_OUT} wingState, oldWingState;
     const char* wingStateString[4] = {"WINGS OUT", "WINGS IN", "LEFT OUT", "RIGHT OUT"};
 
-    enum class climb_state {UP, DOWN, AUTO_BALANCE} climbState, oldClimbState;
+    enum class climb_state {NULL_STATE, UP, DOWN, AUTO_BALANCE} climbState, oldClimbState;
     const char* climbStateString[3] = {"CLIMB UP", "CLIMB DOWN", "ON BAR"};
 
-    enum class parking_brake_state {BRAKE_ON, BRAKE_OFF} parkingBrakeState, oldParkingBrakeState;
+    enum class parking_brake_state {NULL_STATE, BRAKE_ON, BRAKE_OFF} parkingBrakeState, oldParkingBrakeState;
     const char* parkingBrakeStateString[2] = {"BRAKES ON", "BRAKES OFF"};
 
     // Drive auto states

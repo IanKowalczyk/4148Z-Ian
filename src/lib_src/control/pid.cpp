@@ -1,4 +1,4 @@
-#include "lib_header/auto_h/pid.h"
+#include "lib_header/control_h/pid.h"
 
 double PID::calculateOutput(double new_error) { //, double upperBound, double lowerBound
     error = new_error;

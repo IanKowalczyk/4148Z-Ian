@@ -4,13 +4,20 @@ stateMachine states;
 bool runStateHandler = false;
 
 void stateHandler() {
+    // initialize old states
+    states.oldIntakeState = stateMachine::intake_state::NULL_STATE;
+    states.oldShooterState = stateMachine::shooter_state::NULL_STATE;
+    states.oldWingState = stateMachine::wing_state::NULL_STATE;
+    states.oldClimbState = stateMachine::climb_state::NULL_STATE;
+    states.oldParkingBrakeState = stateMachine::parking_brake_state::NULL_STATE;
+
     // default states
     matchloadState = false;
     states.setIntakeState(stateMachine::intake_state::OFF);
-    states.setWingState(stateMachine::wing_state::WINGS_STOWED);
-    states.setParkingBrakeState(stateMachine::parking_brake_state::BRAKE_OFF);
     states.setShooterState(stateMachine::shooter_state::PULLED_BACK);
+    states.setWingState(stateMachine::wing_state::WINGS_STOWED);
     states.setClimbState(stateMachine::climb_state::DOWN);
+    states.setParkingBrakeState(stateMachine::parking_brake_state::BRAKE_OFF);
 
     // set sensor data rates
     inertial.set_data_rate(5);

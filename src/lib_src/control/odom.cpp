@@ -1,12 +1,4 @@
-#include "lib_header/auto_h/odom.h"
-
-
-// **** Constants **** //
-// double FRONT_ENC_OFFSET = 1/4;      // Front enc offset to the left of tracking center (inches) // 1/4
-// double SIDE_ENC_OFFSET = -3.5;       // Side enc offset to tracking center (inches) // old : 5.5 in
-// double BASE_X_OFFSET = 13.5/2;      // robot base width: 13.5 in
-// double BASE_Y_OFFSET = 14/2;        // robot base length: 14 in
-// double TOTAL_Y_OFFSET = 17.5/2;     // robot length: 14 in + 3.5 in to tip of intake sled
+#include "lib_header/control_h/odom.h"
 
 // Points 
 Point globalPose;

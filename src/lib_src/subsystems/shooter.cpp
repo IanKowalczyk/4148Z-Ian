@@ -1,12 +1,5 @@
 #include "lib_header/subsystems_h/shooter.h"
 
-// Shooter Constants
-// int SHORT_PULLBACK_TICKS = 3000;  // In centidegrees (100 * degrees)  // 4500
-// int FULL_PULLBACK_TICKS = 0;     // In centidegrees (100 * degrees) 
-// int MIN_FIRE_TIME = 300;        // 200 ms // 380 ms
-// int PULLBACK_TIMEOUT = 1000;    // 1000 ms
-// int PULLBACK_THRESHOLD = 700;  // How close we want to get to the pullback value before stopping the cata (to mitigate overshoot)
-
 // Variables
 int pullbackCount = 0;
 
@@ -14,7 +7,6 @@ int pullbackCount = 0;
 bool matchloadState = false;
 int triballsFired = 0;
 int triballFireTarget = 0;
-
 
 // **** Helper functions **** //
 void setShooter(int volt) {

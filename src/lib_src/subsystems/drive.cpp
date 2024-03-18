@@ -1,12 +1,6 @@
 #include "lib_header/subsystems_h/drive.h"
 
-// ******** Drive Constants ******** //
-// double TURN_SENS = 0.8;
-// double DRIVE_BRAKE_THRESHOLD = 45;  // 45 RPM
-
-
 // ******** Drive Helper Functions ******** //
-
 void setDrive(int leftVolt, int rightVolt) {
     leftDrive.move(leftVolt);
     rightDrive.move(rightVolt);
@@ -27,7 +21,7 @@ void splitArcade(pros::motor_brake_mode_e_t driveBrakeMode) {
     // Read inputs from joysticks 
     double forwardPower = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
     double turnPower = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) * TURN_SENS;
-    // Deadzone to prevent drift
+    // Deadzone to prevent drift // 15 => 1.5 volts
     if(fabs(forwardPower) <= 15) { forwardPower = 0;}
     if(fabs(turnPower) <= 15) { turnPower = 0;}
     // Output 

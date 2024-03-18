@@ -2,21 +2,6 @@
 #define ODOM_H
 #include "main.h"
 
-// **** Constants **** //
-/** @brief Front encoder distance in inches from tracking center */ 
-extern double FRONT_ENC_OFFSET;
-
-/** @brief Side encoder distance in inches from tracking center */
-extern double SIDE_ENC_OFFSET;
-
-/** @brief X-offset from center of bot to side of base; 13.5/2 */
-extern double BASE_X_OFFSET;
-
-/** @brief Y-offset from center of bot to front of base; 14/2 */
-extern double BASE_Y_OFFSET;
-
-/** @brief Y-offset from center of bot to tip of intake; 17.5/2*/
-extern double TOTAL_Y_OFFSET;
 
 /**
  * @brief Class that creates a point with x, y coordinates and an orientation

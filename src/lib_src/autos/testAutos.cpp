@@ -1,4 +1,4 @@
-#include "lib_header/routines_h/testAutos.h"
+#include "lib_header/autos_h/testAutos.h"
 
 // ******** Test Autos ******** //
 void autoFunctionTest() {
