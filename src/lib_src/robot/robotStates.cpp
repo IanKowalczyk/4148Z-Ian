@@ -101,7 +101,7 @@ void stateHandler() {
 
     // TODO - Better firing logic (e.g. fire, wait until sensor jumps back to zero-ish, then pull back)
     // ******** Shooter state handler ******** // 
-    if(states.shooterStateChanged()) {
+    if(states.shooterStateChanged() && oneIntakeMode) {
         if(states.shooterStateIs(stateMachine::shooter_state::FIRE)) {
             if(displayInfo) {pros::screen::print(TEXT_MEDIUM_CENTER, 3, "SHOOTER FIRED");}
             // if((shooterEnc.get_position()/100) > 330) {passedZero = true;}
@@ -223,7 +223,7 @@ void stateHandler() {
 
 
     // ******** Matchload ******** //
-    if(matchloadState) {
+    if(matchloadState && oneIntakeMode) {
         matchloadFirstLoop = true;
         // optical.set_led_pwm(100);
         // rumble every second to signal we are in matchload state

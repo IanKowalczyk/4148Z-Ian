@@ -42,7 +42,7 @@ void setMatchload(int numTimes, bool waitForCompletion) {
 
 // **** Op control **** //
 void shooterOpControl(pros::controller_digital_e_t shootButton) {
-    if(controller.get_digital_new_press(shootButton)) {
+    if(controller.get_digital_new_press(shootButton) && oneIntakeMode) {
         if(states.shooterStateIs(stateMachine::shooter_state::PULLED_BACK)) {
             states.setShooterState(stateMachine::shooter_state::FIRE);
         }
@@ -51,7 +51,7 @@ void shooterOpControl(pros::controller_digital_e_t shootButton) {
 
 void matchloadOpControl(pros::controller_digital_e_t matchloadButton) {
     // // static bool localMatchloadState = matchloadState;
-    if(controller.get_digital_new_press(matchloadButton)) {
+    if(controller.get_digital_new_press(matchloadButton) && oneIntakeMode) {
         matchloadState = !matchloadState;
         controller.rumble("-");
     }

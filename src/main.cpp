@@ -109,7 +109,7 @@ void autonomous() {
 	}
 	if(autoToRun == 3) {
 		newSixBall(sixBall_mode::BAR); 
-		 // defenseAuto(defense_auto_mode::THREE_BALL); // defenseAuto(defense_auto_mode::FOUR_BALL);
+		// defenseAuto(defense_auto_mode::THREE_BALL); // defenseAuto(defense_auto_mode::FOUR_BALL);
 	}
 	if(autoToRun == 4) {
 		sixBallWP();
