@@ -19,7 +19,13 @@ extern pros::Motor rightBackDrive;
 // Subsystem motors
 extern pros::Motor leftShooter;
 extern pros::Motor rightShooter;
+
+// one motor intake
 extern pros::Motor intake;
+
+// two motor intake
+extern pros::Motor leftIntake; 
+extern pros::Motor rightIntake; 
 
 // Motor Groups
 extern pros::Motor_Group leftDrive;

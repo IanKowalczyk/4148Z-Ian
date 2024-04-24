@@ -26,7 +26,10 @@ void stateHandler() {
     shooterEnc.set_data_rate(5);
 
     // default brake modes
-    intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    // intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    // leftIntake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    // rightIntake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    setIntakeBrakeMode(pros::E_MOTOR_BRAKE_COAST);
     setShooterBrakeMode(pros::E_MOTOR_BRAKE_COAST);
 
     // optical sensor initilization
@@ -64,15 +67,18 @@ void stateHandler() {
     // ******** Intake state handler ******** //
     if(states.intakeStateChanged()) {
         if(states.intakeStateIs(stateMachine::intake_state::OFF)) {
-            intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-            intake.brake();
+            // intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+            // intake.brake();
+            stopIntake(pros::E_MOTOR_BRAKE_COAST);
             intakeCount = 0;
         }
         else if(states.intakeStateIs(stateMachine::intake_state::INTAKING)) {
-            intake.move(127);
+            // intake.move(127);
+            setIntake(127);
         }
         else if(states.intakeStateIs(stateMachine::intake_state::OUTTAKING)) {
-            intake.move(-127);
+            // intake.move(-127);
+            setIntake(-127);
         }
         states.oldIntakeState = states.intakeState;
     }
@@ -80,8 +86,15 @@ void stateHandler() {
     // If triball in intake, rumble controller
     if(states.intakeStateIs(stateMachine::intake_state::INTAKING)) {
         intakeCount += loopDelay;
-        if(intakeCount > 200 && intake.get_current_draw() > 1500) {
-            controller.rumble("-");
+        // if(intakeCount > 200 && intake.get_current_draw() > 1500) {
+        //     controller.rumble("-");
+        if(intakeCount > 200) {
+            if(oneIntakeMode) {
+                if(intake.get_current_draw() > 1500) {controller.rumble("-");}
+            }
+            else {
+                if(rightIntake.get_current_draw() > 1500) {controller.rumble("-");}
+            }
         }
     }
     else {intakeCount = 0;}

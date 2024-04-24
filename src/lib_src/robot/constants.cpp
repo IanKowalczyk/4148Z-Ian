@@ -1,5 +1,8 @@
 #include "lib_header/robot_h/constants.h"
 
+// **** Global flags **** //
+bool oneIntakeMode;
+
 // ******** SUBSYSTEM Constants ******** //
 // Drive
 double TURN_SENS = 0.8;
