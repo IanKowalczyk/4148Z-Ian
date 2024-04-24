@@ -102,7 +102,8 @@ void autonomous() {
 
 	// **** Autoselector **** //
 	if(autoToRun == 1) {
-		defenseWP();
+		// defenseWP();
+		sixBallElims();
 	}
 	if(autoToRun == 2) {
 		defenseElims();
