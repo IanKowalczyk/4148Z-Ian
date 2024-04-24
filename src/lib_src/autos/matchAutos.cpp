@@ -253,7 +253,7 @@ void sixBallElims() { // mid rush, guaranteed? 5 ball (maybe) hopefully
 	
 	// 3: Back to matchload bar
 	int descoreAngle = 51;
-	setMoveToPoint(109, 22, 120, 125, 1100, true); // (109, 18)
+	setMoveToPoint(109, 18, 120, 125, 1100, true); // (109, 22)
 	waitUntilSettled(0);
 	setMove(0, 330, 0, 100, 500); 
 		pros::delay(200);
@@ -271,12 +271,12 @@ void sixBallElims() { // mid rush, guaranteed? 5 ball (maybe) hopefully
 	waitUntilSettled(0);
 	
 	// 5: Score first four triballs from side of goal
-	setMove(0, 70, 0, 120, 400);
+	setMove(0, 60, 0, 120, 400); 		// 70
 		// states.setWingState(stateMachine::wing_state::WINGS_OUT);
 	waitUntilSettled(0);
 		// states.setWingState(stateMachine::wing_state::LEFT_OUT);
 		states.setIntakeState(stateMachine::intake_state::OUTTAKING);
-	setMove(28, 70, 120, 120, 1000);
+	setMove(28, 60, 120, 120, 1000); 	// 70
 		pros::delay(200); // 200ms
 		states.setWingState(stateMachine::wing_state::LEFT_OUT);
 		turn_target = 0;
@@ -310,7 +310,7 @@ void sixBallElims() { // mid rush, guaranteed? 5 ball (maybe) hopefully
 		pros::delay(350);
 		max_translate_power = 120;
 		max_rotate_power = 100;
-		pros::delay(200);
+		pros::delay(100);
 		states.setIntakeState(stateMachine::intake_state::OUTTAKING);
 	waitUntilSettled(0);
 
@@ -324,10 +324,10 @@ void sixBallElims() { // mid rush, guaranteed? 5 ball (maybe) hopefully
 	waitUntilSettled(0);
 
 	// 9: Score last triball
-	setMove(0, 90, 0, 120, 500);
+	setMove(0, 92, 0, 120, 500);
 	waitUntilSettled(0);
 		states.setWingState(stateMachine::wing_state::WINGS_OUT);
-	setMove(36, 92, 125, 80, 850); // relative goal push instead of moveToPoint
+	setMove(36, 94, 125, 80, 850); // relative goal push instead of moveToPoint
 	// setMoveToPoint(125, 75, 120, 120, 900, false); // absolute goal push
 		states.setIntakeState(stateMachine::intake_state::OUTTAKING);
 	waitUntilSettled(0);
