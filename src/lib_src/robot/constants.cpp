@@ -15,7 +15,7 @@ int INTAKE_OPEN_THRESHOLD = 200;    // 200 ms
 // Shooter
 int SHORT_PULLBACK_TICKS = 4500;    // In centidegrees (100 * degrees)  // 4800
 int FULL_PULLBACK_TICKS = 0;        // In centidegrees (100 * degrees) 
-int MIN_FIRE_TIME = 200;    // used to be 200ms 
+int MIN_FIRE_TIME = 50;            // used to be 200ms 
 int PULLBACK_TIMEOUT = 400;        // 1000 ms
 int PULLBACK_THRESHOLD = 700;       // How close we want to get to the pullback value before stopping the cata (to mitigate overshoot)
 int FIRE_DELAY = 120;               // 140 ms

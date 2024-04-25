@@ -110,10 +110,13 @@ void stateHandler() {
             //     states.setShooterState(stateMachine::shooter_state::SHORT_PULLBACK);
             // }
 
-            setShooter(-127);
-            fireCount += loopDelay;
-            if(fireCount > MIN_FIRE_TIME) {
-                fireCount = 0;
+            setShooter(-80);
+            // fireCount += loopDelay;
+            // if(fireCount > MIN_FIRE_TIME) {
+            //     fireCount = 0;
+            //     states.setShooterState(stateMachine::shooter_state::SHORT_PULLBACK);
+            // }
+            if(shooterEnc.get_position() < 10*100) {
                 states.setShooterState(stateMachine::shooter_state::SHORT_PULLBACK);
             }
         }
@@ -227,12 +230,12 @@ void stateHandler() {
         matchloadFirstLoop = true;
         // optical.set_led_pwm(100);
         // rumble every second to signal we are in matchload state
-        rumbleCount += loopDelay;
+        // rumbleCount += loopDelay;
 
-        if(rumbleCount > 1000) {
-            rumbleCount = 0;
-            controller.rumble(".");
-        }
+        // if(rumbleCount > 1000) {
+        //     rumbleCount = 0;
+        //     controller.rumble(".");
+        // }
 
         // ** firing logic with optical sensor ** // 
         // if(states.shooterStateIs(stateMachine::shooter_state::PULLED_BACK)) {
@@ -246,19 +249,21 @@ void stateHandler() {
         // }
 
         // ** regular firing logic ** //
-        if(states.shooterStateIs(stateMachine::shooter_state::PULLED_BACK)) {
-            matchloadDelay += loopDelay;
-            if(matchloadDelay >= FIRE_DELAY) {
-                matchloadDelay = 0;
-                states.setShooterState(stateMachine::shooter_state::FIRE);
-            }
-        }
+        // if(states.shooterStateIs(stateMachine::shooter_state::PULLED_BACK)) {
+        //     matchloadDelay += loopDelay;
+        //     if(matchloadDelay >= FIRE_DELAY) {
+        //         matchloadDelay = 0;
+        //         states.setShooterState(stateMachine::shooter_state::FIRE);
+        //     }
+        // }
+        setShooter(-70);
     }
     else {
         if(matchloadFirstLoop) {
             // optical.set_led_pwm(0);
             matchloadDelay = 0;
             triballsFired = 0;
+            stopShooter(pros::E_MOTOR_BRAKE_COAST);
             matchloadFirstLoop = false;
         }
     }
