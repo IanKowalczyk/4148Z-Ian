@@ -20,7 +20,7 @@ lv_res_t act2(lv_obj_t *btnm, const char *txt){
 lv_res_t act3(lv_obj_t *btnm, const char *txt){
     autoToRun = 3;
     pros::screen::erase_line(0, 7, 600, 8);
-    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "AUTO TO RUN %d: %s", autoToRun, "SIX BALL - BAR RUSH");
+    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "AUTO TO RUN %d: %s", autoToRun, "DEFENSE WP - 3 BALL");
 	return LV_RES_OK; // return OK because the button matrix is not deleted
 }
 lv_res_t act4(lv_obj_t *btnm, const char *txt){
@@ -39,7 +39,7 @@ lv_res_t act5(lv_obj_t *btnm, const char *txt){
 lv_res_t act6(lv_obj_t *btnm, const char *txt){
     autoToRun = 6;
     pros::screen::erase_line(0, 7, 600, 8);
-    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "AUTO TO RUN %d: %s", autoToRun, "PROG SKILLS");
+    pros::screen::print(TEXT_MEDIUM_CENTER, 7, "AUTO TO RUN %d: %s", autoToRun, "OLD SIX BALL - BAR RUSH");
 	return LV_RES_OK; // return OK because the button matrix is not deleted
 }
 
