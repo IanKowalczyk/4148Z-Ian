@@ -4,17 +4,24 @@
 void defenseWP() { // descore matchload first, touches bar
 	/**** mile gveore ****/
 	// setup: top left corner of tile
+
+	// descore
 	states.setWingState(stateMachine::wing_state::LEFT_OUT);
-	states.setShooterState(stateMachine::shooter_state::FIRE);
+	// states.setShooterState(stateMachine::shooter_state::FIRE);
 	pros::delay(200);
 	setMove(0, 260, 0, 120, 800);
 	waitUntilSettled(0);
 	setMove(0, 315, 0, 100, 500);
 	waitUntilSettled(0);
+
+	// turn around 
 	states.setWingState(stateMachine::wing_state::WINGS_STOWED);
+	pros::delay(300); // delay so we don't smack triballs with wing still open
 	setMove(0, 135, 0, 100, 800);
 	waitUntilSettled(0);
 	states.setIntakeState(stateMachine::intake_state::OUTTAKING);
+
+	// touch bar
 	setMove(36, 110, 80, 100, 1300);
 	pros::delay(400);
 	turn_target = 90;
@@ -28,7 +35,7 @@ void defenseElims() { // mid rush and pull back both triballs
 	globalPose.setPoint(40, 17, 1); // mirror of sixball
 
 	// intake drop down
-		states.setShooterState(stateMachine::shooter_state::FIRE);
+		// states.setShooterState(stateMachine::shooter_state::FIRE);
 
 	// 1: Rush mid triball
 	setMoveToPoint(48, 62, 120, 120, 1000, false); // (48, 63)
@@ -130,9 +137,9 @@ void sixBallWP() { // scores preload first, stable
 		// setShooter(0);
 	waitUntilSettled(100);
 	setMove(0, 90, 0, 100, 600);
+		states.setIntakeState(stateMachine::intake_state::OFF);
 	waitUntilSettled(0);
 		states.setWingState(stateMachine::wing_state::WINGS_OUT);
-		states.setIntakeState(stateMachine::intake_state::OFF);
 	setMove(36, 92, 120, 80, 900);
 		states.setIntakeState(stateMachine::intake_state::OUTTAKING);
 	waitUntilSettled(0);
@@ -233,7 +240,7 @@ void sixBallWP() { // scores preload first, stable
 	waitUntilSettled(0);
 
 	// second push
-	setMove(15, 0, 120, 120, 400);
+	setMove(-15, 0, 120, 120, 400);
 	waitUntilSettled(0);
 	setMove(30, 0, 120, 120, 600);
 	waitUntilSettled(0);
@@ -363,7 +370,7 @@ void defenseAuto(defense_auto_mode s) {
 	globalPose.setPoint(48 - BASE_X_OFFSET, 24 - BASE_Y_OFFSET, 0); // top right of tile
 
 	// Drop intake by firing shooter
-	states.setShooterState(stateMachine::shooter_state::FIRE);
+	// states.setShooterState(stateMachine::shooter_state::FIRE);
 	
 	// 1: RUSH MID TRIBALL
 	setMoveToPoint(48, 62, 120, 120, 1100, false);
@@ -489,7 +496,7 @@ void newSixBall(sixBall_mode s) { // GOOD
 	// states.setShooterState(stateMachine::shooter_state::PULLED_BACK);
 
 	// Wing push and intake drop down
-	states.setShooterState(stateMachine::shooter_state::FIRE);
+	// states.setShooterState(stateMachine::shooter_state::FIRE);
 	states.setWingState(stateMachine::wing_state::RIGHT_OUT);
 
 	// **** Rush mid **** //
@@ -623,7 +630,7 @@ void fourBall() {
 
 	// 2: Push triballs in from side of goal
 	setMove(0, 60, 0, 100, 600);
-	states.setShooterState(stateMachine::shooter_state::FIRE);
+	// states.setShooterState(stateMachine::shooter_state::FIRE);
 	waitUntilSettled(0);
 	setMove(28, 50, 120, 120, 900);
 	pros::delay(200);
