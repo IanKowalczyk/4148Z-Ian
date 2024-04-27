@@ -147,11 +147,11 @@ void sixBallWP() { // scores preload first, stable
 		states.setIntakeState(stateMachine::intake_state::OFF);
 
 	// 4: Grab third triball 
-	setMoveToPoint(104, 48, 120, 120, 800, true);	// (104, 48) // 4/26 (104, 52) missed right in x dir
+	setMoveToPoint(104, 50, 120, 120, 800, true);	// (104, 48) // 4/26 (104, 52) 
 	waitUntilSettled(0);
 	setMove(0, 260, 0, 100, 410);
 	waitUntilSettled(0);
-	setMoveToPoint(82, 49, 700, false); // (82, 48)
+	setMoveToPoint(79, 49, 700, false); // 4/27: (82, 49) missed right in x dir
 		states.setIntakeState(stateMachine::intake_state::INTAKING);
 	waitUntilSettled(20); // 4/26: 100ms timeout
 
@@ -241,6 +241,7 @@ void sixBallWP() { // scores preload first, stable
 
 	// second push
 	setMove(-15, 0, 120, 120, 400);
+		states.setWingState(stateMachine::wing_state::WINGS_STOWED);
 	waitUntilSettled(0);
 	setMove(30, 0, 120, 120, 600);
 	waitUntilSettled(0);
