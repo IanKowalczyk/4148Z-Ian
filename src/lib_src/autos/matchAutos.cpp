@@ -44,9 +44,10 @@ void defenseElims() { // mid rush and pull back both triballs
 	waitUntilSettled(100);
 
 	// 2: Scoop top triball over to our side
-	setMove(-14.5, 280, 40, 120, 800); // move -15.5
+	setMove(-13.5, 280, 40, 120, 800); // move -15.5 // 4/27: move -14.5
         pros::delay(300);
 		states.setWingState(stateMachine::wing_state::RIGHT_OUT);
+		states.setIntakeState(stateMachine::intake_state::OFF);
 	waitUntilSettled(0);
 	setMove(0, 1, 0, 100, 600);
 		pros::delay(200);
@@ -265,15 +266,15 @@ void sixBallElims() { // mid rush, guaranteed? 5 ball (maybe) hopefully
 	waitUntilSettled(100);
 	
 	// 2: Back to start, outtake triball, grab hangbar triball
-	setMoveToPoint(105, 14, 120, 120, 1000, true); 
+	setMoveToPoint(105, 13, 120, 120, 1150, true);  // 4/27: 1000ms timeout, (105, 13)
 	waitUntilSettled(0);
 		states.setIntakeState(stateMachine::intake_state::OFF);
-	setMove(0, 50, 0, 100, 410);
+	setMove(0, 50, 0, 120, 400);
 		pros::delay(280);
 		states.setIntakeState(stateMachine::intake_state::OUTTAKING);
 	waitUntilSettled(0);
 		states.setIntakeState(stateMachine::intake_state::INTAKING);
-	setMoveToPoint(74, 13, 0, 125, 1000, false); // (75, 12)
+	setMoveToPoint(74, 13, 0, 125, 1100, false); // (75, 12) // 4/27: timeout 1000ms
 		pros::delay(340);
 		max_translate_power = 125;
 	waitUntilSettled(100);
@@ -292,13 +293,13 @@ void sixBallElims() { // mid rush, guaranteed? 5 ball (maybe) hopefully
 		states.setWingState(stateMachine::wing_state::RIGHT_OUT);
 	setMove(19, descoreAngle, 120, 100, 400); // 400 ms
 	waitUntilSettled(0);
-	setMove(0, 15, 0, 120, 410);
+	setMove(0, 15, 0, 120, 350);
 		pros::delay(300); // 200 ms
 		states.setWingState(stateMachine::wing_state::WINGS_STOWED);
 	waitUntilSettled(0);
 	
 	// 5: Score first four triballs from side of goal
-	setMove(0, 60, 0, 120, 400); 		// 70
+	setMove(0, 60, 0, 120, 350); 		// 70
 		// states.setWingState(stateMachine::wing_state::WINGS_OUT);
 	waitUntilSettled(0);
 		// states.setWingState(stateMachine::wing_state::LEFT_OUT);
@@ -327,7 +328,7 @@ void sixBallElims() { // mid rush, guaranteed? 5 ball (maybe) hopefully
 		pros::delay(300);
 		max_translate_power = 125;
 	waitUntilSettled(0);
-	setMoveToPoint(78, 50, 0, 125, 1000, false); // (79, 47)
+	setMoveToPoint(78, 48, 0, 125, 1000, false); // 4/27: (78, 50)
 		pros::delay(300);
 		max_translate_power = 125;
 	waitUntilSettled(100);
@@ -341,13 +342,13 @@ void sixBallElims() { // mid rush, guaranteed? 5 ball (maybe) hopefully
 		states.setIntakeState(stateMachine::intake_state::OUTTAKING);
 	waitUntilSettled(0);
 
-	// 8: Grab last triball
+	// 8: Grab last triball at ~(77, 72)
 	setMoveToPoint(90, 56, 120, 120, 700, true);
 	waitUntilSettled(0);
 		states.setIntakeState(stateMachine::intake_state::INTAKING);
-	setMoveToPoint(77, 80, 0, 125, 900, false); // triball 6 // (77, 80)
+	setMoveToPoint(77, 74, 0, 125, 900, false); // triball 6 // (77, 74) // 4/27: (77, 80)
 		pros::delay(300);
-		max_translate_power = 125;
+		max_translate_power = 120;
 	waitUntilSettled(0);
 
 	// 9: Score last triball
