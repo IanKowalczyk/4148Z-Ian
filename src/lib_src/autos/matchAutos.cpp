@@ -98,7 +98,7 @@ void defenseElims() { // mid rush and pull back both triballs
     waitUntilSettled(0);
 
 	// 5: Push over alliance triball & hangbar triball
-	setMoveToPoint(61, 11, 100, 120, 1000, false);
+	setMoveToPoint(60, 11, 100, 120, 1000, false); // 4/27: move 61
 		// pros::delay(350);
 		// max_translate_power = 120;
 	waitUntilSettled(0);
