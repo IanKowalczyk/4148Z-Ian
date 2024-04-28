@@ -16,6 +16,7 @@ void initialize() {
 	pros::Task stateMachineTask(stateHandler);
 	pros::Task GUI(initGUI);
 	// setShooterBrakeMode(pros::E_MOTOR_BRAKE_COAST);
+	oneIntakeMode = false;
 }
 
 /**
@@ -102,13 +103,13 @@ void autonomous() {
 	// **** Autoselector **** //
 	if(autoToRun == 1) {
 		defenseWP();
+		// sixBallWP();
 	}
 	if(autoToRun == 2) {
 		defenseElims();
 	}
 	if(autoToRun == 3) {
-		newSixBall(sixBall_mode::BAR); 
-		 // defenseAuto(defense_auto_mode::THREE_BALL); // defenseAuto(defense_auto_mode::FOUR_BALL);
+		defenseAuto(defense_auto_mode::THREE_BALL); // defenseAuto(defense_auto_mode::FOUR_BALL);
 	}
 	if(autoToRun == 4) {
 		sixBallWP();
@@ -117,7 +118,8 @@ void autonomous() {
 		sixBallElims(); //
 	}
 	if(autoToRun == 6) {
-		newProgSkillsMRL();
+		// newProgSkillsMRL();
+		newSixBall(sixBall_mode::BAR); 
 	}
 }
 
@@ -152,13 +154,16 @@ void opcontrol() {
 		if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT)) {
 			autoMovement.resume();
 			pros::Task progInDriver(progFirstHalf);
+
 			// exit once driver moves joystick
 			while(controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) < 50) {pros::delay(20);}
 			progInDriver.suspend();
 			autoMovement.suspend();
+			
 			// set default states
 			states.setWingState(stateMachine::wing_state::WINGS_STOWED);
 			states.setIntakeState(stateMachine::intake_state::OFF);
+			stopShooter(pros::E_MOTOR_BRAKE_COAST);
 			matchloadState = false;
 		}
 

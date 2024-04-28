@@ -5,6 +5,8 @@
 // **** Auto to run **** //
 extern int autoToRun;
 
+// **** Global flags **** //
+extern bool oneIntakeMode;
 
 // ******** SUBSYSTEM Constants ******** //
 // Drive

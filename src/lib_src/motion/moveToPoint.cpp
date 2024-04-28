@@ -42,10 +42,12 @@ void moveToPoint() {
 
         // Calculate distance and angle, check if movement is reversed
         if(movement_reversed) { // reversed, add 180 to angle
-            targetAngle = fmod((90 - (atan2(yError, xError) * RAD_TO_DEG)), 360) + 180;
+            // targetAngle = fmod((90 - (atan2(yError, xError) * RAD_TO_DEG)), 360) + 180;
+            targetAngle = (atan2(xError, yError) * RAD_TO_DEG) + 180;
         }
         else { // forward
-            targetAngle = fmod((90 - (atan2(yError, xError) * RAD_TO_DEG)), 360);
+            // targetAngle = fmod((90 - (atan2(yError, xError) * RAD_TO_DEG)), 360);
+            targetAngle = atan2(xError, yError) * RAD_TO_DEG;
         }
         // targetAngle = 90 - (atan2(yError, xError) * RAD_TO_DEG);
 
@@ -65,14 +67,15 @@ void moveToPoint() {
 
         // translate power
         translationPower = round(translationPID.calculateOutput(translation_error) * movementScaleFactor);
-        translationPower = constrainVoltage(translationPower, std::fabs(movementScaleFactor) * max_translate_power, -std::fabs(movementScaleFactor) * max_translate_power);
+        // translationPower = constrainVoltage(translationPower, std::fabs(movementScaleFactor) * max_translate_power, -std::fabs(movementScaleFactor) * max_translate_power);
         
         // Slew
-        translationPower = constrainVoltage(translationPower, tempDriveMax, -tempDriveMax);
+        // translationPower = constrainVoltage(translationPower, tempDriveMax, -tempDriveMax);
         if(tempDriveMax <= max_translate_power - DRIVE_SLEW_RATE) {
             tempDriveMax += DRIVE_SLEW_RATE;
         }
 
+        translationPower = constrainVoltage(translationPower, std::fabs(movementScaleFactor) * tempDriveMax, -std::fabs(movementScaleFactor) * tempDriveMax);
         
         // Rotate power
         // Stop rotating when close to target // used to be within 2.5 inches, now 3.5

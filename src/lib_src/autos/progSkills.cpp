@@ -7,7 +7,7 @@ void newProgSkillsMRL() { // PUSHED MID, RIGHT, LEFT
 	int MATCHLOAD_TIME = 23000; // 23000 ms - 23 seconds
 	if(MATCHLOAD_TIME > 23000) {MATCHLOAD_TIME = 23000;}
 	int ANGLE_TO_GOAL = 66.4; // angle = 74
-	states.setShooterState(stateMachine::shooter_state::FIRE);
+	// states.setShooterState(stateMachine::shooter_state::FIRE);
 
 	/** 1: Push two preloads in and line up to matchload bar */ 
 		pros::delay(100);
@@ -16,7 +16,7 @@ void newProgSkillsMRL() { // PUSHED MID, RIGHT, LEFT
 		pros::delay(400);
 		turn_target = 0;
 	waitUntilSettled(0);
-		states.setShooterState(stateMachine::shooter_state::FIRE);
+		// states.setShooterState(stateMachine::shooter_state::FIRE);
 	setMoveToPoint(25, 17, 80, 110, 1000, true); // (26, 17) // BACK TO BAR
 		states.setIntakeState(stateMachine::intake_state::OFF);
 	waitUntilSettled(0);
@@ -31,9 +31,11 @@ void newProgSkillsMRL() { // PUSHED MID, RIGHT, LEFT
 
 	// Matchload
 		pros::delay(400);
-		matchloadState = true;
+		setShooter(-70);
+		// matchloadState = true;
 		pros::delay(MATCHLOAD_TIME); // 28 seconds
-		matchloadState = false;
+		stopShooter(pros::E_MOTOR_BRAKE_COAST);
+		// matchloadState = false;
 		pros::delay(100);
 	// states.setWingState(stateMachine::wing_state::WINGS_STOWED);
 
@@ -616,34 +618,33 @@ void progSkills() { // OLD - 2 PUSHES FROM RIGHT AND LEFT
 
 // driver macro to run first half of prog, shoots forever
 void progFirstHalf() { // yea
-		// init
+	// init
 	globalPose.setPoint(22, 17, 0); // as far left as possible on matchload bar, right drive motor in line with edge of tile
-	int MATCHLOAD_TIME = 24000; // 26000 ms - 26 seconds
-	if(MATCHLOAD_TIME > 24000) {MATCHLOAD_TIME = 24000;}
-	int ANGLE_TO_GOAL = 65.5; // angle = 74
-	states.setShooterState(stateMachine::shooter_state::FIRE);
+	int MATCHLOAD_TIME = 23000; // 23000 ms - 23 seconds
+	if(MATCHLOAD_TIME > 23000) {MATCHLOAD_TIME = 23000;}
+	int ANGLE_TO_GOAL = 66.4; // angle = 74
 
 	/** 1: Push two preloads in and line up to matchload bar */ 
-	pros::delay(100);
+		pros::delay(100);
 	setMove(34, 320, 100, 100, 900); // 800 ms, DONT FORGET TO CHANGE
-	states.setIntakeState(stateMachine::intake_state::OUTTAKING);
-	pros::delay(400);
-	turn_target = 0;
+		states.setIntakeState(stateMachine::intake_state::OUTTAKING);
+		pros::delay(400);
+		turn_target = 0;
 	waitUntilSettled(0);
 	setMoveToPoint(25, 17, 80, 110, 1000, true); // (26, 17) // BACK TO BAR
-	states.setIntakeState(stateMachine::intake_state::OFF);
+		states.setIntakeState(stateMachine::intake_state::OFF);
 	waitUntilSettled(0);
 	// setMoveToPoint(120, 50, 0, 100, 800, false); // turn to face goal
-	setMove(0, ANGLE_TO_GOAL, 0, 100, 800);
+	setMove(0, ANGLE_TO_GOAL, 0, 120, 700);
 	waitUntilSettled(0);
 
 	// Back up to bar
-	setMove(-6.5, ANGLE_TO_GOAL, 60, 80, MATCHLOAD_TIME - 2000);
-	pros::delay(200);
-	max_drive_power = 10;
+	setMove(-6.7, ANGLE_TO_GOAL, 60, 80, MATCHLOAD_TIME - 2000);
+		pros::delay(230);
+		max_drive_power = 10;
 
 	// Matchload
-	pros::delay(200);
-	matchloadState = true;
-	pros::delay(50000);
+		pros::delay(400);
+		setShooter(-70);
+		pros::delay(50000);
 }
