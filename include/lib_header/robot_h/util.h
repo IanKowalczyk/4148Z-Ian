@@ -1,6 +1,8 @@
 #ifndef UTIL_H
 #define UTIL_H
 #include "main.h"
+#include "lib_header/robot_h/robot_config.h"
+#include "lib_header/robot_h/constants.h"
 
 // ******** Constants ******** //
 // extern double PI;

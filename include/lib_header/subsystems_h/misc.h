@@ -1,6 +1,8 @@
 #ifndef MISC_H
 #define MISC_H
 #include "main.h"
+#include "lib_header/api/robot_api.h"
+
 
 // Variables
 extern bool brakeReady;

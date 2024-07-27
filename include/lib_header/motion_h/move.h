@@ -1,6 +1,10 @@
 #ifndef MOVE_H
 #define MOVE_H
 #include "main.h"
+#include "lib_header/api/robot_api.h"
+#include "lib_header/subsystems_h/drive.h"
+#include "lib_header/motion_h/motionFunctions.h"
+#include "lib_header/api/control_api.h"
 
 // ******** Variables ******** //
 extern double drive_position;

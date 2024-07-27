@@ -1,6 +1,7 @@
 #ifndef PID_H
 #define PID_H
 #include "main.h"
+#include "lib_header/robot_h/util.h"
 
 /** @brief PID Class */
 class PID {
@@ -50,12 +51,12 @@ public:
   */
   double calculateOutput(double new_error); // , double upperBound, double lowerBound
 
-  /**
-   * @brief Wrapper for calculateOutput that uses current and target values
-   * @param new_target Target value
-   * @param new_current Current value
-  */
-  double calculate(double new_target, double new_current);
+  // /**
+  //  * @brief Wrapper for calculateOutput that uses current and target values
+  //  * @param new_target Target value
+  //  * @param new_current Current value
+  // */
+  // double calculate(double new_target, double new_current);
   
   /** @brief Returns stored error in PID object */
   double getError();

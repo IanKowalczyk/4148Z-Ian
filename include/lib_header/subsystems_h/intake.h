@@ -1,6 +1,8 @@
 #ifndef INTAKE_H
 #define INTAKE_H
 #include "main.h"
+#include "lib_header/api/robot_api.h"
+
 
 // ******** Intake Constants ******** //
 

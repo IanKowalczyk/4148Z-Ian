@@ -1,4 +1,6 @@
-#pragma once
+// #pragma once
+#ifndef LIB_API_H
+#define LIB_API_H
 
 // **** Include this file (lib_header/api.h) in main.h **** //
 
@@ -24,10 +26,10 @@
 #include "lib_header/robot_h/robotStates.h"
 #include "lib_header/robot_h/util.h"
 
-
-
 // subsystems_h
 #include "lib_header/subsystems_h/drive.h"
 #include "lib_header/subsystems_h/intake.h"
 #include "lib_header/subsystems_h/misc.h"
 #include "lib_header/subsystems_h/shooter.h"
+
+#endif  // LIB_API_H

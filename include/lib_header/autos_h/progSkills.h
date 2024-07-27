@@ -1,6 +1,10 @@
 #ifndef PROG_SKILLS_H
 #define PROG_SKILLS_H
 #include "main.h"
+#include "lib_header/api/motion_api.h"
+#include "lib_header/api/robot_api.h"
+#include "lib_header/api/subsystems_api.h"
+#include "lib_header/api/control_api.h"
 
 // ******** Prog Skills ******** //
 /** @brief Setup: Right side of Matchload Station, 45 deg --

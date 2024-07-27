@@ -1,6 +1,11 @@
 #ifndef MOVE_TO_POINT_H
 #define MOVE_TO_POINT_H
 #include "main.h"
+#include "lib_header/api/robot_api.h"
+#include "lib_header/subsystems_h/drive.h"
+#include "lib_header/motion_h/motionFunctions.h"
+#include "lib_header/api/control_api.h"
+
 
 // ******** Variables ******** //
 extern double translation_error;

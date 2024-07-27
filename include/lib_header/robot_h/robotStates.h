@@ -1,6 +1,11 @@
 #ifndef ROBOT_STATES_H
 #define ROBOT_STATES_H
 #include "main.h"
+#include "lib_header/robot_h/constants.h"
+#include "lib_header/robot_h/robot_config.h"
+#include "lib_header/api/subsystems_api.h"
+#include "lib_header/api/control_api.h"
+
 // #include <string>
 
 /** @brief State Machine that holds all subsystem states */

@@ -1,6 +1,9 @@
 #ifndef CURVE_H
 #define CURVE_H
 #include "main.h"
+#include "lib_header/api/robot_api.h"
+#include "lib_header/motion_h/move.h"
+
 
 // ******** Variables ******** //
 

@@ -1,6 +1,7 @@
 #ifndef SHOOTER_H
 #define SHOOTER_H
 #include "main.h"
+#include "lib_header/api/robot_api.h"
 #include <string>
 
 // ******* Shooter constants ******** //

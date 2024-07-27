@@ -1,7 +1,14 @@
 #ifndef MOTION_FUNCTIONS_H
 #define MOTION_FUNCTIONS_H
 #include "main.h"
+#include "lib_header/api/robot_api.h"
+#include "lib_header/subsystems_h/drive.h"
+#include "lib_header/motion_h/curve.h"
+#include "lib_header/motion_h/move.h"
+#include "lib_header/motion_h/moveToPoint.h"
+
 #include <vector>
+
 
 // namespace AUTO {}
 

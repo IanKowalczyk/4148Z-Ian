@@ -1,6 +1,11 @@
 #ifndef MATCH_AUTOS_H
 #define MATCH_AUTOS_H
 #include "main.h"
+#include "lib_header/api/motion_api.h"
+#include "lib_header/api/robot_api.h"
+#include "lib_header/api/subsystems_api.h"
+#include "lib_header/api/control_api.h"
+
 
 // ******** Current Autos ******** //
 extern void defenseWP();
