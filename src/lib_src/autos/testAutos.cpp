@@ -108,3 +108,40 @@ void curveTuning() {
 	waitUntilSettled(20);
 	pros::delay(1000);
 }
+
+// From main
+
+	// ******** TESTS ******** //
+	// **** Extend moveToPoint test **** //
+	// setMoveToPoint(0, 24, 800, false);
+	// waitUntilNear(4, 0);
+	// extendMoveToPoint(12, 24, 100, 100, 1000, false);
+	// waitUntilNear(4, 0);
+	// extendMoveToPoint(0, 0, 100, 100, 1000, false);
+	// waitUntilSettled(500);
+	// setMove(0, 90, 1000);
+	// waitUntilSettled(0);
+
+	// globalPose.setPoint(103.5, 17, 1); // newSixBall() // top left of tile
+	// states.setWingState(stateMachine::wing_state::RIGHT_OUT);
+
+	/** Forward and backward test */
+	// setMoveToPoint(0, 24, 40, 30, 5000, false);
+	// waitUntilSettled(0);
+	// setMoveToPoint(0, 0, 40, 30, 5000, true);
+	// waitUntilSettled(0);
+	
+	// squigglesTest(); 		// FAILED, turns but doesn't move after chained movement
+	// chainedMoveToPoint(); 	// FAILED, turns but doesn't move after first chained to move
+	
+	// ** waitUntilNear test (WORKS) ** //
+	// setMoveToPoint(40, 24, 900, false);
+	// waitUntilNear(5, 0);
+	// setMoveToPoint(49, 5, 800, true);
+	// waitUntilNear(5, 0);
+	// setMoveToPoint(0, 0, 1200, true);
+	// waitUntilSettled(50000);
+
+	// globalPose.setPoint(120, 14, 321); // angled to face triball near bar; right front wheel in line with intersection of tiles; (24, 14)
+	// sixBall(sixBall_mode::BAR);
+	// ******** ******** //

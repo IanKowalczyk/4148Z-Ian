@@ -29,10 +29,6 @@ double PID::calculateOutput(double new_error) { //, double upperBound, double lo
     return output;
 }
 
-double PID::calculate(double new_target, double new_current) {
-    return calculateOutput(new_target - new_current);
-}
-
 double PID::getError() {
     return error;
 }
