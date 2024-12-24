@@ -208,8 +208,8 @@ void sixBallWP() { // scores preload first, stable
 	// states.setIntakeState(stateMachine::intake_state::OUTTAKING);
 	waitUntilSettled(0);
 
-	// 6: Push triballs in from side of goal
-		// setMove(0, 80, 0, 100, 600); // 60 degrees
+	// 6: Push triballs in from side of blue goal
+		// setMove(0, 80, 0, 110, 600); // 60 degrees
 		// 	states.setWingState(stateMachine::wing_state::WINGS_OUT);
 		// waitUntilSettled(0);
 		// 	states.setWingState(stateMachine::wing_state::LEFT_OUT);
