@@ -614,15 +614,17 @@ void newSixBall(sixBall_mode s) { // GOOD
 	waitUntilSettled(0);
 }
 
-void fourBall() {
+void fourBall() { //Safe, matchload, far middle, end with one.
 	globalPose.setPoint(120 - BASE_X_OFFSET, 24 - BASE_Y_OFFSET, 0);
 
-	// 1: Turn and descore matchload 
-	setMove(0, 45, 0, 100, 800);
+	// 1: Turn and descore matchload (Blue)
+	setMove(0, 45, 0, 200, 700);
 	waitUntilSettled(0);
 	states.setWingState(stateMachine::wing_state::RIGHT_OUT);
-	pros::delay(200);
-	setMove(18, 45, 1000);
+	pros::delay(300);
+	//200 inconsistent
+	setMove(18, 45, 1100);
+	//Added 100
 	waitUntilSettled(0);
 	// turn to descore
 	setMove(0, 15, 0, 100, 500);
